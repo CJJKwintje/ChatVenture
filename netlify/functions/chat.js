@@ -11,18 +11,16 @@ exports.handler = async function(event) {
 
   try {
     // Parse the body to get the prompt
-    const { prompt } = JSON.parse(event.body);
+    const { messages } = JSON.parse(event.body);
 
     // Prepare the payload to send to OpenAI's API
     const data = {
-      model: "gpt-3.5-turbo", // Replace with your desired model
-      prompt: prompt,
-      max_tokens: 150,
-      // Add other parameters as needed
+      model: "gpt-3.5-turbo", // Make sure to use the correct model for your use case
+      messages: messages, // 'messages' should be an array of message objects
     };
 
     // Make the POST request to OpenAI's API
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', { // Ensure you're using the correct endpoint for chat
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${OPENAI_API_KEY}`,

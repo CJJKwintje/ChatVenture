@@ -42,9 +42,18 @@ async function submitPrompt() {
   // Get the selected prompt from the dropdown
   const promptSelection = document.getElementById('prompt-select').value;
 
-  // Set up the data you want to send, including the prompt
+  // Set up the data you want to send, including the messages array
   const postData = {
-    prompt: promptSelection // Pass only the prompt selection to the Netlify function
+    messages: [
+      {
+        role: "system",
+        content: "You are a helpful assistant."
+      },
+      {
+        role: "user",
+        content: promptSelection
+      }
+    ]
   };
 
   // Set up the options for the fetch request
@@ -60,7 +69,7 @@ async function submitPrompt() {
     // Make the API request to your Netlify function
     const response = await fetch(apiEndpoint, requestOptions);
 
-    // Ensure the response is JSON before parsing
+    // Check if the response is okay and the content type is JSON
     if (!response.ok) {
       throw new Error(`Network response was not ok: ${response.statusText}`);
     }
@@ -71,19 +80,20 @@ async function submitPrompt() {
 
     const data = await response.json();
 
-    // Check if the response has a completion
+    // Check if the response from the Netlify function (OpenAI API) has a 'choices' array
     if (data.choices && data.choices.length > 0) {
-      // Output the completion text to the page
+      // Assuming the structure of the response includes a 'choices' array with message content
+      // Adjust this line based on the actual response structure from OpenAI
       document.getElementById('response-output').textContent = data.choices[0].message.content;
     } else {
-      // Output an error message
+      // Output an error message if the 'choices' array is not present
       document.getElementById('response-output').textContent = 'No response from API.';
     }
   } catch (error) {
-    // Output an error message
+    // Output an error message if there was a problem with the fetch request
     document.getElementById('response-output').textContent = error.message;
   } finally {
-    // Hide the loader
+    // Hide the loader after the request is completed or if an error occurred
     document.getElementById('loader').classList.add('hidden');
   }
 }
