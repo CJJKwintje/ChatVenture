@@ -8,26 +8,30 @@
 <link rel="stylesheet" href="styles.css">
 <script>
 async function submitPrompt() {
-  // Show the loader and hide the previous response
+  // Show the loader and hide the previous response and response title
   document.getElementById('loader').classList.remove('hidden');
+  document.getElementById('response-title').classList.add('hidden');
+  document.getElementById('response-output').classList.add('hidden');
   document.getElementById('response-output').textContent = '';
 
   // The endpoint for your Netlify serverless function
   const apiEndpoint = '/.netlify/functions/chat';
 
-  // Get the selected prompt from the dropdown
-  const promptSelection = document.getElementById('prompt-select').value;
+  // Collect user responses from the dropdowns and text area
+  const typeVakantie = document.getElementById('type-vakantie-select').value;
+  const gebied = document.getElementById('gebied-select').value;
+  const extraVoorkeuren = document.getElementById('extra-voorkeuren').value;
 
-  // Set up the data you want to send, including the messages array
+  // Set up the data to send, including the messages array
   const postData = {
-    messages: [
+messages: [
       {
         role: "system",
-        content: "Gedraag je als een enthousiaste travelagent. Je zal als prompt een naam van een land ontvangen. Zorg dat je 5 steden aanbeveelt in dat land die leuk zijn om te bezoeken. Houd je antwoord kort en bondig, maar wel vriendelijk"
+        content: "Gedraag je als een enthousiaste travelagent. De gebruiker gaat 3 vragen beantwoorden, namelijk “Naar wat voor type vakantie ben je op zoek?”, “Naar welk gebied zou je willen gaan?” En “Wat vind je verder belangrijk voor je volgende vakantie?”. Voor de eerste 2 vragen zal je een gepast antwoord krijgen wat de gebruiker kiest in een dropdown menu. De derde vraag zal beantwoord worden in een open tekstveld. Zorg ervoor dat je een waardevol en bondig advies geeft op basis van de 3 antwoorden die je gaat krijgen op deze vragen."
       },
       {
         role: "user",
-        content: promptSelection
+        content: `Type vakantie: ${typeVakantie}, Gebied: ${gebied}, Belangrijk: ${extraVoorkeuren}`
       }
     ]
   };
@@ -35,9 +39,7 @@ async function submitPrompt() {
   // Set up the options for the fetch request
   const requestOptions = {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(postData)
   };
 
@@ -45,7 +47,7 @@ async function submitPrompt() {
     // Make the API request to your Netlify function
     const response = await fetch(apiEndpoint, requestOptions);
 
-    // Check if the response is okay and the content type is JSON
+    // Ensure the response is JSON before parsing
     if (!response.ok) {
       throw new Error(`Network response was not ok: ${response.statusText}`);
     }
@@ -58,18 +60,21 @@ async function submitPrompt() {
 
     // Check if the response from the Netlify function (OpenAI API) has a 'choices' array
     if (data.choices && data.choices.length > 0) {
-      // Assuming the structure of the response includes a 'choices' array with message content
-      // Adjust this line based on the actual response structure from OpenAI
+      // Remove the 'hidden' class to display the response title and output
+      document.getElementById('response-title').classList.remove('hidden');
+      document.getElementById('response-output').classList.remove('hidden');
       document.getElementById('response-output').textContent = data.choices[0].message.content;
     } else {
-      // Output an error message if the 'choices' array is not present
+      // If there is no 'choices' array, display an error message
+      document.getElementById('response-output').classList.remove('hidden');
       document.getElementById('response-output').textContent = 'No response from API.';
     }
   } catch (error) {
-    // Output an error message if there was a problem with the fetch request
+    // If there is an error, display it in the response output
+    document.getElementById('response-output').classList.remove('hidden');
     document.getElementById('response-output').textContent = error.message;
   } finally {
-    // Hide the loader after the request is completed or if an error occurred
+    // Hide the loader once the request is completed
     document.getElementById('loader').classList.add('hidden');
   }
 }
@@ -77,23 +82,51 @@ async function submitPrompt() {
 </head>
 <body>
 
-<h1>De 5 beste steden om te bezoeken!</h1>
+<h1>Waar gaat jouw volgende vakantie naartoe?</h1>
 
-<!-- Dropdown form for the prompt -->
-<label for="prompt-select">Naar welk land wil je op vakantie?</label>
-<select id="prompt-select">
-  <option value="Duitsland">Duitsland</option>
-  <option value="Nederland">Nederland</option>
-  <option value="Verendigde Staten">Verendigde Staten</option>
+<!-- Dropdown voor het type vakantie -->
+<label for="type-vakantie-select">Naar wat voor type vakantie ben je op zoek?</label>
+<select id="type-vakantie-select">
+  <option value="Stedentrip">Stedentrip</option>
+  <option value="Reis voor langere periode">Reis voor langere periode</option>
+  <option value="Zomervakantie">Zomervakantie</option>
+  <option value="Wintersport">Wintersport</option>
+  <option value="Dagje weg">Dagje weg</option>
 </select>
-<button onclick="submitPrompt()">Geef me tips!</button>
+
+<!-- Dropdown voor het gebied -->
+<label for="gebied-select">Naar welk gebied zou je willen gaan?</label>
+<select id="gebied-select">
+  <option value="Europa">Europa</option>
+  <option value="Azië">Azië</option>
+  <option value="Afrika">Afrika</option>
+  <option value="Noord-Amerika">Noord-Amerika</option>
+  <option value="Zuid-Amerika">Zuid-Amerika</option>
+  <option value="Midden-Oosten">Midden-Oosten</option>
+  <option value="Australië">Australië</option>
+  <option value="Oceanië">Oceanië</option>
+  <option value="Latijns-Amerika">Latijns-Amerika</option>
+</select>
+
+<!-- Tekstveld voor extra voorkeuren -->
+<label for="extra-voorkeuren">Wat vind je verder belangrijk voor je volgende vakantie?</label>
+<textarea id="extra-voorkeuren" rows="4" cols="50"></textarea>
+
+<!-- Knop om de gegevens te verzenden -->
+<button onclick="submitPrompt()">Inspireer me!</button>
 
 <!-- Loader -->
 <div id="loader" class="hidden"></div>
 
-<!-- Area to display the response -->
-<h2>De 5 beste tips voor jou:</h2>
-<div id="response-output" style="white-space: pre-wrap;"></div>
+<!-- Gebied om de respons weer te geven -->
+<!-- Verborgen gebied voor de response, die later zichtbaar gemaakt zal worden -->
+<h2 id="response-title" class="hidden">Jouw reisadvies op maat:</h2>
+<div id="response-output" class="hidden" style="white-space: pre-wrap;"></div>
+
+<script>
+// Plaats hier de bijgewerkte JavaScript-functie submitPrompt
+</script>
 
 </body>
+
 </html>
