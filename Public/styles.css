@@ -1,0 +1,78 @@
+
+/* styles.css */
+/* styles.css */
+body {
+  background-color: #87CEEB; /* Lichtblauwe achtergrond */
+  color: #ffffff; /* Witte tekst */
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh; /* Zorg ervoor dat de body altijd de volledige viewport hoogte inneemt */
+  justify-content: center;
+}
+
+h1 {
+  color: #000000; /* Zwarte tekst */
+  margin: 0.5em 0; /* Voeg wat ruimte toe rond de h1 */
+  font-size: 2em; /* Grotere tekst */
+}
+
+label, select, button {
+  font-size: 1.2em;
+  display: block; /* Zorg ervoor dat deze elementen hun eigen regel innemen */
+}
+
+select, button {
+  margin: 10px 0;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+}
+
+button {
+  background-color: #008CBA; /* Knop achtergrondkleur */
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #005f6b; /* Donkerdere hover kleur */
+}
+
+#response-output {
+  background-color: white; /* Witte achtergrond voor respons */
+  color: black; /* Zwarte tekst voor respons */
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 5px;
+  width: 100%; /* Zorg dat de output de volledige breedte van de container inneemt */
+  max-width: 600px; /* Max breedte voor leesbaarheid */
+  box-sizing: border-box; /* Zorg dat padding en border inbegrepen zijn in de breedte */
+}
+
+/* Centreer de inhoud binnen select en button */
+select, button {
+  text-align: center;
+}
+
+#loader {
+  border: 5px solid #f3f3f3; /* Light grey */
+  border-top: 5px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
+  margin: 20px auto; /* Center the loader */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.hidden {
+  display: none;
+}

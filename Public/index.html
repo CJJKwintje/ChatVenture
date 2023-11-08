@@ -5,31 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ChatVenture</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-<style>
-  body, input, button {
-    font-family: 'Roboto', sans-serif;
-  }
-
-  #loader {
-    border: 5px solid #f3f3f3; /* Light grey */
-    border-top: 5px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 2s linear infinite;
-    margin: 20px auto; /* Center the loader */
-  }
-
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-  /* Hide the loader by default */
-  .hidden {
-    display: none;
-  }
-</style>
+<link rel="stylesheet" href="styles.css">
 <script>
 async function submitPrompt() {
   // Show the loader and hide the previous response
@@ -47,7 +23,7 @@ async function submitPrompt() {
     messages: [
       {
         role: "system",
-        content: "You are a helpful assistant."
+        content: "Gedraag je als een enthousiaste travelagent. Je zal als prompt een naam van een land ontvangen. Zorg dat je 5 steden aanbeveelt in dat land die leuk zijn om te bezoeken. Houd je antwoord kort en bondig, maar wel vriendelijk"
       },
       {
         role: "user",
