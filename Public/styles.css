@@ -120,6 +120,16 @@ button:hover {
   box-sizing: border-box;
 }
 
+#new-search-button {
+  margin-top: 20px; /* dezelfde margin als je loader voor consistentie */
+  padding: 10px 20px;
+  border: 2px solid #008cba;
+  background-color: #008cba;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 select, button {
   text-align: center;
 }

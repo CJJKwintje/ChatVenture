@@ -7,8 +7,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <script>
+  function startNewSearch() {
+  document.getElementById('response-output').classList.add('hidden');
+  document.getElementById('response-title').classList.add('hidden');
+  document.getElementById('new-search-button').classList.add('hidden');
+  document.getElementById('input-fields').classList.remove('hidden');
+}
+
 async function submitPrompt() {
   // Show the loader and hide the previous response and response title
+  document.getElementById('input-fields').classList.add('hidden'); // Zorg ervoor dat er een container met deze ID is
   document.getElementById('loader').classList.remove('hidden');
   document.getElementById('response-title').classList.add('hidden');
   document.getElementById('response-output').classList.add('hidden');
@@ -73,6 +81,7 @@ messages: [
       document.getElementById('response-title').classList.remove('hidden');
       document.getElementById('response-output').classList.remove('hidden');
       document.getElementById('response-output').textContent = data.choices[0].message.content;
+      document.getElementById('new-search-button').classList.remove('hidden'); // Laat de knop zien
     } else {
       // If there is no 'choices' array, display an error message
       document.getElementById('response-output').classList.remove('hidden');
@@ -92,9 +101,8 @@ messages: [
 <body>
 
 <h1>Waar gaat jouw volgende vakantie naartoe?</h1>
-
 <div class="container">
-
+<div id="input-fields">
 <!-- Dropdown voor het type vakantie -->
 <div class="Vakantie-dropdown">
 <label for="type-vakantie-select">Naar wat voor type vakantie ben je op zoek?</label>
@@ -139,7 +147,7 @@ messages: [
 </div>
 <!-- Knop om de gegevens te verzenden -->
 <button onclick="submitPrompt()">Inspireer me!</button>
-
+</div>
 <!-- Loader -->
 <div id="loader" class="hidden"></div>
 
@@ -147,6 +155,7 @@ messages: [
 <!-- Verborgen gebied voor de response, die later zichtbaar gemaakt zal worden -->
 <h2 id="response-title" class="hidden">Jouw reisadvies op maat:</h2>
 <div id="response-output" class="hidden" style="white-space: pre-wrap;"></div>
+<button id="new-search-button" class="hidden" onclick="startNewSearch()">Nieuwe zoekopdracht</button>
 </div>
 
 </body>
