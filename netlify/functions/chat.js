@@ -21,7 +21,7 @@ exports.handler = async function(event) {
     };
 
     // Make the request to OpenAI API
-    const response = await fetch('https://api.openai.com/v1/engines/davinci-codex/completions', {
+    const response = await fetch('https://api.openai.com/v1/models/gpt-3.5-turbo-instruct', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${OPENAI_API_KEY}`,
