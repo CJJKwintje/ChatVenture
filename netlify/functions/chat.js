@@ -22,7 +22,7 @@ exports.handler = async function(event) {
     };
 
     // Make the POST request to OpenAI's API
-    const response = await fetch('https://api.openai.com/v1/completions', {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${OPENAI_API_KEY}`,
