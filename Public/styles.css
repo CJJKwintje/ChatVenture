@@ -38,6 +38,7 @@ select, button {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
+
 }
 
 button {
@@ -57,6 +58,10 @@ button:hover {
 
 }
 
+#extra-voorkeuren {
+  max-width: 100%;
+}
+
 #response-output {
   background-color: white; /* Witte achtergrond voor respons */
   color: black; /* Zwarte tekst voor respons */
@@ -71,6 +76,46 @@ button:hover {
 /* Centreer de inhoud binnen select en button */
 select, button {
   text-align: center;
+}
+
+/* Media query voor schermen kleiner dan 600px */
+@media (max-width: 400px) {
+  body {
+    padding: 10px;
+    display: block;
+  }
+
+  h1 {
+    font-size: 2em; /* Kleinere tekstgrootte voor de titel */
+    margin: 0.2em 0; /* Minder ruimte rond de h1 */
+  }
+
+  label, select, button {
+    font-size: 1em; /* Kleinere tekstgrootte */
+  }
+
+  select, button {
+    padding: 8px 15px; /* Minder padding */
+  }
+
+  .container {
+    padding: 20px; /* Minder padding in de container */
+  }
+
+  #response-output {
+    padding: 10px; /* Minder padding in de response-output */
+    margin-top: 10px;
+    max-width: 100%; /* Volledige breedte op kleine schermen */
+  }
+}
+
+/* Media query voor schermen tussen 600px en 900px */
+@media (min-width: 601px) and (max-width: 900px) {
+  h1 {
+    font-size: 2.5em; /* Iets grotere tekstgrootte voor de titel */
+  }
+
+  /* Je kunt hier meer aangepaste stijlen toevoegen */
 }
 
 #loader {
