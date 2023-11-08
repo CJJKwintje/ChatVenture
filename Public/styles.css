@@ -1,61 +1,85 @@
 
 /* styles.css */
-/* styles.css */
 @font-face {
-  font-family: 'Hind'; /* Geef een naam aan het font */
-  src: url('font/hind/hind-bold.ttf') format('truetype'); /* Oudste browsers en fallback */
-  font-weight: normal; /* of 400, 700, etc. */
-  font-style: normal; /* of italic */
+  font-family: 'Hind';
+  src: url('font/hind/hind-bold.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
 
 body {
-  background-color: #87CEEB; /* Lichtblauwe achtergrond */
-  color: #000000; /* Witte tekst */
+  background-color: #f0f0f0; /* Soft grey background for a modern look */
+  color: #333; /* Dark grey text for better readability */
   font-family: 'Hind', sans-serif;
   margin: 0;
   padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 100vh; /* Zorg ervoor dat de body altijd de volledige viewport hoogte inneemt */
+  min-height: 100vh;
   justify-content: center;
 }
 
 h1 {
-  color: #000000; /* Zwarte tekst */
+  color: #333;
   font-family: 'Hind';
-  margin: 0.5em 0; /* Voeg wat ruimte toe rond de h1 */
-  font-size: 3em; /* Grotere tekst */
+  margin: 0.5em 0;
+  font-size: 2.5em; /* Adjusted for better visual hierarchy */
 }
 
 label, select, button {
   font-size: 1.2em;
-  display: block; /* Zorg ervoor dat deze elementen hun eigen regel innemen */
+  display: block;
 }
 
 select, button {
   margin: 10px 0;
   padding: 10px 20px;
-  border: none;
+  border: 2px solid #008cba; /* Stylish border for inputs */
   border-radius: 5px;
-
 }
 
 button {
-  background-color: #008CBA; /* Knop achtergrondkleur */
+  background-color: #008cba; /* Refreshing blue for buttons */
   color: white;
   cursor: pointer;
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
 }
 
 button:hover {
-  background-color: #005f6b; /* Donkerdere hover kleur */
+  background-color: #006494; /* Darker blue on hover for interactivity */
 }
 
 .container {
-   background-color: #ffeb90;
+   background-color: #ffffff; /* White background for the container for cleanliness */
    padding: 50px;
    border-radius: 25px;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
 
+.image-selection {
+  padding: 25px;
+}
+
+.image-selection label {
+  display: inline-block;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.image-selection label img {
+  width: 100px;
+  height: auto;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.image-selection input[type="radio"] {
+  display: none;
+}
+
+.image-selection input[type="radio"]:checked + img {
+  transform: scale(1.3);
+  border-color: #008cba;
 }
 
 #extra-voorkeuren {
@@ -63,22 +87,21 @@ button:hover {
 }
 
 #response-output {
-  background-color: white; /* Witte achtergrond voor respons */
-  color: black; /* Zwarte tekst voor respons */
+  background-color: white;
+  color: #333;
   padding: 20px;
   margin-top: 20px;
   border-radius: 5px;
-  width: 100%; /* Zorg dat de output de volledige breedte van de container inneemt */
-  max-width: 600px; /* Max breedte voor leesbaarheid */
-  box-sizing: border-box; /* Zorg dat padding en border inbegrepen zijn in de breedte */
+  width: 100%;
+  max-width: 600px;
+  box-sizing: border-box;
 }
 
-/* Centreer de inhoud binnen select en button */
 select, button {
   text-align: center;
 }
 
-/* Media query voor schermen kleiner dan 600px */
+/* Media query for better responsive design */
 @media (max-width: 400px) {
   body {
     padding: 10px;
@@ -86,46 +109,49 @@ select, button {
   }
 
   h1 {
-    font-size: 2em; /* Kleinere tekstgrootte voor de titel */
-    margin: 0.2em 0; /* Minder ruimte rond de h1 */
+    font-size: 2em;
+    margin: 0.2em 0;
   }
 
   label, select, button {
-    font-size: 1em; /* Kleinere tekstgrootte */
+    font-size: 1em;
   }
 
   select, button {
-    padding: 8px 15px; /* Minder padding */
+    padding: 8px 15px;
   }
+.image-selection {
+  padding: 25px;
+  display: grid;
 
+}
   .container {
-    padding: 20px; /* Minder padding in de container */
+    padding: 20px;
   }
 
   #response-output {
-    padding: 10px; /* Minder padding in de response-output */
+    padding: 10px;
     margin-top: 10px;
-    max-width: 100%; /* Volledige breedte op kleine schermen */
+    max-width: 100%;
   }
 }
 
-/* Media query voor schermen tussen 600px en 900px */
 @media (min-width: 601px) and (max-width: 900px) {
   h1 {
-    font-size: 2.5em; /* Iets grotere tekstgrootte voor de titel */
+    font-size: 2.25em;
   }
 
-  /* Je kunt hier meer aangepaste stijlen toevoegen */
+  /* Additional styles can be added here for other elements as needed */
 }
 
 #loader {
-  border: 5px solid #f3f3f3; /* Light grey */
-  border-top: 5px solid #3498db; /* Blue */
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #008cba; /* Using the button color for consistency */
   border-radius: 50%;
   width: 50px;
   height: 50px;
   animation: spin 2s linear infinite;
-  margin: 20px auto; /* Center the loader */
+  margin: 20px auto;
 }
 
 @keyframes spin {

@@ -19,7 +19,15 @@ async function submitPrompt() {
 
   // Collect user responses from the dropdowns and text area
   const typeVakantie = document.getElementById('type-vakantie-select').value;
-  const gebied = document.getElementById('gebied-select').value;
+  
+  const selectedRadio = document.querySelector('input[name="gebied-select"]:checked');
+  
+  // Check of er een radio-button is geselecteerd
+  if (!selectedRadio) {
+    console.error('Geen gebied geselecteerd');
+    return; // Stop de functie als er niets is geselecteerd
+  }
+  const selectedImageValue = selectedRadio.value;
   const extraVoorkeuren = document.getElementById('extra-voorkeuren').value;
 
   // Set up the data to send, including the messages array
@@ -31,7 +39,8 @@ messages: [
       },
       {
         role: "user",
-        content: `Type vakantie: ${typeVakantie}, Gebied: ${gebied}, Belangrijk: ${extraVoorkeuren}`
+        content: `Type vakantie: ${typeVakantie}, Gebied: ${selectedImageValue}, Belangrijk: ${extraVoorkeuren}`
+
       }
     ]
   };
@@ -85,10 +94,11 @@ messages: [
 <h1>Waar gaat jouw volgende vakantie naartoe?</h1>
 
 <div class="container">
-  
+
 <!-- Dropdown voor het type vakantie -->
 <label for="type-vakantie-select">Naar wat voor type vakantie ben je op zoek?</label>
 <select id="type-vakantie-select">
+  <option value="Geen voorkeur">-</option>
   <option value="Stedentrip">Stedentrip</option>
   <option value="Reis voor langere periode">Reis voor langere periode</option>
   <option value="Zomervakantie">Zomervakantie</option>
@@ -97,18 +107,25 @@ messages: [
 </select>
 
 <!-- Dropdown voor het gebied -->
-<label for="gebied-select">Naar welk gebied zou je willen gaan?</label>
-<select id="gebied-select">
-  <option value="Europa">Europa</option>
-  <option value="Azië">Azië</option>
-  <option value="Afrika">Afrika</option>
-  <option value="Noord-Amerika">Noord-Amerika</option>
-  <option value="Zuid-Amerika">Zuid-Amerika</option>
-  <option value="Midden-Oosten">Midden-Oosten</option>
-  <option value="Australië">Australië</option>
-  <option value="Oceanië">Oceanië</option>
-  <option value="Latijns-Amerika">Latijns-Amerika</option>
-</select>
+<div class="image-selection">
+  <label for="gebied1">
+    <input type="radio" name="gebied-select" id="gebied1" value="Europa">
+    <img src="images/europe.png" alt="Europa">
+  </label>
+  
+  <label for="gebied2">
+    <input type="radio" name="gebied-select" id="gebied2" value="Afrika">
+    <img src="images/africa.png" alt="Afrika">
+  </label>
+
+  <label for="gebied3">
+    <input type="radio" name="gebied-select" id="gebied3" value="Azië">
+    <img src="images/asia.png" alt="Azië">
+    
+  </label>
+
+  <!-- Voeg meer labels en inputs toe voor elke afbeelding -->
+</div>
 
 <!-- Tekstveld voor extra voorkeuren -->
 <label for="extra-voorkeuren">Wat vind je verder belangrijk voor je volgende vakantie?</label>
