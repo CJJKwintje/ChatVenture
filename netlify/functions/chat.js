@@ -15,7 +15,7 @@ exports.handler = async function(event) {
 
     // Prepare the payload to send to OpenAI's API
     const data = {
-      model: "gpt-4-1106-preview", // Replace with your desired model
+      model: "gpt-3.5-turbo", // Replace with your desired model
       prompt: prompt,
       max_tokens: 150,
       // Add other parameters as needed
