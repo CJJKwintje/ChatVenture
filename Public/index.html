@@ -35,7 +35,7 @@ async function submitPrompt() {
 messages: [
       {
         role: "system",
-        content: "Gedraag je als een enthousiaste travelagent. De gebruiker gaat 3 vragen beantwoorden, namelijk “Naar wat voor type vakantie ben je op zoek?”, “Naar welk gebied zou je willen gaan?” En “Wat vind je verder belangrijk voor je volgende vakantie?”. Voor de eerste 2 vragen zal je een gepast antwoord krijgen wat de gebruiker kiest in een dropdown menu. De derde vraag zal beantwoord worden in een open tekstveld. Zorg ervoor dat je een waardevol en bondig advies geeft op basis van de 3 antwoorden die je gaat krijgen op deze vragen."
+        content: "Gedraag je als een enthousiaste travelagent. De gebruiker gaat 3 vragen beantwoorden, namelijk “Naar wat voor type vakantie ben je op zoek?”, “Naar welk gebied zou je willen gaan?” En “Wat vind je verder belangrijk voor je volgende vakantie?”. Voor de eerste 2 vragen zal je een gepast antwoord krijgen. De derde vraag zal beantwoord worden in een via vrij tekstveld. Zorg ervoor dat je een waardevol en kort advies geeft op basis van de 3 antwoorden die je gaat krijgen op deze vragen."
       },
       {
         role: "user",
@@ -96,6 +96,7 @@ messages: [
 <div class="container">
 
 <!-- Dropdown voor het type vakantie -->
+<div class="Vakantie-dropdown">
 <label for="type-vakantie-select">Naar wat voor type vakantie ben je op zoek?</label>
 <select id="type-vakantie-select">
   <option value="Geen voorkeur">-</option>
@@ -105,32 +106,37 @@ messages: [
   <option value="Wintersport">Wintersport</option>
   <option value="Dagje weg">Dagje weg</option>
 </select>
+</div>
 
-<!-- Dropdown voor het gebied -->
+<!-- Kies een gebied door het klikken van een plaatje -->
+
 <div class="image-selection">
+  <h3>Naar welk gebied zou je willen gaan?<h3>
   <label for="gebied1">
     <input type="radio" name="gebied-select" id="gebied1" value="Europa">
     <img src="images/europe.png" alt="Europa">
+    <figcaption>Europa</figcaption>
   </label>
   
   <label for="gebied2">
     <input type="radio" name="gebied-select" id="gebied2" value="Afrika">
     <img src="images/africa.png" alt="Afrika">
+    <figcaption>Afrika</figcaption>
   </label>
 
   <label for="gebied3">
     <input type="radio" name="gebied-select" id="gebied3" value="Azië">
     <img src="images/asia.png" alt="Azië">
+    <figcaption>Azië</figcaption>
     
   </label>
-
-  <!-- Voeg meer labels en inputs toe voor elke afbeelding -->
 </div>
 
 <!-- Tekstveld voor extra voorkeuren -->
+<div class="extra-voorkeuren">
 <label for="extra-voorkeuren">Wat vind je verder belangrijk voor je volgende vakantie?</label>
 <textarea id="extra-voorkeuren" rows="4" cols="50"></textarea>
-
+</div>
 <!-- Knop om de gegevens te verzenden -->
 <button onclick="submitPrompt()">Inspireer me!</button>
 

@@ -51,14 +51,23 @@ button:hover {
 }
 
 .container {
-   background-color: #ffffff; /* White background for the container for cleanliness */
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   background-color: #ffffff;
    padding: 50px;
    border-radius: 25px;
-   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   max-width: 800px; /* Stel een maximale breedte in als je wilt */
+   width: 100%; /* Dit zorgt ervoor dat de container breedte aanpast aan de maximale breedte */
+   margin-left: auto;
+   margin-right: auto;
 }
 
-.image-selection {
-  padding: 25px;
+.Vakantie-dropdown {
+  padding-bottom: 25px;
+  display: grid;
 }
 
 .image-selection label {
@@ -71,6 +80,7 @@ button:hover {
   width: 100px;
   height: auto;
   transition: transform 0.3s ease, border-color 0.3s ease;
+  border: 2px solid transparent; /* Standaard transparante rand */
 }
 
 .image-selection input[type="radio"] {
@@ -78,8 +88,21 @@ button:hover {
 }
 
 .image-selection input[type="radio"]:checked + img {
-  transform: scale(1.3);
-  border-color: #008cba;
+  transform: scale(1.1);
+  border-color: #ffb931; /* Deze kleur wordt nu zichtbaar omdat de randdikte al gedefinieerd is */
+}
+
+.image-selection figcaption {
+  text-align: center; /* Centreer de tekst */
+  margin-top: 5px; /* Voeg wat ruimte toe boven de titel */
+  color: #333; /* Kleur van de titel, kan worden aangepast */
+  font-size: 0.6em; /* Kleinere tekstgrootte voor de titel */
+}
+
+.extra-voorkeuren {
+  display: grid;
+  padding-top: 25px;
+  padding-bottom: 50px;
 }
 
 #extra-voorkeuren {
