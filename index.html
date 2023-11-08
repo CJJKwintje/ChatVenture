@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChatVenture</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body, input, button {
+    font-family: 'Roboto', sans-serif;
+  }
+
+  #loader {
+    border: 5px solid #f3f3f3; /* Light grey */
+    border-top: 5px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 2s linear infinite;
+    margin: 20px auto; /* Center the loader */
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* Hide the loader by default */
+  .hidden {
+    display: none;
+  }
+</style>
+<script>
+async function submitPrompt() {
+  // Show the loader and hide the previous response
+  document.getElementById('loader').classList.remove('hidden');
+  document.getElementById('response-output').textContent = '';
+
+  // The endpoint for your Netlify serverless function
+  const apiEndpoint = '/.netlify/functions/chat';
+
+  // Get the selected prompt from the dropdown
+  const promptSelection = document.getElementById('prompt-select').value;
+
+  // Set up the data you want to send, including the prompt
+  const postData = {
+    prompt: promptSelection // Pass only the prompt selection to the Netlify function
+  };
+
+  // Set up the options for the fetch request
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(postData)
+  };
+
+  try {
+    // Make the API request to your Netlify function
+    const response = await fetch(apiEndpoint, requestOptions);
+
+    // Ensure the response is JSON before parsing
+    if (!response.ok) {
+      throw new Error(`Network response was not ok: ${response.statusText}`);
+    }
+    const contentType = response.headers.get('content-type');
+    if (!contentType || !contentType.includes('application/json')) {
+      throw new TypeError("Oops, we haven't got JSON!");
+    }
+
+    const data = await response.json();
+
+    // Check if the response has a completion
+    if (data.choices && data.choices.length > 0) {
+      // Output the completion text to the page
+      document.getElementById('response-output').textContent = data.choices[0].message.content;
+    } else {
+      // Output an error message
+      document.getElementById('response-output').textContent = 'No response from API.';
+    }
+  } catch (error) {
+    // Output an error message
+    document.getElementById('response-output').textContent = error.message;
+  } finally {
+    // Hide the loader
+    document.getElementById('loader').classList.add('hidden');
+  }
+}
+</script>
+</head>
+<body>
+
+<h1>De 5 beste steden om te bezoeken!</h1>
+
+<!-- Dropdown form for the prompt -->
+<label for="prompt-select">Naar welk land wil je op vakantie?</label>
+<select id="prompt-select">
+  <option value="Duitsland">Duitsland</option>
+  <option value="Nederland">Nederland</option>
+  <option value="Verendigde Staten">Verendigde Staten</option>
+</select>
+<button onclick="submitPrompt()">Geef me tips!</button>
+
+<!-- Loader -->
+<div id="loader" class="hidden"></div>
+
+<!-- Area to display the response -->
+<h2>De 5 beste tips voor jou:</h2>
+<div id="response-output" style="white-space: pre-wrap;"></div>
+
+</body>
+</html>
