@@ -15,7 +15,7 @@ exports.handler = async function(event) {
 
     // Prepare the payload to send to OpenAI's API
     const data = {
-      model: "gpt-3.5-turbo", // Make sure to use the correct model for your use case
+      model: "gpt-4-1106-preview", // Make sure to use the correct model for your use case
       messages: messages, // 'messages' should be an array of message objects
     };
 
