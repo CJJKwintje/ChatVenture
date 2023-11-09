@@ -8,13 +8,11 @@
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.7.4/lottie.min.js" integrity="sha512-m0RQU4SBx0p/bLwRiI4fJBGRafVLZ4s86wRe1+OAx5EXbcWiS/X1jvYdJQRD8jOoIVl+WTyVeMawUWVCh1O8+Q==" crossorigin="anonymous"></script>
 </head>
-
-</script>
-</head>
 <body>
 
 <h1>Waar gaat jouw volgende vakantie naartoe?</h1>
 <div class="container">
+<div id="content-container">
 <div id="input-fields">
 <div class="locatie">
 <label for="vertreklocatie">Wat is je vertreklocatie?</label>
@@ -65,6 +63,7 @@
 <!-- Knop om de gegevens te verzenden -->
 <button onclick="submitPrompt()">Inspireer me!</button>
 </div>
+</div>
 <!-- Loader -->
 <div id="loader" class="hidden"></div>
 
@@ -72,19 +71,18 @@
 <!-- Verborgen gebied voor de response, die later zichtbaar gemaakt zal worden -->
 <h2 id="response-title" class="hidden">Jouw reisadvies op maat:</h2>
 <div id="response-output" class="hidden" style="white-space: pre-wrap;"></div>
-<button id="new-search-button" class="hidden" onclick="startNewSearch()">Terug</button>
 </div>
 
 
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-    loaderAnimation = lottie.loadAnimation({
-      container: document.getElementById('loader'), // het ID van de div in je HTML voor de Lottie
-      renderer: 'svg',
-      loop: true,
-      autoplay: false, // We beginnen niet met automatisch afspelen
-      path: '/assets/loader.json' // het pad naar je Lottie JSON-bestand
+  loaderAnimation = lottie.loadAnimation({
+    container: document.getElementById('loader'), // het ID van de div in je HTML voor de Lottie
+    renderer: 'svg',
+    loop: true,
+    autoplay: false, // We beginnen niet met automatisch afspelen
+    path: '/assets/loader.json' // het pad naar je Lottie JSON-bestand
     });
   });
   function fetchWithTimeout(resource, options, timeout = 8000) {
@@ -102,19 +100,14 @@
       throw error;
     });
   }
-  function startNewSearch() {
-  loaderAnimation.stop(); // Stop de Lottie-animatie
-  document.getElementById('response-output').classList.add('hidden');
-  document.getElementById('response-title').classList.add('hidden');
-  document.getElementById('new-search-button').classList.add('hidden');
-  document.getElementById('input-fields').classList.remove('hidden');
-
-}
+ 
 async function submitPrompt() {
   // Toon de loader en verberg de invoervelden, response titel en vorige response
-  loaderAnimation.goToAndPlay(0, true); // Start de Lottie-animatie
+  document.getElementById('content-container').style.display = 'none';
+  // Toon de loader
+  document.getElementById('loader').classList.remove('hidden');
+  loaderAnimation.goToAndPlay(0, true);
   document.getElementById('input-fields').classList.add('hidden');
-  document.getElementById('loader').classList.remove('hidden'); // Verwijder de verborgen klasse om de loader te tonen
   document.getElementById('response-title').classList.add('hidden');
   document.getElementById('response-output').classList.add('hidden');
   document.getElementById('response-output').textContent = '';
@@ -193,10 +186,14 @@ const response = await fetchWithTimeout(apiEndpoint, requestOptions, 20000); // 
     document.getElementById('response-output').classList.remove('hidden');
     document.getElementById('response-output').textContent = error.message;
   } finally {
-    // Hide the loader once the request is completed
-    document.getElementById('loader').classList.add('hidden'); // Voeg de verborgen klasse weer toe om de loader te verbergen
-  }
+  // Stop de loader animatie
+  loaderAnimation.stop();
+
+  // Verberg de loader en toon de inhoud
+  document.getElementById('loader').classList.add('hidden');
+  document.getElementById('content-container').style.display = 'block';
 }
+
 </script>
 </body>
 
