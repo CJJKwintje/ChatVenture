@@ -2,17 +2,17 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ChatVenture - Inspiratie voor jouw volgende avontuur!</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.7.4/lottie.min.js" integrity="sha512-m0RQU4SBx0p/bLwRiI4fJBGRafVLZ4s86wRe1+OAx5EXbcWiS/X1jvYdJQRD8jOoIVl+WTyVeMawUWVCh1O8+Q==" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChatVenture - Inspiratie voor jouw volgende avontuur!</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.7.4/lottie.min.js" integrity="sha512-m0RQU4SBx0p/bLwRiI4fJBGRafVLZ4s86wRe1+OAx5EXbcWiS/X1jvYdJQRD8jOoIVl+WTyVeMawUWVCh1O8+Q==" crossorigin="anonymous"></script>
 </head>
 <body>
 
 <h1>Waar gaat jouw volgende vakantie naartoe?</h1>
 <div class="container">
-<div id="content-container">
+  <div id="content-container">
 <div id="input-fields">
 <div class="locatie">
 <label for="vertreklocatie">Wat is je vertreklocatie?</label>
@@ -60,141 +60,117 @@
 <label for="textarea-voorkeuren">Wat vind je verder belangrijk voor je volgende vakantie?</label>
 <textarea id="textarea-voorkeuren" name="extra-voorkeuren" rows="4" cols="50" placeholder="Bijv. Ik neem graag mijn hond mee op vakantie"></textarea>
 </div>
-<!-- Knop om de gegevens te verzenden -->
-<button onclick="submitPrompt()">Inspireer me!</button>
+  </div>
+  <button id="inspire-me-btn">Inspireer me!</button>
+  <div id="loader" class="hidden"></div>
+  <h2 id="response-title" class="hidden">Jouw reisadvies op maat:</h2>
+  <div id="response-output" class="hidden" style="white-space: pre-wrap;"></div>
 </div>
-</div>
-<!-- Loader -->
-<div id="loader" class="hidden"></div>
-
-<!-- Gebied om de respons weer te geven -->
-<!-- Verborgen gebied voor de response, die later zichtbaar gemaakt zal worden -->
-<h2 id="response-title" class="hidden">Jouw reisadvies op maat:</h2>
-<div id="response-output" class="hidden" style="white-space: pre-wrap;"></div>
-</div>
-
-
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+let loaderAnimation;
+
+function setupLoaderAnimation() {
   loaderAnimation = lottie.loadAnimation({
-    container: document.getElementById('loader'), // het ID van de div in je HTML voor de Lottie
+    container: document.getElementById('loader'),
     renderer: 'svg',
     loop: true,
-    autoplay: false, // We beginnen niet met automatisch afspelen
-    path: '/assets/loader.json' // het pad naar je Lottie JSON-bestand
-    });
+    autoplay: false,
+    path: '/assets/loader.json'
   });
-  function fetchWithTimeout(resource, options, timeout = 8000) {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), timeout); // Stel een default timeout in
-
-    return fetch(resource, {
-      ...options,
-      signal: controller.signal
-    }).then(response => {
-      clearTimeout(timeoutId);
-      return response;
-    }).catch(error => {
-      clearTimeout(timeoutId);
-      throw error;
-    });
-  }
- 
-async function submitPrompt() {
-  // Toon de loader en verberg de invoervelden, response titel en vorige response
-  document.getElementById('content-container').style.display = 'none';
-  // Toon de loader
-  document.getElementById('loader').classList.remove('hidden');
-  loaderAnimation.goToAndPlay(0, true);
-  document.getElementById('input-fields').classList.add('hidden');
-  document.getElementById('response-title').classList.add('hidden');
-  document.getElementById('response-output').classList.add('hidden');
-  document.getElementById('response-output').textContent = '';
-
-  // The endpoint for your Netlify serverless function
-  const apiEndpoint = '/.netlify/functions/chat';
-
-  // Vertreklocatie
-  const vertreklocatie = document.getElementById('vertreklocatie').value;
-
-  // Type vakantie
-  const typeVakantie = document.getElementById('type-vakantie-select').value;
-  
-   // Voorkeursgebied
-  const selectedRadio = document.querySelector('input[name="gebied-select"]:checked');
-  
-  // Check of er een radio-button is geselecteerd
-  if (!selectedRadio) {
-    console.error('Geen gebied geselecteerd');
-    return; // Stop de functie als er niets is geselecteerd
-  }
-  const selectedImageValue = selectedRadio.value;
-  const extraVoorkeuren = document.getElementById('textarea-voorkeuren').value;
-
-  // Set up the data to send, including the messages array
-  const postData = {
-messages: [
-      {
-        role: "system",
-        content: `Gedraag je als een enthousiaste travelagent. De gebruiker gaat 4 vragen beantwoorden, namelijk "wat is je vertrek locatie?" "Naar wat voor type vakantie ben je op zoek?", "Naar welk gebied zou je willen gaan?" En "Wat vind je verder belangrijk voor je volgende vakantie?". Zorg ervoor dat je een waardevol en heel kort advies geeft op basis van de 4 antwoorden die je gaat formuleren op deze vragen.`
-      },
-      {
-        role: "user",
-        content: `Vertreklocatie: ${vertreklocatie}, Type vakantie: ${typeVakantie}, Gebied: ${selectedImageValue}, Belangrijk: ${extraVoorkeuren}`
-
-      }
-    ]
-  };
-
-  // Set up the options for the fetch request
-  const requestOptions = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(postData)
-  };
-
-   try {
-  // Make the API request to your Netlify function with a timeout
-const response = await fetchWithTimeout(apiEndpoint, requestOptions, 20000); // bijvoorbeeld een 20 seconden timeout
-
-  // Hieronder volgt je bestaande code om de response te verwerken
-  if (!response.ok) {
-    throw new Error(`Network response was not ok: ${response.statusText}`);
-    }
-    const contentType = response.headers.get('content-type');
-    if (!contentType || !contentType.includes('application/json')) {
-      throw new TypeError("Oops, we haven't got JSON!");
-    }
-
-    const data = await response.json();
-
-    // Check if the response from the Netlify function (OpenAI API) has a 'choices' array
-    if (data.choices && data.choices.length > 0) {
-      // Toon de response titel en output
-      document.getElementById('response-title').classList.remove('hidden');
-      document.getElementById('response-output').classList.remove('hidden');
-      document.getElementById('response-output').textContent = data.choices[0].message.content;
-      document.getElementById('new-search-button').classList.remove('hidden');
-    } else {
-      // Als er geen 'choices' array is, toon dan een foutmelding
-      document.getElementById('response-output').classList.remove('hidden');
-      document.getElementById('response-output').textContent = 'No response from API.';
-    }
-  } catch (error) {
-    // If there is an error, display it in the response output
-    document.getElementById('response-output').classList.remove('hidden');
-    document.getElementById('response-output').textContent = error.message;
-  } finally {
-  // Stop de loader animatie
-  loaderAnimation.stop();
-
-  // Verberg de loader en toon de inhoud
-  document.getElementById('loader').classList.add('hidden');
-  document.getElementById('content-container').style.display = 'block';
 }
 
+function fetchWithTimeout(resource, options, timeout = 8000) {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeout);
+
+  return fetch(resource, {
+    ...options,
+    signal: controller.signal
+  })
+  .then(response => {
+    clearTimeout(id);
+    return response;
+  })
+  .catch(error => {
+    clearTimeout(id);
+    throw error;
+  });
+}
+
+async function submitPrompt() {
+  // Your submitPrompt function logic goes here
+  // ... rest of submitPrompt code
+  document.getElementById('content-container').style.display = 'none';
+    document.getElementById('loader').style.display = 'block';
+    loaderAnimation.goToAndPlay(0, true);
+
+    // Verkrijg de input waarden
+    const vertreklocatie = document.getElementById('vertreklocatie').value;
+    const typeVakantie = document.getElementById('type-vakantie-select').value;
+    const selectedRadio = document.querySelector('input[name="gebied-select"]:checked');
+    if (!selectedRadio) {
+      console.error('Geen gebied geselecteerd');
+      return;
+    }
+    const gebied = selectedRadio.value;
+    const extraVoorkeuren = document.getElementById('textarea-voorkeuren').value;
+
+    // Bereid de data voor het verzoek voor
+    const postData = {
+      messages: [
+        {
+          role: "system",
+          content: `Gedraag je als een enthousiaste travelagent. De gebruiker gaat vragen beantwoorden over hun vertreklocatie, type vakantie, voorkeursgebied en extra voorkeuren. Geef een waardevol en kort advies op basis van deze antwoorden.`
+        },
+        {
+          role: "user",
+          content: `Vertreklocatie: ${vertreklocatie}, Type vakantie: ${typeVakantie}, Gebied: ${gebied}, Belangrijk: ${extraVoorkeuren}`
+        }
+      ]
+    };
+
+    // Verstuur het verzoek naar de server
+    try {
+      const response = await fetchWithTimeout('/.netlify/functions/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(postData)
+      }, 20000); // timeout na 20 seconden
+
+      if (!response.ok) {
+        throw new Error(`Network response was not ok: ${response.statusText}`);
+      }
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new TypeError("Oops, we haven't got JSON!");
+      }
+
+      const data = await response.json();
+      if (data.choices && data.choices.length > 0) {
+        // Toon de response titel en output
+        document.getElementById('response-title').classList.remove('hidden');
+        document.getElementById('response-output').classList.remove('hidden');
+        document.getElementById('response-output').textContent = data.choices[0].message.content;
+        document.getElementById('new-search-button').classList.remove('hidden');
+      } else {
+        document.getElementById('response-output').textContent = 'No response from API.';
+      }
+    } catch (error) {
+      document.getElementById('response-output').textContent = error.message;
+    } finally {
+      // Stop de loader en toon de content weer
+      loaderAnimation.stop();
+      document.getElementById('loader').style.display = 'none';
+      document.getElementById('content-container').style.display = 'block';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  setupLoaderAnimation();
+
+  const inspireMeButton = document.getElementById('inspire-me-btn');
+  inspireMeButton.addEventListener('click', submitPrompt);
+});
 </script>
 </body>
-
 </html>
