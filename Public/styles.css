@@ -1,11 +1,6 @@
 
 /* styles.css */
-@font-face {
-  font-family: 'Fredoka';
-  src: url('font/fredoka/Fredoka-VariableFont_wdth,wght.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400&display=swap');
 
 body {
   background-color: #f0f0f0; /* Soft grey background for a modern look */
@@ -22,7 +17,8 @@ body {
 
 h1 {
   color: #333;
-  font-family: 'Fredoka';
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 400;
   margin: 1em 0;
   font-size: 2.5em; /* Adjusted for better visual hierarchy */
 }
@@ -167,21 +163,12 @@ button:hover {
   background-color: white;
   color: #333;
   padding: 20px;
-  margin-top: 20px;
   border-radius: 5px;
   width: 100%;
   max-width: 600px;
   box-sizing: border-box;
-}
-
-#new-search-button {
-  margin-top: 20px; /* dezelfde margin als je loader voor consistentie */
-  padding: 10px 20px;
-  border: 2px solid #008cba;
-  background-color: #008cba;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
+  font-size: 1.2em;
+  line-height: 1.5em;
 }
 
 select, button {
@@ -222,7 +209,7 @@ select, button {
 }
 
   .container {
-    padding: 20px;
+    padding: 25px;
   }
 
   #response-output {
