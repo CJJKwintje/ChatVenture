@@ -1,111 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ChatVenture - Inspiratie voor jouw volgende avontuur!</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.7.4/lottie.min.js" integrity="sha512-m0RQU4SBx0p/bLwRiI4fJBGRafVLZ4s86wRe1+OAx5EXbcWiS/X1jvYdJQRD8jOoIVl+WTyVeMawUWVCh1O8+Q==" crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChatVenture - Inspiratie voor jouw volgende avontuur!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.7.4/lottie.min.js" integrity="sha512-m0RQU4SBx0p/bLwRiI4fJBGRafVLZ4s86wRe1+OAx5EXbcWiS/X1jvYdJQRD8jOoIVl+WTyVeMawUWVCh1O8+Q==" crossorigin="anonymous"></script>
 </head>
 <body>
 
 <h1>Waar gaat jouw volgende vakantie naartoe?</h1>
 <div class="container">
   <div id="content-container">
-<div id="input-fields">
-<div class="locatie">
-<label for="vertreklocatie">Wat is je vertreklocatie?</label>
-  <input type="text" id="vertreklocatie" name="locatie" placeholder="Bijv. Amsterdam">
-  </div> 
-<!-- Dropdown voor het type vakantie -->
-<div class="Vakantie-dropdown">
-<label for="type-vakantie-select">Naar wat voor type vakantie ben je op zoek?</label>
-<select id="type-vakantie-select">
-  <option value="Geen voorkeur">-</option>
-  <option value="Stedentrip">Stedentrip</option>
-  <option value="Reis voor langere periode">Reis voor langere periode</option>
-  <option value="Zomervakantie">Zomervakantie</option>
-  <option value="Wintersport">Wintersport</option>
-  <option value="Dagje weg">Dagje weg</option>
-</select>
-</div>
+    <div id="input-fields">
+      <div class="locatie">
+        <label for="vertreklocatie">Wat is je vertreklocatie?</label>
+        <input type="text" id="vertreklocatie" name="locatie" placeholder="Bijv. Amsterdam">
+      </div> 
 
-<!-- Kies een gebied door het klikken van een plaatje -->
+      <div class="Vakantie-dropdown">
+        <label for="type-vakantie-select">Naar wat voor type vakantie ben je op zoek?</label>
+        <select id="type-vakantie-select">
+          <option value="">Geen voorkeur</option>
+          <option value="Stedentrip">Stedentrip</option>
+          <option value="Reis voor langere periode">Reis voor langere periode</option>
+          <option value="Zomervakantie">Zomervakantie</option>
+          <option value="Wintersport">Wintersport</option>
+          <option value="Dagje weg">Dagje weg</option>
+        </select>
+      </div>
 
-<div class="image-selection">
-  <h3>Naar welk gebied zou je willen gaan?</h3>
-  <label for="gebied1">
-    <input type="radio" name="gebied-select" id="gebied1" value="Europa">
-    <img src="images/europe.png" alt="Europa">
-    <figcaption>Europa</figcaption>
-  </label>
-  
-  <label for="gebied2">
-    <input type="radio" name="gebied-select" id="gebied2" value="Afrika">
-    <img src="images/africa.png" alt="Afrika">
-    <figcaption>Afrika</figcaption>
-  </label>
+      <div class="image-selection">
+        <h3>Naar welk gebied zou je willen gaan?</h3>
+        <label for="gebied1">
+          <input type="radio" name="gebied-select" id="gebied1" value="Europa">
+          <img src="images/europe.png" alt="Europa">
+          <figcaption>Europa</figcaption>
+        </label>
 
-  <label for="gebied3">
-    <input type="radio" name="gebied-select" id="gebied3" value="Azië">
-    <img src="images/asia.png" alt="Azië">
-    <figcaption>Azië</figcaption>
-    
-  </label>
-</div>
+        <label for="gebied2">
+          <input type="radio" name="gebied-select" id="gebied2" value="Afrika">
+          <img src="images/africa.png" alt="Afrika">
+          <figcaption>Afrika</figcaption>
+        </label>
 
-<!-- Tekstveld voor extra voorkeuren -->
-<div class="extra-voorkeuren">
-<label for="textarea-voorkeuren">Wat vind je verder belangrijk voor je volgende vakantie?</label>
-<textarea id="textarea-voorkeuren" name="extra-voorkeuren" rows="4" cols="50" placeholder="Bijv. Ik neem graag mijn hond mee op vakantie"></textarea>
-</div>
+        <label for="gebied3">
+          <input type="radio" name="gebied-select" id="gebied3" value="Azië">
+          <img src="images/asia.png" alt="Azië">
+          <figcaption>Azië</figcaption>
+        </label>
+      </div>
+
+      <div class="extra-voorkeuren">
+        <label for="textarea-voorkeuren">Wat vind je verder belangrijk voor je volgende vakantie?</label>
+        <textarea id="textarea-voorkeuren" name="extra-voorkeuren" rows="4" cols="50" placeholder="Bijv. Ik neem graag mijn hond mee op vakantie"></textarea>
+      </div>
+
+      <button id="inspire-me-btn">Inspireer me!</button>
+    </div>
   </div>
-  <button id="inspire-me-btn">Inspireer me!</button>
+
   <div id="loader" class="hidden"></div>
   <h2 id="response-title" class="hidden">Jouw reisadvies op maat:</h2>
   <div id="response-output" class="hidden" style="white-space: pre-wrap;"></div>
 </div>
 
 <script>
-let loaderAnimation;
+  let loaderAnimation;
 
-function setupLoaderAnimation() {
-  loaderAnimation = lottie.loadAnimation({
-    container: document.getElementById('loader'),
-    renderer: 'svg',
-    loop: true,
-    autoplay: false,
-    path: '/assets/loader.json'
-  });
-}
+  function setupLoaderAnimation() {
+    loaderAnimation = lottie.loadAnimation({
+      container: document.getElementById('loader'),
+      renderer: 'svg',
+      loop: true,
+      autoplay: false,
+      path: '/assets/loader.json'
+    });
+  }
 
-function fetchWithTimeout(resource, options, timeout = 8000) {
-  const controller = new AbortController();
-  const id = setTimeout(() => controller.abort(), timeout);
+  function fetchWithTimeout(resource, options, timeout = 8000) {
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeout);
 
-  return fetch(resource, {
-    ...options,
-    signal: controller.signal
-  })
-  .then(response => {
-    clearTimeout(id);
-    return response;
-  })
-  .catch(error => {
-    clearTimeout(id);
-    throw error;
-  });
-}
+    return fetch(resource, {
+      ...options,
+      signal: controller.signal
+    })
+    .then(response => {
+      clearTimeout(id);
+      return response;
+    })
+    .catch(error => {
+      clearTimeout(id);
+      throw error;
+    });
+  }
 
-async function submitPrompt() {
-  // Your submitPrompt function logic goes here
-  // ... rest of submitPrompt code
-  document.getElementById('content-container').style.display = 'none';
-    document.getElementById('loader').style.display = 'block';
+  async function submitPrompt() {
+    document.getElementById('content-container').style.display = 'none';
+    document.getElementById('loader').classList.remove('hidden');
     loaderAnimation.goToAndPlay(0, true);
 
-    // Verkrijg de input waarden
     const vertreklocatie = document.getElementById('vertreklocatie').value;
     const typeVakantie = document.getElementById('type-vakantie-select').value;
     const selectedRadio = document.querySelector('input[name="gebied-select"]:checked');
@@ -116,7 +112,6 @@ async function submitPrompt() {
     const gebied = selectedRadio.value;
     const extraVoorkeuren = document.getElementById('textarea-voorkeuren').value;
 
-    // Bereid de data voor het verzoek voor
     const postData = {
       messages: [
         {
@@ -130,17 +125,17 @@ async function submitPrompt() {
       ]
     };
 
-    // Verstuur het verzoek naar de server
     try {
       const response = await fetchWithTimeout('/.netlify/functions/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(postData)
-      }, 20000); // timeout na 20 seconden
+      }, 20000);
 
       if (!response.ok) {
         throw new Error(`Network response was not ok: ${response.statusText}`);
       }
+
       const contentType = response.headers.get('content-type');
       if (!contentType || !contentType.includes('application/json')) {
         throw new TypeError("Oops, we haven't got JSON!");
@@ -148,29 +143,27 @@ async function submitPrompt() {
 
       const data = await response.json();
       if (data.choices && data.choices.length > 0) {
-        // Toon de response titel en output
         document.getElementById('response-title').classList.remove('hidden');
         document.getElementById('response-output').classList.remove('hidden');
         document.getElementById('response-output').textContent = data.choices[0].message.content;
-        document.getElementById('new-search-button').classList.remove('hidden');
       } else {
         document.getElementById('response-output').textContent = 'No response from API.';
       }
     } catch (error) {
       document.getElementById('response-output').textContent = error.message;
     } finally {
-      // Stop de loader en toon de content weer
       loaderAnimation.stop();
-      document.getElementById('loader').style.display = 'none';
+      document.getElementById('loader').classList.add('hidden');
       document.getElementById('content-container').style.display = 'block';
-}
+    }
+  }
 
-document.addEventListener('DOMContentLoaded', () => {
-  setupLoaderAnimation();
+  document.addEventListener('DOMContentLoaded', () => {
+    setupLoaderAnimation();
 
-  const inspireMeButton = document.getElementById('inspire-me-btn');
-  inspireMeButton.addEventListener('click', submitPrompt);
-});
+    const inspireMeButton = document.getElementById('inspire-me-btn');
+    inspireMeButton.addEventListener('click', submitPrompt);
+  });
 </script>
 </body>
 </html>
