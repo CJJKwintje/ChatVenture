@@ -1,5 +1,4 @@
-<script>
-  let loaderAnimation;
+let loaderAnimation;
 
   function setupLoaderAnimation() {
     loaderAnimation = lottie.loadAnimation({
@@ -99,4 +98,3 @@
     const inspireMeButton = document.getElementById('inspire-me-btn');
     inspireMeButton.addEventListener('click', submitPrompt);
   });
-</script>
