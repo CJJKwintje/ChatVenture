@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ChatVenture - Inspiratie voor jouw volgende vakantie</title>
+<title>ChatVenture - Inspiratie voor jouw volgende avontuur!</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <script>
@@ -12,6 +12,22 @@
   document.getElementById('response-title').classList.add('hidden');
   document.getElementById('new-search-button').classList.add('hidden');
   document.getElementById('input-fields').classList.remove('hidden');
+
+  function fetchWithTimeout(resource, options) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), options.timeout || 8000); // Stel een default timeout in, of gebruik de waarde uit options
+
+  return fetch(resource, {
+    ...options,
+    signal: controller.signal
+  }).then(response => {
+    clearTimeout(timeoutId);
+    return response;
+  }).catch(error => {
+    clearTimeout(timeoutId);
+    throw error;
+  });
+}
 }
 async function submitPrompt() {
   // Toon de loader en verberg de invoervelden, response titel en vorige response
@@ -63,13 +79,13 @@ messages: [
     body: JSON.stringify(postData)
   };
 
-  try {
-    // Make the API request to your Netlify function
-    const response = await fetch(apiEndpoint, requestOptions);
+   try {
+  // Make the API request to your Netlify function with a timeout
+  const response = await fetchWithTimeout(apiEndpoint, requestOptions, 20000); // 20 seconden timeout
 
-    // Ensure the response is JSON before parsing
-    if (!response.ok) {
-      throw new Error(`Network response was not ok: ${response.statusText}`);
+  // Hieronder volgt je bestaande code om de response te verwerken
+  if (!response.ok) {
+    throw new Error(`Network response was not ok: ${response.statusText}`);
     }
     const contentType = response.headers.get('content-type');
     if (!contentType || !contentType.includes('application/json')) {
