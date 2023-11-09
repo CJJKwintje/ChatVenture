@@ -25,9 +25,13 @@ async function submitPrompt() {
   // The endpoint for your Netlify serverless function
   const apiEndpoint = '/.netlify/functions/chat';
 
-  // Collect user responses from the dropdowns and text area
+  // Vertreklocatie
+  const vertreklocatie = document.getElementById('vertreklocatie').value;
+
+  // Type vakantie
   const typeVakantie = document.getElementById('type-vakantie-select').value;
   
+   // Voorkeursgebied
   const selectedRadio = document.querySelector('input[name="gebied-select"]:checked');
   
   // Check of er een radio-button is geselecteerd
@@ -36,7 +40,7 @@ async function submitPrompt() {
     return; // Stop de functie als er niets is geselecteerd
   }
   const selectedImageValue = selectedRadio.value;
-  const extraVoorkeuren = document.getElementById('extra-voorkeuren').value;
+  const extraVoorkeuren = document.getElementById('textarea-voorkeuren').value;
 
   // Set up the data to send, including the messages array
   const postData = {
@@ -47,7 +51,7 @@ messages: [
       },
       {
         role: "user",
-        content: `Type vakantie: ${typeVakantie}, Gebied: ${selectedImageValue}, Belangrijk: ${extraVoorkeuren}`
+        content: `Vertreklocatie: ${vertreklocatie}, Type vakantie: ${typeVakantie}, Gebied: ${selectedImageValue}, Belangrijk: ${extraVoorkeuren}`
 
       }
     ]
@@ -103,6 +107,10 @@ messages: [
 <h1>Waar gaat jouw volgende vakantie naartoe?</h1>
 <div class="container">
 <div id="input-fields">
+<div class="locatie">
+<label for="vertreklocatie">Wat is je vertreklocatie?</label>
+  <input type="text" id="vertreklocatie" name="locatie" placeholder="Bijv. Amsterdam">
+  </div> 
 <!-- Dropdown voor het type vakantie -->
 <div class="Vakantie-dropdown">
 <label for="type-vakantie-select">Naar wat voor type vakantie ben je op zoek?</label>
@@ -119,7 +127,7 @@ messages: [
 <!-- Kies een gebied door het klikken van een plaatje -->
 
 <div class="image-selection">
-  <h3>Naar welk gebied zou je willen gaan?<h3>
+  <h3>Naar welk gebied zou je willen gaan?</h3>
   <label for="gebied1">
     <input type="radio" name="gebied-select" id="gebied1" value="Europa">
     <img src="images/europe.png" alt="Europa">
@@ -142,8 +150,8 @@ messages: [
 
 <!-- Tekstveld voor extra voorkeuren -->
 <div class="extra-voorkeuren">
-<label for="extra-voorkeuren">Wat vind je verder belangrijk voor je volgende vakantie?</label>
-<textarea id="extra-voorkeuren" rows="4" cols="50"></textarea>
+<label for="textarea-voorkeuren">Wat vind je verder belangrijk voor je volgende vakantie?</label>
+<textarea id="textarea-voorkeuren" name="extra-voorkeuren" rows="4" cols="50" placeholder="Bijv. Ik neem graag mijn hond mee op vakantie"></textarea>
 </div>
 <!-- Knop om de gegevens te verzenden -->
 <button onclick="submitPrompt()">Inspireer me!</button>
@@ -155,7 +163,7 @@ messages: [
 <!-- Verborgen gebied voor de response, die later zichtbaar gemaakt zal worden -->
 <h2 id="response-title" class="hidden">Jouw reisadvies op maat:</h2>
 <div id="response-output" class="hidden" style="white-space: pre-wrap;"></div>
-<button id="new-search-button" class="hidden" onclick="startNewSearch()">Nieuwe zoekopdracht</button>
+<button id="new-search-button" class="hidden" onclick="startNewSearch()">Terug</button>
 </div>
 
 </body>

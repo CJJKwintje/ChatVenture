@@ -35,20 +35,21 @@ label, select, button {
 select, button {
   margin: 10px 0;
   padding: 10px 20px;
-  border: 2px solid #008cba; /* Stylish border for inputs */
   border-radius: 5px;
+  border: 1px solid #b6b6b6;
 }
 
 button {
-  background-color: #008cba; /* Refreshing blue for buttons */
+  background-color: #ffb931; /* Refreshing blue for buttons */
   color: white;
   cursor: pointer;
   transition: background-color 0.3s; /* Smooth transition for hover effect */
 }
 
 button:hover {
-  background-color: #006494; /* Darker blue on hover for interactivity */
+  background-color: #b79700; /* Darker blue on hover for interactivity */
 }
+
 
 .container {
    display: flex;
@@ -60,9 +61,27 @@ button:hover {
    border-radius: 25px;
    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
    max-width: 800px; /* Stel een maximale breedte in als je wilt */
-   width: 100%; /* Dit zorgt ervoor dat de container breedte aanpast aan de maximale breedte */
    margin-left: auto;
    margin-right: auto;
+}
+#input-fields {
+  display: grid;
+}
+
+.locatie {
+  display: inline-grid;
+  padding-bottom: 25px;
+}
+
+.locatie input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #b6b6b6;
+}
+
+.locatie input::placeholder {
+  color: #888;
+  font-style: italic;
 }
 
 .Vakantie-dropdown {
@@ -71,9 +90,11 @@ button:hover {
 }
 
 .image-selection label {
-  display: inline-block;
+  display: inline-grid;
+  justify-content: center;
   margin: 5px;
   cursor: pointer;
+
 }
 
 .image-selection label img {
@@ -105,8 +126,17 @@ button:hover {
   padding-bottom: 50px;
 }
 
-#extra-voorkeuren {
+.extra-voorkeuren textarea::placeholder {
+  color: #888;
+  font-style: italic;
+}
+
+#textarea-voorkeuren {
   max-width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #b6b6b6;
 }
 
 #response-output {
@@ -143,7 +173,9 @@ select, button {
 
   h1 {
     font-size: 2em;
-    margin: 0.2em 0;
+    margin: 10px;
+    line-height: 1.3;
+
   }
 
   label, select, button {
@@ -153,11 +185,19 @@ select, button {
   select, button {
     padding: 8px 15px;
   }
+
 .image-selection {
   padding: 25px;
   display: grid;
 
 }
+.image-selection figcaption {
+  text-align: center; /* Centreer de tekst */
+  margin-top: 5px; /* Voeg wat ruimte toe boven de titel */
+  color: #333; /* Kleur van de titel, kan worden aangepast */
+  font-size: 0.6em; /* Kleinere tekstgrootte voor de titel */
+}
+
   .container {
     padding: 20px;
   }
