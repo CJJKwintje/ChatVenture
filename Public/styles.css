@@ -27,6 +27,12 @@ h1 {
   font-size: 2.5em; /* Adjusted for better visual hierarchy */
 }
 
+h3 {
+  font-size: 1.2em;
+  margin: 0px;
+  margin-bottom: 10px;
+}
+
 label, select, button {
   font-size: 1.2em;
   display: block;
@@ -70,7 +76,7 @@ button:hover {
 
 .locatie {
   display: inline-grid;
-  padding-bottom: 25px;
+  padding-bottom: 35px;
 }
 
 .locatie input {
@@ -87,7 +93,7 @@ button:hover {
 }
 
 .Vakantie-dropdown {
-  padding-bottom: 25px;
+  padding-bottom: 35px;
   display: grid;
  }
 
@@ -98,6 +104,10 @@ button:hover {
    border-radius: 5px;
   border: 1px solid #eee;
 
+}
+
+.image-selection {
+  margin-bottom: 35px;
 }
 
 .image-selection label {
@@ -201,8 +211,7 @@ select, button {
   }
 
 .image-selection {
-  padding: 25px;
-  display: grid;
+  display: inline;
 
 }
 .image-selection figcaption {
