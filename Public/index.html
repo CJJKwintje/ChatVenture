@@ -13,10 +13,9 @@
   document.getElementById('new-search-button').classList.add('hidden');
   document.getElementById('input-fields').classList.remove('hidden');
 }
-
 async function submitPrompt() {
-  // Show the loader and hide the previous response and response title
-  document.getElementById('input-fields').classList.add('hidden'); // Zorg ervoor dat er een container met deze ID is
+  // Toon de loader en verberg de invoervelden, response titel en vorige response
+  document.getElementById('input-fields').classList.add('hidden');
   document.getElementById('loader').classList.remove('hidden');
   document.getElementById('response-title').classList.add('hidden');
   document.getElementById('response-output').classList.add('hidden');
@@ -47,7 +46,7 @@ async function submitPrompt() {
 messages: [
       {
         role: "system",
-        content: "Gedraag je als een enthousiaste travelagent. De gebruiker gaat 3 vragen beantwoorden, namelijk “Naar wat voor type vakantie ben je op zoek?”, “Naar welk gebied zou je willen gaan?” En “Wat vind je verder belangrijk voor je volgende vakantie?”. Voor de eerste 2 vragen zal je een gepast antwoord krijgen. De derde vraag zal beantwoord worden in een via vrij tekstveld. Zorg ervoor dat je een waardevol en kort advies geeft op basis van de 3 antwoorden die je gaat krijgen op deze vragen."
+        content: `Gedraag je als een enthousiaste travelagent. De gebruiker gaat 4 vragen beantwoorden, namelijk "wat is je vertrek locatie?" "Naar wat voor type vakantie ben je op zoek?", "Naar welk gebied zou je willen gaan?" En "Wat vind je verder belangrijk voor je volgende vakantie?". Zorg ervoor dat je een waardevol en heel kort advies geeft op basis van de 4 antwoorden die je gaat formuleren op deze vragen.`
       },
       {
         role: "user",
@@ -81,13 +80,13 @@ messages: [
 
     // Check if the response from the Netlify function (OpenAI API) has a 'choices' array
     if (data.choices && data.choices.length > 0) {
-      // Remove the 'hidden' class to display the response title and output
+      // Toon de response titel en output
       document.getElementById('response-title').classList.remove('hidden');
       document.getElementById('response-output').classList.remove('hidden');
       document.getElementById('response-output').textContent = data.choices[0].message.content;
-      document.getElementById('new-search-button').classList.remove('hidden'); // Laat de knop zien
+      document.getElementById('new-search-button').classList.remove('hidden');
     } else {
-      // If there is no 'choices' array, display an error message
+      // Als er geen 'choices' array is, toon dan een foutmelding
       document.getElementById('response-output').classList.remove('hidden');
       document.getElementById('response-output').textContent = 'No response from API.';
     }
