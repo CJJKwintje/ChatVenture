@@ -146,6 +146,9 @@
         document.getElementById('response-title').classList.remove('hidden');
         document.getElementById('response-output').classList.remove('hidden');
         document.getElementById('response-output').textContent = data.choices[0].message.content;
+    // Verberg de input velden en de 'inspireer me' knop
+        document.getElementById('input-fields').style.display = 'none';
+        document.getElementById('inspire-me-btn').style.display = 'none';
       } else {
         document.getElementById('response-output').textContent = 'No response from API.';
       }
