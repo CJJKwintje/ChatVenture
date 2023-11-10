@@ -93,21 +93,23 @@ let loaderAnimation;
     }
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
     setupLoaderAnimation();
     document.querySelector('h1').style.display = 'none';
+    
     document.querySelectorAll('.image-selection input[type="radio"]').forEach(radio => {
-  radio.addEventListener('change', function() {
-    // Verwijder de 'selected' klasse van alle labels
-    document.querySelectorAll('.image-selection label').forEach(label => {
-      label.classList.remove('selected');
-    });
+        radio.addEventListener('change', function() {
+            // Verwijder de 'selected' klasse van alle labels
+            document.querySelectorAll('.image-selection label').forEach(label => {
+                label.classList.remove('selected');
+            });
 
-    // Voeg de 'selected' klasse toe aan het huidige label
-    this.parentNode.classList.add('selected');
-  });
-});
+            // Voeg de 'selected' klasse toe aan het huidige label
+            this.parentNode.classList.add('selected');
+        });
+    });
 
     const inspireMeButton = document.getElementById('inspire-me-btn');
     inspireMeButton.addEventListener('click', submitPrompt);
-  });
+
+});
