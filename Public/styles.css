@@ -96,16 +96,22 @@ button:hover {
   display: flex;
   justify-content: left;
   width: 75%;
+  align-items: center;
+  margin-left: 25px;
+
 }
 
 .headerright {
   display: flex;
   justify-content: right;
   width: 25%;
+  margin-right: 25px;
 }
 
 .logo {
-  padding: 25px;
+  display: flex;
+  align-items: center;
+  padding: 20px;
   color: #40506A; 
   font-size: 25px;
   text-decoration: none;
@@ -113,6 +119,13 @@ button:hover {
   font-weight: 700; 
   line-height: 55.69px; 
   word-wrap: break-word
+}
+
+.logoimage {
+  display: inline-block;
+  width: 50px; 
+  height: auto;
+  justify-content: center; 
 }
 
 .payoff {
