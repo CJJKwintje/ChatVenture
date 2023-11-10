@@ -11,10 +11,22 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.7.4/lottie.min.js" integrity="sha512-m0RQU4SBx0p/bLwRiI4fJBGRafVLZ4s86wRe1+OAx5EXbcWiS/X1jvYdJQRD8jOoIVl+WTyVeMawUWVCh1O8+Q==" crossorigin="anonymous"></script>
 </head>
 <body>
+<header>
+<div class="headerleft">
+  <div class="logo">
+    <a href="/index.html" class="logo">ChatVenture</a>
+  </div>
+  <div class="payoff">Inspiratie voor jouw volgende avontuur!</div>
+</div>
 
-<h1>Inspiratie voor jouw volgende avontuur!</h1>
+<div class="headerright">
+  <div class="headerlink">Hoe werkt het?</div>
+</div>
+
+</header>
 <div class="container">
-  <div id="content-container">
+  <h1 class="title">Start jouw volgende avontuur</h1>
+    <div id="content-container">
     <div id="input-fields">
       <div class="locatie">
         <label for="vertreklocatie">Wat is je vertreklocatie?</label>
@@ -33,34 +45,33 @@
         </select>
       </div>
 
-      <div class="image-selection">
-         <h3>Naar welk gebied zou je willen gaan?</h3>
-        <label for="gebied1">
-          <input type="radio" name="gebied-select" id="gebied1" value="Europa">
-          <img src="images/europe.png" alt="Europa">
-          <figcaption>Europa</figcaption>
+       <div class="image-selection">
+         <h3>Kies je vervoerstype:</h3>
+        <label for="trein">
+          <input type="radio" name="transport-select" id="trein" value="trein">
+          <img src="assets/train.png">
+       
         </label>
 
-        <label for="gebied2">
-          <input type="radio" name="gebied-select" id="gebied2" value="Afrika">
-          <img src="images/africa.png" alt="Afrika">
-          <figcaption>Afrika</figcaption>
+        <label for="auto">
+          <input type="radio" name="transport-select" id="auto" value="auto">
+          <img src="assets/car.png">
+  
         </label>
 
-        <label for="gebied3">
-          <input type="radio" name="gebied-select" id="gebied3" value="Azië">
-          <img src="images/asia.png" alt="Azië">
-          <figcaption>Azië</figcaption>
+        <label for="vliegtuig">
+          <input type="radio" name="transport-select" id="vliegtuig" value="vliegtuig">
+          <img src="assets/airplane.png">
+       
         </label>
       </div>
 
       <div class="extra-voorkeuren">
         <label for="textarea-voorkeuren">Wat vind je verder belangrijk voor je volgende vakantie?</label>
         <textarea id="textarea-voorkeuren" name="extra-voorkeuren" rows="4" cols="50" placeholder="Bijv. Ik neem graag mijn hond mee op vakantie"></textarea>
-      </div>
+      </div></div>
 
-      <button id="inspire-me-btn">Inspireer me!</button>
-    </div>
+      <button id="inspire-me-btn">Start avontuur</button>
   </div>
 
   <div id="loader" class="hidden"></div>

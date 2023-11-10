@@ -29,29 +29,30 @@ let loaderAnimation;
   }
 
   async function submitPrompt() {
+    document.querySelector('h1').style.display = 'none';
     document.getElementById('content-container').style.display = 'none';
     document.getElementById('loader').classList.remove('hidden');
     loaderAnimation.goToAndPlay(0, true);
 
     const vertreklocatie = document.getElementById('vertreklocatie').value;
     const typeVakantie = document.getElementById('type-vakantie-select').value;
-    const selectedRadio = document.querySelector('input[name="gebied-select"]:checked');
+    const selectedRadio = document.querySelector('input[name="transport-select"]:checked');
     if (!selectedRadio) {
-      console.error('Geen gebied geselecteerd');
+      console.error('Geen transport geselecteerd');
       return;
     }
-    const gebied = selectedRadio.value;
+    const transport = selectedRadio.value;
     const extraVoorkeuren = document.getElementById('textarea-voorkeuren').value;
 
     const postData = {
       messages: [
         {
           role: "system",
-          content: `Gedraag je als een enthousiaste travelagent. De gebruiker gaat vragen beantwoorden over hun vertreklocatie, type vakantie, voorkeursgebied en extra voorkeuren. Geef een waardevol en kort vakantie advies`
+          content: `Gedraag je als een enthousiaste travelagent. De gebruiker geeft 3 voorkeuren door voor een nieuwe vakantie, namelijk vertreklocatie, type vakantie en type vervoer.Geef een waardevol en kort vakantie advies op basis van deze 3 voorkeuren`
         },
         {
           role: "user",
-          content: `Vertreklocatie: ${vertreklocatie}, Type vakantie: ${typeVakantie}, Gebied: ${gebied}, Belangrijk: ${extraVoorkeuren}`
+          content: `Vertreklocatie: ${vertreklocatie}, Type vakantie: ${typeVakantie}, Gebied: ${transport}, Belangrijk: ${extraVoorkeuren}`
         }
       ]
     };
@@ -94,6 +95,18 @@ let loaderAnimation;
 
   document.addEventListener('DOMContentLoaded', () => {
     setupLoaderAnimation();
+    document.querySelector('h1').style.display = 'none';
+    document.querySelectorAll('.image-selection input[type="radio"]').forEach(radio => {
+  radio.addEventListener('change', function() {
+    // Verwijder de 'selected' klasse van alle labels
+    document.querySelectorAll('.image-selection label').forEach(label => {
+      label.classList.remove('selected');
+    });
+
+    // Voeg de 'selected' klasse toe aan het huidige label
+    this.parentNode.classList.add('selected');
+  });
+});
 
     const inspireMeButton = document.getElementById('inspire-me-btn');
     inspireMeButton.addEventListener('click', submitPrompt);
