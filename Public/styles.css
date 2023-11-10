@@ -263,7 +263,7 @@ select, button {
 }
 
 /* Media query for better responsive design */
-@media (max-width: 400px) {
+@media (max-width: 415px) {
 
   body {
     padding: 10px;
