@@ -95,7 +95,7 @@ let loaderAnimation;
 
 document.addEventListener('DOMContentLoaded', () => {
     setupLoaderAnimation();
-    document.querySelector('h1').style.display = 'none';
+   // document.querySelector('h1').style.display = 'none';
     
     document.querySelectorAll('.image-selection input[type="radio"]').forEach(radio => {
         radio.addEventListener('change', function() {

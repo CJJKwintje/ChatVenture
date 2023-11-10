@@ -57,7 +57,7 @@ label, select, button {
   font-size: 1.2em;
   font-style: normal;
   font-weight: 300;
-  line-height: 55.688px; /* 371.25% */
+  line-height: 25px; /* 371.25% */
   letter-spacing: -0.3px;
 }
 
@@ -117,9 +117,8 @@ button:hover {
   color: #40506A; 
   font-size: 25px;
   text-decoration: none;
-  ont-family: Fredoka; 
+  font-family: Fredoka; 
   font-weight: 700; 
-  line-height: 55.69px; 
   word-wrap: break-word
 }
 
@@ -155,7 +154,7 @@ button:hover {
    flex-direction: column;
    justify-content: center;
    padding: 50px 100px 50px 100px;
-   max-width: 30%; /* Stel een maximale breedte in als je wilt */
+   max-width: 35%; /* Stel een maximale breedte in als je wilt */
    margin-left: auto;
    margin-right: auto;
 }
@@ -201,8 +200,8 @@ button:hover {
   margin: 5px;
   cursor: pointer;
   border-radius: 10px;
-  border: 1px solid #A8CAFF;
-  background: #E5EFFF;
+  border: 1px solid #ff8e8e;
+  background: #ffc2c2;
   padding: 10px 50px;
 }
 
@@ -217,11 +216,11 @@ button:hover {
 }
 
 .image-selection input[type="radio"]:checked + img {
-  border-color: #ffb931;
+  border-color: #ff8e8e;
 }
 
 .image-selection label.selected {
-  background-color: white;
+  background-color: #FFFF;
 }
 
 
