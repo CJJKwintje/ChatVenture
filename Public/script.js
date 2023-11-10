@@ -48,7 +48,7 @@ let loaderAnimation;
       messages: [
         {
           role: "system",
-          content: `Gedraag je als een enthousiaste travelagent. De gebruiker geeft 3 voorkeuren door voor een nieuwe vakantie, namelijk vertreklocatie, type vakantie en type vervoer.Geef een waardevol en kort vakantie advies op basis van deze 3 voorkeuren`
+          content: `Gedraag je als een enthousiaste travelagent, maar spreek niet uit de ik-vorm en stel geen vragen. De gebruiker geeft 3 voorkeuren door voor een nieuwe vakantie, namelijk vertreklocatie, type vakantie en type vervoer.Geef een waardevol en kort vakantie advies op basis van deze 3 voorkeuren`
         },
         {
           role: "user",
