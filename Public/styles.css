@@ -105,6 +105,7 @@ button:hover {
 .headerright {
   display: flex;
   justify-content: right;
+  align-items: center;
   width: 25%;
   margin-right: 25px;
 }
