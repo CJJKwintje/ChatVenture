@@ -28,6 +28,24 @@ let loaderAnimation;
     });
   }
 
+  function queryGoogleSheetsWithCountry(country) {
+    // URL voor je server endpoint, eventueel met een query parameter voor het land
+    const url = `http://localhost:3000/getSheetData?country=${encodeURIComponent(country)}`;
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            console.log("Gegevens ontvangen van Google Sheets:", data);
+            document.getElementById('dataDisplay').innerText = JSON.stringify(data, null, 2);
+            // Je kunt hier verdere verwerking van de gegevens doen
+        })
+        .catch(error => {
+            console.error('Fout bij het ophalen van gegevens:', error);
+            document.getElementById('dataDisplay').innerText = 'Er is een fout opgetreden bij het ophalen van de gegevens.';
+        });
+}
+
+
   async function submitPrompt() {
     document.querySelector('h1').style.display = 'none';
     document.getElementById('content-container').style.display = 'none';
@@ -78,6 +96,23 @@ let loaderAnimation;
         document.getElementById('response-title').classList.remove('hidden');
         document.getElementById('response-output').classList.remove('hidden');
         document.getElementById('response-output').textContent = data.choices[0].message.content;
+const responseText = data.choices[0].message.content;
+const countryRegex = /een reis naar (\w+)/;  // Eenvoudige regex voor demonstratie
+const match = responseText.match(countryRegex);
+
+if (match && match.length > 1) {
+    let country = match[1];
+    console.log("Gevonden land: " + country);
+    // Hier kun je de landennaam opslaan voor verdere verwerking
+    // Bijvoorbeeld, door een functie aan te roepen die de Google Sheets API query maakt
+    queryGoogleSheetsWithCountry(country);
+} else {
+    console.log("Geen land gevonden in de respons");
+    // Behandel het geval waarin geen landennaam werd gevonden
+}
+
+
+
     // Verberg de input velden en de 'inspireer me' knop
         document.getElementById('input-fields').style.display = 'none';
         document.getElementById('inspire-me-btn').style.display = 'none';
