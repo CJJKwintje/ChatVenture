@@ -1,0 +1,7 @@
+# netlify.toml
+[build]
+  publish = "." # This tells Netlify that your site's root directory is also where your built files are
+
+[dev]
+  publish = "Public" # This should be the same as your build publish directory for local development
+
