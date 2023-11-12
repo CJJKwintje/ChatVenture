@@ -86,10 +86,35 @@
   </div>
 
   <div id="loader" class="hidden"></div>
-  <h2 id="response-title" class="hidden">Jouw reisadvies op maat:</h2>
+  <h2 id="response-title" class="hidden">Inspiratie voor jouw reis</h2>
   <div id="response-output" class="hidden" style="white-space: pre-wrap;"></div>
+  <div id="response-output" class="hidden" style="white-space: pre-wrap;"></div>
+   <button id="stel-samen-btn" class="hidden">Stel je eigen reis samen</button>
 </div>
 
+<!-- Nieuwe div voor het tonen van reisaanbod -->
+
+<div class="reisaanbod-container">
+<h2 id="reisaanbod-title" class="hidden">Reisaanbod wat je misschien ook interessant vindt</h2>
+<div id="reisaanbodDisplay"></div>
+
+<!-- Template in je HTML-bestand -->
+<template id="reisaanbodTemplate">
+    <div class="reisaanbod-item">
+        <div class="reisaanbod-item-content">
+            <div class="reisaanbod-item-content-left">
+                <img src="" alt="Logo Bestemming" class="reisaanbod-logo">
+                <img src="" alt="Afbeelding Bestemming" class="reisaanbod-image">
+            </div>
+            <div class="reisaanbod-item-content-right">
+                <h3 class="reisaanbod-naam"></h3>
+                <p class="reisaanbod-beschrijving"></p>
+                <button type="button" class="reisaanbod-link" onclick="window.location.href='#';">Bekijk Reis</button>
+            </div>
+        </div>
+    </div>
+</template>
+</div>
 <script src="script.js"></script>
 </body>
 </html>

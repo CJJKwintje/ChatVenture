@@ -1,23 +1,25 @@
 let loaderAnimation;
+let chatGPTResponseReceived = false;
+let googleSheetsDataReceived = false;
 
-  function setupLoaderAnimation() {
-    loaderAnimation = lottie.loadAnimation({
-      container: document.getElementById('loader'),
-      renderer: 'svg',
-      loop: true,
-      autoplay: false,
-      path: '/assets/loader.json'
-    });
-  }
+function setupLoaderAnimation() {
+  loaderAnimation = lottie.loadAnimation({
+    container: document.getElementById('loader'),
+    renderer: 'svg',
+    loop: true,
+    autoplay: false,
+    path: '/assets/loader.json'
+  });
+}
 
-  function fetchWithTimeout(resource, options, timeout = 8000) {
-    const controller = new AbortController();
-    const id = setTimeout(() => controller.abort(), timeout);
+function fetchWithTimeout(resource, options, timeout = 8000) {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeout);
 
-    return fetch(resource, {
-      ...options,
-      signal: controller.signal
-    })
+  return fetch(resource, {
+    ...options,
+    signal: controller.signal
+  })
     .then(response => {
       clearTimeout(id);
       return response;
@@ -26,125 +28,156 @@ let loaderAnimation;
       clearTimeout(id);
       throw error;
     });
+}
+
+function queryGoogleSheetsWithCountry(country) {
+  const url = `http://localhost:3000/getSheetData?country=${encodeURIComponent(country)}`;
+
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      googleSheetsDataReceived = true;
+      checkLoaderAndDisplayStatus();
+      const reisaanbodDisplay = document.getElementById('reisaanbodDisplay');
+      const template = document.getElementById('reisaanbodTemplate').content;
+
+      reisaanbodDisplay.innerHTML = ''; // Leegmaken van vorige resultaten
+
+      data.forEach((row) => {
+        const clone = document.importNode(template, true);
+
+        clone.querySelector('.reisaanbod-logo').src = row[5];
+        clone.querySelector('.reisaanbod-image').src = row[4];
+        clone.querySelector('.reisaanbod-naam').textContent = row[1];
+        clone.querySelector('.reisaanbod-beschrijving').textContent = row[2];
+        let button = clone.querySelector('.reisaanbod-link');
+        button.onclick = function() {
+          window.location.href = row[3];
+        };
+
+        reisaanbodDisplay.appendChild(clone);
+      });
+    })
+    .catch(error => {
+      console.error('Fout bij het ophalen van gegevens:', error);
+      reisaanbodDisplay.innerText = 'Er is een fout opgetreden bij het ophalen van de gegevens.';
+      googleSheetsDataReceived = true;
+      checkLoaderAndDisplayStatus();
+    });
+}
+
+async function submitPrompt() {
+  chatGPTResponseReceived = false;
+  googleSheetsDataReceived = false;
+
+  document.querySelector('h1').style.display = 'none';
+  document.getElementById('content-container').style.display = 'none';
+  document.getElementById('loader').classList.remove('hidden');
+  loaderAnimation.goToAndPlay(0, true);
+
+  const vertreklocatie = document.getElementById('vertreklocatie').value;
+  const typeVakantie = document.getElementById('type-vakantie-select').value;
+  const selectedRadio = document.querySelector('input[name="transport-select"]:checked');
+  if (!selectedRadio) {
+    console.error('Geen transport geselecteerd');
+    return;
   }
+  const transport = selectedRadio.value;
+  const extraVoorkeuren = document.getElementById('textarea-voorkeuren').value;
 
-  function queryGoogleSheetsWithCountry(country) {
-    // URL voor je server endpoint, eventueel met een query parameter voor het land
-    const url = `http://localhost:3000/getSheetData?country=${encodeURIComponent(country)}`;
+  const postData = {
+    messages: [
+      {
+        role: "system",
+        content: `Gedraag je als een enthousiaste travelagent. De gebruiker geeft 3 voorkeuren door voor een nieuwe vakantie, namelijk vertreklocatie, type vakantie en type vervoer. Geef een waardevol en kort vakantie advies op basis van deze 3 voorkeuren. Begin je zin altijd met “We raden een reis naar [land] aan” en zet de response altijd tussen “”.`
+      },
+      {
+        role: "user",
+        content: `Vertreklocatie: ${vertreklocatie}, Type vakantie: ${typeVakantie}, Gebied: ${transport}, Belangrijk: ${extraVoorkeuren}`
+      }
+    ]
+  };
 
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            console.log("Gegevens ontvangen van Google Sheets:", data);
-            document.getElementById('dataDisplay').innerText = JSON.stringify(data, null, 2);
-            // Je kunt hier verdere verwerking van de gegevens doen
-        })
-        .catch(error => {
-            console.error('Fout bij het ophalen van gegevens:', error);
-            document.getElementById('dataDisplay').innerText = 'Er is een fout opgetreden bij het ophalen van de gegevens.';
-        });
-}
+  try {
+    const response = await fetchWithTimeout('/.netlify/functions/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(postData)
+    }, 20000);
 
-
-  async function submitPrompt() {
-    document.querySelector('h1').style.display = 'none';
-    document.getElementById('content-container').style.display = 'none';
-    document.getElementById('loader').classList.remove('hidden');
-    loaderAnimation.goToAndPlay(0, true);
-
-    const vertreklocatie = document.getElementById('vertreklocatie').value;
-    const typeVakantie = document.getElementById('type-vakantie-select').value;
-    const selectedRadio = document.querySelector('input[name="transport-select"]:checked');
-    if (!selectedRadio) {
-      console.error('Geen transport geselecteerd');
-      return;
+    if (!response.ok) {
+      throw new Error(`Network response was not ok: ${response.statusText}`);
     }
-    const transport = selectedRadio.value;
-    const extraVoorkeuren = document.getElementById('textarea-voorkeuren').value;
 
-    const postData = {
-      messages: [
-        {
-          role: "system",
-          content: `Gedraag je als een enthousiaste travelagent, maar spreek niet uit de ik-vorm en stel geen vragen. De gebruiker geeft 3 voorkeuren door voor een nieuwe vakantie, namelijk vertreklocatie, type vakantie en type vervoer.Geef een waardevol en kort vakantie advies op basis van deze 3 voorkeuren`
-        },
-        {
-          role: "user",
-          content: `Vertreklocatie: ${vertreklocatie}, Type vakantie: ${typeVakantie}, Gebied: ${transport}, Belangrijk: ${extraVoorkeuren}`
-        }
-      ]
-    };
+    const contentType = response.headers.get('content-type');
+    if (!contentType || !contentType.includes('application/json')) {
+      throw new TypeError("Oops, we haven't got JSON!");
+    }
 
-    try {
-      const response = await fetchWithTimeout('/.netlify/functions/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(postData)
-      }, 20000);
+    const data = await response.json();
+    if (data.choices && data.choices.length > 0) {
+      chatGPTResponseReceived = true;
+      checkLoaderAndDisplayStatus();
 
-      if (!response.ok) {
-        throw new Error(`Network response was not ok: ${response.statusText}`);
-      }
+      document.getElementById('response-title').classList.remove('hidden');
+      document.getElementById('response-title').classList.remove('hidden');
+      document.getElementById('reisaanbod-title').classList.remove('hidden');
+      document.getElementById('response-output').classList.remove('hidden');
+      document.getElementById('response-output').textContent = data.choices[0].message.content;
+      const responseText = data.choices[0].message.content;
+      const countryRegex = /een reis naar (\w+)/;  // Eenvoudige regex voor demonstratie
+      const match = responseText.match(countryRegex);
 
-      const contentType = response.headers.get('content-type');
-      if (!contentType || !contentType.includes('application/json')) {
-        throw new TypeError("Oops, we haven't got JSON!");
-      }
-
-      const data = await response.json();
-      if (data.choices && data.choices.length > 0) {
-        document.getElementById('response-title').classList.remove('hidden');
-        document.getElementById('response-output').classList.remove('hidden');
-        document.getElementById('response-output').textContent = data.choices[0].message.content;
-const responseText = data.choices[0].message.content;
-const countryRegex = /een reis naar (\w+)/;  // Eenvoudige regex voor demonstratie
-const match = responseText.match(countryRegex);
-
-if (match && match.length > 1) {
-    let country = match[1];
-    console.log("Gevonden land: " + country);
-    // Hier kun je de landennaam opslaan voor verdere verwerking
-    // Bijvoorbeeld, door een functie aan te roepen die de Google Sheets API query maakt
-    queryGoogleSheetsWithCountry(country);
-} else {
-    console.log("Geen land gevonden in de respons");
-    // Behandel het geval waarin geen landennaam werd gevonden
-}
-
-
-
-    // Verberg de input velden en de 'inspireer me' knop
-        document.getElementById('input-fields').style.display = 'none';
-        document.getElementById('inspire-me-btn').style.display = 'none';
+      if (match && match.length > 1) {
+        let country = match[1];
+        console.log("Gevonden land: " + country);
+        // Hier kun je de landennaam opslaan voor verdere verwerking
+        // Bijvoorbeeld, door een functie aan te roepen die de Google Sheets API query maakt
+        queryGoogleSheetsWithCountry(country);
       } else {
-        document.getElementById('response-output').textContent = 'No response from API.';
+        console.log("Geen land gevonden in de respons");
+        // Behandel het geval waarin geen landennaam werd gevonden
       }
-    } catch (error) {
-      document.getElementById('response-output').textContent = error.message;
-    } finally {
-      loaderAnimation.stop();
-      document.getElementById('loader').classList.add('hidden');
-      document.getElementById('content-container').style.display = 'block';
+
+      // Verberg de input velden en de 'inspireer me' knop
+      document.getElementById('input-fields').style.display = 'none';
+      document.getElementById('inspire-me-btn').style.display = 'none';
+    } else {
+      chatGPTResponseReceived = true;
+      checkLoaderAndDisplayStatus();
+      document.getElementById('response-output').textContent = 'No response from API.';
     }
+  } catch (error) {
+    document.getElementById('response-output').textContent = error.message;
+    chatGPTResponseReceived = true;
+    checkLoaderAndDisplayStatus();
   }
+}
+
+function checkLoaderAndDisplayStatus() {
+  if (chatGPTResponseReceived && googleSheetsDataReceived) {
+    // Beide responses zijn ontvangen, stop de loader en toon de inhoud
+    loaderAnimation.stop();
+    document.getElementById('loader').classList.add('hidden');
+    document.getElementById('content-container').style.display = 'block';
+  }
+}
 
 document.addEventListener('DOMContentLoaded', () => {
-    setupLoaderAnimation();
-   // document.querySelector('h1').style.display = 'none';
-    
-    document.querySelectorAll('.image-selection input[type="radio"]').forEach(radio => {
-        radio.addEventListener('change', function() {
-            // Verwijder de 'selected' klasse van alle labels
-            document.querySelectorAll('.image-selection label').forEach(label => {
-                label.classList.remove('selected');
-            });
+  setupLoaderAnimation();
 
-            // Voeg de 'selected' klasse toe aan het huidige label
-            this.parentNode.classList.add('selected');
-        });
+  document.querySelectorAll('.image-selection input[type="radio"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+      // Verwijder de 'selected' klasse van alle labels
+      document.querySelectorAll('.image-selection label').forEach(label => {
+        label.classList.remove('selected');
+      });
+
+      // Voeg de 'selected' klasse toe aan het huidige label
+      this.parentNode.classList.add('selected');
     });
+  });
 
-    const inspireMeButton = document.getElementById('inspire-me-btn');
-    inspireMeButton.addEventListener('click', submitPrompt);
-
+  const inspireMeButton = document.getElementById('inspire-me-btn');
+  inspireMeButton.addEventListener('click', submitPrompt);
 });
