@@ -31,7 +31,7 @@ function fetchWithTimeout(resource, options, timeout = 8000) {
 }
 
 function queryGoogleSheetsWithCountry(country) {
-  const url = `http://localhost:3000/getSheetData?country=${encodeURIComponent(country)}`;
+  const url = `https://script.google.com/macros/s/AKfycbwI5Pf0FuI3w5-PpF5LEBFuj1de0ddK87DyHyMu5aOFc5DkLuZL9Vpg21vsRaOXE3iH/exec?country=${encodeURIComponent(country)}`;
 
   fetch(url)
     .then(response => response.json())

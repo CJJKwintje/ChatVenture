@@ -5,15 +5,13 @@ document.addEventListener('DOMContentLoaded', function() {
     loadDataButton.addEventListener('click', loadSheetData);
 });
 
-function loadSheetData() {
-    fetch('https://chatventure.ew.r.appspot.com//getSheetData')
- // Endpoint gedefinieerd in server.js
+fetch('https://script.google.com/macros/s/AKfycbwI5Pf0FuI3w5-PpF5LEBFuj1de0ddK87DyHyMu5aOFc5DkLuZL9Vpg21vsRaOXE3iH/exec')
         .then(response => response.json())
         .then(data => {
             console.log('Sheet data:', data);
-            // Voeg hier code toe om de data te verwerken en weer te geven in je webpagina
+            // Verwerk en toon de data in je webpagina
         })
         .catch(error => {
             console.error('Fout bij het ophalen van gegevens:', error);
         });
-}
+
