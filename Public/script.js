@@ -31,7 +31,7 @@ function fetchWithTimeout(resource, options, timeout = 8000) {
 }
 
 function queryGoogleSheetsWithCountry(country) {
-  const url = `http://localhost:3000/getSheetData?country=${encodeURIComponent(country)}`;
+  const url = `https://chatventure.ew.r.appspot.com/getSheetData?country=${encodeURIComponent(country)}`;
 
   fetch(url)
     .then(response => response.json())
