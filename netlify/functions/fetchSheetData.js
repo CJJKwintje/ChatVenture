@@ -15,7 +15,6 @@ exports.handler = async (event, context) => {
     console.log("Parsing credentials");
     const creds = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS);
     console.log("Parsed credentials:", creds);
-    console.log("google-spreadsheet module version:", require('google-spreadsheet/package.json').version);
 
     console.log("Attempting to authenticate with useServiceAccountAuth");
     await doc.useServiceAccountAuth(creds);
