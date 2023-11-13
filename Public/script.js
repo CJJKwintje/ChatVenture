@@ -30,6 +30,12 @@ function fetchWithTimeout(resource, options, timeout = 8000) {
     });
 }
 
+// Functie om de lengte van de beschrijving te beperken
+function beperkTekstLengte(tekst, maxLengte) {
+  return tekst.length > maxLengte ? tekst.substring(0, maxLengte) + '...' : tekst;
+}
+
+// Bestaande functie die de data ophaalt en verwerkt
 function queryGoogleSheetsWithCountry(country) {
   const url = `/.netlify/functions/fetchSheetData?country=${encodeURIComponent(country)}`;
 
@@ -49,7 +55,14 @@ function queryGoogleSheetsWithCountry(country) {
         clone.querySelector('.reisaanbod-logo').src = row[5];
         clone.querySelector('.reisaanbod-image').src = row[4];
         clone.querySelector('.reisaanbod-naam').textContent = row[1];
-        clone.querySelector('.reisaanbod-beschrijving').textContent = row[2];
+        clone.querySelector('.reisaanbod-beschrijving').textContent = beperkTekstLengte(row[2], 350); // Limiet van 350 tekens
+
+        // Toevoegen van de vanaf prijs
+        const prijsElement = clone.querySelector('.reisaanbod-prijs');
+        if (prijsElement) {
+          prijsElement.textContent = `Vanaf ${row[6]}`; // Aanname dat de prijs in kolom 7 staat (index 6)
+        }
+
         let button = clone.querySelector('.reisaanbod-link');
         button.onclick = function() {
           window.location.href = row[3];
@@ -65,6 +78,9 @@ function queryGoogleSheetsWithCountry(country) {
       checkLoaderAndDisplayStatus();
     });
 }
+
+// De rest van je code blijft ongewijzigd
+
 
 async function submitPrompt() {
   chatGPTResponseReceived = false;

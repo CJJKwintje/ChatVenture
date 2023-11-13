@@ -1,6 +1,6 @@
 
 /* styles.css */
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600&display=swap');
 
 body {
   display: flex;
@@ -311,7 +311,7 @@ flex-shrink: 0;
 }
 
 .reisaanbod-item-content-left {
-  max-width: 45%;
+  min-width: 40%;
 }
 
 .reisaanbod-item-content-right {
@@ -360,11 +360,35 @@ flex-shrink: 0;
 .reisaanbod-beschrijving {
   padding-bottom: 25px;
   line-height: 2em;
+  margin-top: 0px;
+
+}
+
+.reisaanbod-knop {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.reisaanbod-prijs {
+  margin-right: 20px;
+  font-weight: 500;
+  color: #40506A;
+  font-size: 25px;
+}
+.reisaanbod-link {
+  background-color: #FF8E8E;
+  padding: 10px 20px;
+  border: 1px;
+  border-radius: 5px;
+  font-size: 20px;
+  font-weight: 500;
+}
 
 }
 
 #reisaanbodDisplay .reisaanbod-link {
   align-self: end;
+
 }
 
 select, button {
@@ -460,6 +484,15 @@ select, button {
 .reisaanbod-naam {
       line-height: 25px;
 }
+
+.reisaanbod-prijs {
+  font-size: 20px;
+}
+
+.reisaanbod-link {
+  padding: 0px 15px;
+}
+
 .reisaanbod-beschrijving {
   padding-bottom: 0px;
 }
