@@ -1,43 +1,32 @@
 require('dotenv').config();
-
-const { GoogleSpreadsheet } = require('google-spreadsheet');
+const { google } = require('googleapis');
 
 exports.handler = async (event, context) => {
-  console.log("Function start: Fetching data based on country");
-  const country = event.queryStringParameters.country;
-  console.log("Received country parameter:", country);
+    console.log("Function start: Fetching data based on country");
+    const country = event.queryStringParameters.country;
+    console.log("Received country parameter:", country);
 
-  try {
-    console.log("Initializing GoogleSpreadsheet");
-    const doc = new GoogleSpreadsheet('1S6yIEUt4vTbb66-gcUXKJB9V1OjhCrLvU6HSPFj_FYg');
+    try {
+        const sheets = google.sheets({
+            version: 'v4',
+            auth: process.env.GOOGLE_API_KEY // Zorg ervoor dat je API-sleutel hier wordt geladen
+        });
 
-    console.log("Attempting to authenticate");
-    await doc.useServiceAccountAuth({
-      client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-      private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
-    });
-    console.log("Authenticated successfully");
+        const response = await sheets.spreadsheets.values.get({
+            spreadsheetId: '1S6yIEUt4vTbb66-gcUXKJB9V1OjhCrLvU6HSPFj_FYg', // Vervang met jouw Spreadsheet ID
+            range: 'Reisaanbod', // Vervang met jouw specifieke range/tabbladnaam in de Spreadsheet
+        });
 
-    console.log("Loading document info");
-    await doc.loadInfo();
-    console.log("Document info loaded");
+        const rows = response.data.values;
+        const filteredRows = rows.filter(row => row[0] === country); // Verondersteld dat het land in de eerste kolom staat
+        console.log(`Filtered rows count: ${filteredRows.length}`);
 
-    const sheet = doc.sheetsByTitle['Reisaanbod'];
-    console.log("Sheet accessed:", sheet.title);
-
-    console.log("Fetching rows");
-    const rows = await sheet.getRows();
-    console.log(`Fetched ${rows.length} rows`);
-
-    const filteredRows = rows.filter(row => row._rawData[0] === country);
-    console.log(`Filtered rows count: ${filteredRows.length}`);
-
-    return {
-      statusCode: 200,
-      body: JSON.stringify(filteredRows)
-    };
-  } catch (error) {
-    console.error("Error in function:", error);
-    return { statusCode: 500, body: error.toString() };
-  }
+        return {
+            statusCode: 200,
+            body: JSON.stringify(filteredRows)
+        };
+    } catch (error) {
+        console.error("Error in function:", error);
+        return { statusCode: 500, body: error.toString() };
+    }
 };
