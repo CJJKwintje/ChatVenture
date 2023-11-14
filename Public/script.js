@@ -65,7 +65,7 @@ function queryGoogleSheetsWithCountry(country) {
 
         let button = clone.querySelector('.reisaanbod-link');
         button.onclick = function() {
-          window.location.href = row[3];
+          window.open(row[3], '_blank');
         };
 
         reisaanbodDisplay.appendChild(clone);
