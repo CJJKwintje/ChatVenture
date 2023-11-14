@@ -60,7 +60,7 @@ function queryGoogleSheetsWithCountry(country) {
         // Toevoegen van de vanaf prijs
         const prijsElement = clone.querySelector('.reisaanbod-prijs');
         if (prijsElement) {
-          prijsElement.textContent = `Vanaf ${row[6]}`; // Aanname dat de prijs in kolom 7 staat (index 6)
+          prijsElement.textContent = `Vanaf € ${row[6]}`; // Aanname dat de prijs in kolom 7 staat (index 6)
         }
 
         let button = clone.querySelector('.reisaanbod-link');
