@@ -190,6 +190,7 @@ position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    opacity: 80%;
     object-fit: cover;
 }
 
@@ -549,7 +550,7 @@ p.hero-tekst {
 }
 
 .hero-content {
-  padding: 25px 25px 0px 25px;
+  padding: 20px 25px 0px 25px;
   background-color: #FFFF;
 }
 
