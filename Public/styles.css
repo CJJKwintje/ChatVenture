@@ -99,7 +99,6 @@ p.homepage-content-tekst {
 }
 
 label, select, button {
-  color: #000;
   font-family: Fredoka;
   font-size: 1.2em;
   font-style: normal;
@@ -261,10 +260,14 @@ position: absolute;
    display: flex;
    flex-direction: column;
    justify-content: center;
-   padding: 50px 100px 50px 100px;
+   padding: 50px 25%;
    max-width: 50%; /* Stel een maximale breedte in als je wilt */
    margin-left: auto;
    margin-right: auto;
+}
+
+#content-container {
+  padding: 0px 20%;
 }
 
 #input-fields {
@@ -355,13 +358,13 @@ position: absolute;
 }
 
 #response-output {
-  color: #333;
   padding: 25px 0px;
   margin-bottom: 25px;
   border-radius: 5px;
   width: 100%;
   box-sizing: border-box;
-  font-size: 1.2em;
+  font-size: 1.5em;
+  font-weight: 100;
   line-height: 1.5em;
 }
 
@@ -519,6 +522,12 @@ select, button {
     line-height: 1em;
   }
 
+h1.title {
+  padding: 0px;
+  line-height: 1.2em;
+  font-size: 25px;
+}
+
   h2 {
     margin-bottom: 0px;
   }
@@ -528,13 +537,17 @@ p.hero-tekst {
 }
 
   label, select, button {
-    font-size: 1em;
+    font-size: 1.2em;
     line-height: 25px;
   }
 
   select, button {
     padding: 8px 15px;
   }
+
+#content-container {
+  padding: 0px;
+}
 
 .hero {
   display: flex;
@@ -605,7 +618,7 @@ p.hero-tekst {
 
 }
 
-  .container {
+.container {
     padding: 25px;
     margin: 0px;
     max-width: 100%;
@@ -618,6 +631,8 @@ p.hero-tekst {
 #response-output {
     margin-top: 10px;
     max-width: 100%;
+    font-size: 1.2em;
+
   }
 #reisaanbod-title {
   line-height: 25px;
