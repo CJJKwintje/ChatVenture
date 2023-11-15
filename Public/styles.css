@@ -513,8 +513,9 @@ select, button {
   }
 
   h1 {
-    font-size: 50px;
-    line-height: 1.1em;
+    font-size: 40px;
+    padding-right: 25px;
+    line-height: 1em;
   }
 
   h2 {
@@ -523,8 +524,6 @@ select, button {
 
 p.hero-tekst {
   padding-right: 0px;
-  padding-top: 20px;
-  padding-bottom: 20px;
 }
 
   label, select, button {
@@ -537,15 +536,32 @@ p.hero-tekst {
   }
 
 .hero {
-  height: 550px;
-}
-
-.hero-content {
-  padding: 30px 25px;
+  display: flex;
+  flex-direction: column;
+  height: unset;
 }
 
 .hero-image {
-  display: none;
+  min-height: 400px;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.hero-content {
+  padding: 25px 25px 0px 25px;
+  background-color: #FFFF;
+}
+
+.homepage-image {
+  position: absolute;
+  min-width: 100%;
+  min-height: 500px;
+  min-width: 100%;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
 }
 
 .homepage-content-left {
