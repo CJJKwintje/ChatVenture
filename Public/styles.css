@@ -24,6 +24,7 @@ header {
 
 footer {
   display: flex;
+  width: 100%;
   padding-top: 50px;
   padding-bottom: 50px;
   justify-content: space-between;
