@@ -26,7 +26,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.7.4/lottie.min.js" integrity="sha512-m0RQU4SBx0p/bLwRiI4fJBGRafVLZ4s86wRe1+OAx5EXbcWiS/X1jvYdJQRD8jOoIVl+WTyVeMawUWVCh1O8+Q==" crossorigin="anonymous"></script>
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
@@ -37,8 +36,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="headerleft">
   <div class="logo">
       <img src="assets/logo.jpg" class="logoimage">
-    <a href="/index.html" class="logo">ChatVenture</a></div>
-  <div class="payoff">Inspiratie voor jouw volgende avontuur!</div>
+    <a href="/index.html" class="logo">Chatventure</a></div>
 </div>
 
 <div class="headerright">
@@ -47,93 +45,57 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
 
 </header>
-<div class="container">
-    <div id="content-container">
-    <h1 class="title">Start jouw volgende avontuur</h1>
-    <div id="input-fields">
-      <div class="locatie">
-        <label for="vertreklocatie">Wat is je vertreklocatie?</label>
-        <input type="text" id="vertreklocatie" name="locatie" placeholder="Bijv. Amsterdam">
+<div class="container-homepage">
+  <div class="hero">
+    <div class="hero-content">
+    <h1 class="hero-h1">Chatventure</h1>
+    <h2 class="hero-h2">Inspiratie voor jouw volgende avontuur!</h2>
+    <p class="hero-tekst">Een stedentrip, rondreis of gewoon een dagje weg? Laat je inspireren door onze digitale reisagent en start jouw volgende avontuur!</p>
+    <button class="start-avontuur" onclick="location.href='/start-jouw-avontuur';">Start avontuur</button></div>
+
+      <div class="hero-image">
+        <img src="assets/hero.jpg" class="homepage-image">
       </div>
-
-      <div class="Vakantie-dropdown">
-        <label for="type-vakantie-select">Naar wat voor type vakantie ben je op zoek?</label>
-        <select id="type-vakantie-select">
-          <option value="">Geen voorkeur</option>
-          <option value="Stedentrip">Stedentrip</option>
-          <option value="Reis voor langere periode">Reis voor langere periode</option>
-          <option value="Zomervakantie">Zomervakantie</option>
-          <option value="Wintersport">Wintersport</option>
-          <option value="Dagje weg">Dagje weg</option>
-        </select>
-      </div>
-
-       <div class="image-selection">
-         <h3>Kies je vervoerstype:</h3>
-        <label for="trein">
-          <input type="radio" name="transport-select" id="trein" value="trein">
-          <img src="assets/train.png">
-       
-        </label>
-
-        <label for="auto">
-          <input type="radio" name="transport-select" id="auto" value="auto">
-          <img src="assets/car.png">
-  
-        </label>
-
-        <label for="vliegtuig">
-          <input type="radio" name="transport-select" id="vliegtuig" value="vliegtuig">
-          <img src="assets/airplane.png">
-       
-        </label>
-      </div>
-
-      <div class="extra-voorkeuren">
-        <label for="textarea-voorkeuren">Wat vind je verder belangrijk voor je volgende vakantie?</label>
-        <textarea id="textarea-voorkeuren" name="extra-voorkeuren" rows="4" cols="50" placeholder="Bijv. Ik neem graag mijn hond mee op vakantie"></textarea>
-      </div></div>
-
-      <button id="inspire-me-btn">Start avontuur</button>
-  </div>
-
-  <div id="loader" class="hidden"></div>
-  <h2 id="response-title" class="hidden">Inspiratie voor jouw reis</h2>
-  <div id="response-output" class="hidden" style="white-space: pre-wrap;"></div>
-  <div id="response-output" class="hidden" style="white-space: pre-wrap;"></div>
-   <button id="stel-samen-btn" class="hidden">Stel je eigen reis samen</button>
 </div>
 
-<!-- Nieuwe div voor het tonen van reisaanbod -->
+<h3 class="homepage-title">Reisinspiratie <span class="text-blue"> speciaal voor jou</h3>
 
-<div class="reisaanbod-container">
-<h2 id="reisaanbod-title" class="hidden">Reisaanbod wat je misschien interessant vindt</h2>
-<div id="reisaanbodDisplay"></div>
-
-<!-- Template in je HTML-bestand -->
-<template id="reisaanbodTemplate">
-    <div class="reisaanbod-item">
-        <div class="reisaanbod-item-content">
-            <div class="reisaanbod-item-content-left">
-                <img src="" alt="Logo Bestemming" class="reisaanbod-logo">
-                <img src="" alt="Afbeelding Bestemming" class="reisaanbod-image">
-            </div>
-            <div class="reisaanbod-item-content-right">
-                <h3 class="reisaanbod-naam"></h3>
-                <p class="reisaanbod-beschrijving"></p>
-                <div class="reisaanbod-knop">
-                <p class="reisaanbod-prijs"></p>
-                <button type="button" class="reisaanbod-link" onclick="window.open('#', '_blank');">Bekijk reis</button>
-
-            </div>
-        </div>
-    </div>
-</template>
+<div class="homepage-content-left">
+<div class="homepage-content-left-tekst">
+<p class="homepage-content-title">Op basis van jouw voorkeuren</p>
+<p class="homepage-content-tekst">Ontvang persoonlijke reisinspiratie die gebaseerd is op jouw eigen voorkeuren. Laat weten wat jij belangrijk vindt voor je volgende avontuur en onze digitale reisagent doet de rest!</p></div>
+<img src="assets/reisvoorkeuren.png" class="illustration">
 </div>
+
+<div class="homepage-content-right">
+<div class="homepage-content-right-tekst">
+<p class="homepage-content-title">Aanbod van verschillende reisorganisaties</p>
+<p class="homepage-content-tekst">Creëer persoonlijke reisinspiratie die gebaseerd is op jouw eigen voorkeuren. Laat weten wat jij belangrijk vindt voor je volgende avontuur en onze digitale reisagent doet de rest!</p></div>
+<img src="assets/reisaanbod.png" class="illustration">
+</div>    
+
+</div>
+
+
+
 <footer>
-<div class="footer-links">Links</div>
-<div class="footer-midden">Midden</div>
-<div class="footer-rechts">Rechts</div>
+<div class="footer-1">
+<p class="footer-title">Reistypes</p>
+<p class="footer-content">
+  Reistype 1<br>
+  Reistype 2<br>
+Reistype 3<br></p>
+</div>
+<div class="footer-2">
+<p class="footer-title">Gebieden</p>
+<p class="footer-content">
+  Europa
+  Azië<br>
+  Noord-Amerika<br>
+  Zuid-Amerika<br></p>
+</div>
+<div class="footer-3">3</div>
+<div class="footer-4">4</div>
 </footer>
 <script src="script.js"></script>
 </body>

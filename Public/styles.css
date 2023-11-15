@@ -1,16 +1,16 @@
 
 /* styles.css */
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;&display=swap');
 
 body {
   background-color: #FFFF;
-  display: flex;
-  color: #333; /* Dark grey text for better readability */
+  color: #455375; /* Dark grey text for better readability */
   font-family: 'Fredoka', sans-serif;
   margin: 0px;
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
+  line-height: 2em;
 }
 
 header {
@@ -24,19 +24,12 @@ header {
 
 footer {
   display: flex;
+  width: 100%;
   padding-top: 50px;
   padding-bottom: 50px;
-  justify-content: space-between;
+  justify-content: space-around;
   color: #FFFF;
-  background-color: #40506A;
-}
-
-.footer-links {
-  margin-left: 50px;
-}
-
-.footer-rechts {
-  margin-right: 50px;
+  background-color: #FF8E8E;
 }
 
 .title {
@@ -50,6 +43,15 @@ footer {
   margin-bottom: 40px;
 }
 
+h1 {
+  color: #455375;
+  font-family: Fredoka;
+  font-size: 75px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px;
+}
+
 h2 {
   color: #40506A;
   font-family: Fredoka;
@@ -61,11 +63,35 @@ h2 {
   margin-bottom: 40px;
 }
 
+h2.hero-h2 {
+  color: #FF8E8E;
+  font-family: Fredoka;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1em;
+}
+
 h3 {
   font-size: 1.2em;
   font-weight: 300;
   margin: 0px;
   margin-bottom: 10px;
+}
+
+h3.homepage-title {
+  text-align: center;
+  padding-top: 75px;
+  color: #FF8E8E;
+  font-family: Fredoka;
+  font-size: 35px;
+  font-style: normal;
+  font-weight: 600;
+}
+
+p.hero-tekst {
+  padding-right: 75px;
+  font-size: 18px;
 }
 
 label, select, button {
@@ -94,7 +120,8 @@ button {
   gap: 10px;
   flex-shrink: 0;
   border-radius: 6px;
-  background: var(--Primary, #40506A);
+  border-color: #FF8E8E;
+  background: var(--Primary, #FF8E8E);
   color: var(--White, #FFF);
   font-family: Fredoka;
   font-size: 1.2em;
@@ -108,6 +135,14 @@ button:hover {
   background-color: #FFFF;
   color: #40506A;
   cursor: pointer;
+}
+
+.text-blue {
+  color: #455375;
+  font-family: Fredoka;
+  font-size: 35px;
+  font-style: normal;
+  font-weight: 600;
 }
 
 .headerleft {
@@ -127,6 +162,33 @@ button:hover {
   margin-right: 25px;
 }
 
+.hero {
+  display: flex;
+  height: 600px;
+}
+
+.hero-content {
+  background-color: #FFF8F8;
+  padding: 100px 75px;
+}
+
+.hero-image {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.homepage-image {
+position: absolute;
+    min-width: 100%;
+    min-height: 600px;
+    max-width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+}
+
 .logo {
   display: flex;
   align-items: center;
@@ -136,6 +198,7 @@ button:hover {
   text-decoration: none;
   font-family: Fredoka; 
   font-weight: 700; 
+  line-height: 1em;
   word-wrap: break-word
 }
 
@@ -146,14 +209,37 @@ button:hover {
   justify-content: center; 
 }
 
-.payoff {
-  padding: 25px;
-  color: black; 
-  font-size: 20px; 
-  font-family: Fredoka; 
-  font-weight: 400; 
-  line-height: 55.69px; 
-  word-wrap: break-word
+.illustration {
+  width: 313px;
+  height: 208px;  
+}
+
+.homepage-content-left {
+  display: flex;
+  padding: 25px 15%;
+  margin-top: 75px;
+}
+
+.homepage-content-left-tekst {
+  margin-right: 10%;
+}
+
+.homepage-content-right {
+  display: flex;
+  flex-direction: row-reverse;
+  padding: 25px 15%;
+  margin-bottom: 75px;
+}
+
+.homepage-content-right-tekst {
+  margin-left: 10%;
+}
+
+.homepage-content-title {
+  color: #FF8E8E;
+  font-size: 25px;
+  font-weight: 500;
+
 }
 
 .headerlink {
@@ -289,7 +375,6 @@ button:hover {
 
 .reisaanbod-container {
   display: grid;
-  padding-top: 50px;
   background-color: #FFF6F6;
 }
 
@@ -407,6 +492,11 @@ flex-shrink: 0;
 
 }
 
+.footer-title {
+  font-size: 20px;
+  font-weight: 500;
+}
+
 select, button {
   text-align: center;
 }
@@ -427,6 +517,10 @@ select, button {
     margin-bottom: 0px;
   }
 
+p.hero-tekst {
+  padding-right: 0px;
+}
+
   label, select, button {
     font-size: 1em;
     line-height: 25px;
@@ -435,6 +529,36 @@ select, button {
   select, button {
     padding: 8px 15px;
   }
+
+.hero {
+  height: 500px;
+}
+
+.hero-content {
+  padding: 30px 25px;
+}
+
+.hero-image {
+  display: none;
+}
+
+.homepage-content-left {
+  display: flex;
+  padding: 25px 25px;
+  margin-top: 25px;
+  flex-direction: column;
+}
+
+.homepage-content-right {
+  display: flex;
+  flex-direction: column;
+  padding: 25px 25px;
+  margin-bottom: 75px;
+}
+
+.homepage-content-right-tekst {
+  margin-left: 0px;
+}
 
 .payoff {
   display: none;
