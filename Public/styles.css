@@ -53,14 +53,14 @@ h1 {
 }
 
 h2 {
-  color: #40506A;
+  color: #FF8E8E;
   font-family: Fredoka;
   font-size: 25px;
   font-style: normal;
   font-weight: 600;
   line-height: 55.688px; /* 222.75% */
   letter-spacing: -0.5px;
-  margin-bottom: 40px;
+  margin-bottom: 25px;
 }
 
 h2.hero-h2 {
@@ -365,6 +365,7 @@ position: absolute;
   box-sizing: border-box;
   font-size: 1.5em;
   font-weight: 100;
+  text-align: center;
   line-height: 1.5em;
 }
 
