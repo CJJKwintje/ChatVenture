@@ -2,9 +2,10 @@ require('dotenv').config();
 const { google } = require('googleapis');
 
 exports.handler = async (event, context) => {
-    console.log("Function start: Fetching data based on country");
+    console.log("Function start: Fetching data based on country and reistype");
     const country = event.queryStringParameters.country;
-    console.log("Received country parameter:", country);
+    const reistype = event.queryStringParameters.reistype; // Nieuwe parameter voor reistype
+    console.log("Received country parameter:", country, " and reistype parameter:", reistype);
 
     try {
         const sheets = google.sheets({
@@ -18,7 +19,8 @@ exports.handler = async (event, context) => {
         });
 
         const rows = response.data.values;
-        const filteredRows = rows.filter(row => row[0] === country); // Verondersteld dat het land in de eerste kolom staat
+        // Aanname dat het land in de eerste kolom en reistype in de tweede kolom staat
+        const filteredRows = rows.filter(row => row[0] === country && row[1] === reistype); 
         console.log(`Filtered rows count: ${filteredRows.length}`);
 
         return {

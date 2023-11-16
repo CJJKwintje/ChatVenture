@@ -35,9 +35,8 @@ function beperkTekstLengte(tekst, maxLengte) {
   return tekst.length > maxLengte ? tekst.substring(0, maxLengte) + '...' : tekst;
 }
 
-// Bestaande functie die de data ophaalt en verwerkt
-function queryGoogleSheetsWithCountry(country) {
-  const url = `/.netlify/functions/fetchSheetData?country=${encodeURIComponent(country)}`;
+function queryGoogleSheetsWithCountry(country, reistype) {
+  const url = `/.netlify/functions/fetchSheetData?country=${encodeURIComponent(country)}&reistype=${encodeURIComponent(reistype)}`;
 
   fetch(url)
     .then(response => response.json())
@@ -47,25 +46,24 @@ function queryGoogleSheetsWithCountry(country) {
       const reisaanbodDisplay = document.getElementById('reisaanbodDisplay');
       const template = document.getElementById('reisaanbodTemplate').content;
 
-      reisaanbodDisplay.innerHTML = ''; // Leegmaken van vorige resultaten
+      reisaanbodDisplay.innerHTML = '';
 
       data.forEach((row) => {
         const clone = document.importNode(template, true);
 
-        clone.querySelector('.reisaanbod-logo').src = row[5];
-        clone.querySelector('.reisaanbod-image').src = row[4];
-        clone.querySelector('.reisaanbod-naam').textContent = row[1];
-        clone.querySelector('.reisaanbod-beschrijving').textContent = beperkTekstLengte(row[2], 350); // Limiet van 350 tekens
+        clone.querySelector('.reisaanbod-logo').src = row[7];
+        clone.querySelector('.reisaanbod-image').src = row[6];
+        clone.querySelector('.reisaanbod-naam').textContent = row[2];
+        clone.querySelector('.reisaanbod-beschrijving').textContent = beperkTekstLengte(row[3], 350);
 
-        // Toevoegen van de vanaf prijs
         const prijsElement = clone.querySelector('.reisaanbod-prijs');
         if (prijsElement) {
-          prijsElement.textContent = `Vanaf € ${row[6]}`; // Aanname dat de prijs in kolom 7 staat (index 6)
+          prijsElement.textContent = `Vanaf € ${row[4]}`;
         }
 
         let button = clone.querySelector('.reisaanbod-link');
         button.onclick = function() {
-          window.open(row[3], '_blank');
+          window.open(row[5], '_blank');
         };
 
         reisaanbodDisplay.appendChild(clone);
@@ -78,7 +76,6 @@ function queryGoogleSheetsWithCountry(country) {
       checkLoaderAndDisplayStatus();
     });
 }
-
 // De rest van je code blijft ongewijzigd
 
 
@@ -105,11 +102,9 @@ async function submitPrompt() {
     messages: [
       {
         role: "system",
-        content: `Gedraag je als een enthousiaste travelagent. De gebruiker geeft 3 voorkeuren door voor een nieuwe vakantie, namelijk vertreklocatie, type vakantie en type vervoer.  Geef een waardevol en kort vakantie advies en beperk je tot de volgende landen: Griekenland, Frankrijk, Thailand, IJsland, Costa Rica, Swaziland, Marokko, Vietnam, Finland, Spanje, Cuba, Kaapverdië, Portugal, Italië, Verenigde Arabische Emiraten, Roemenië, Ierland, Egypte, Noorwegen, Belize, Nederland, Canada, Denemarken, Fins Lapland, Mexico, Suriname. Belangrijk: Begin je zin altijd met “We raden een reis naar [land] aan” en zet de response altijd tussen “”.`
-      },
-      {
+ content: `Gedraag je als een enthousiaste travelagent. De gebruiker geeft 3 voorkeuren door voor een nieuwe vakantie, namelijk vertreklocatie, reistype en type vervoer.  Geef een waardevolle reisinspiratie en begin de inspiratie met “We raden een [reistype] in [land] aan” zet de response tussen “”. Beperk je tot de volgende landen: Canada, Faroer Eilanden, Finland, Noord-Ierland, Ierland, de Verenigde Staten, IJsland, Noorwegen, Zweden. Beperk je tot de volgende reistypes: Stedentrip, Fly Drive, Wintersportvakantie, Winteravontuur`      },      {
         role: "user",
-        content: `Vertreklocatie: ${vertreklocatie}, Type vakantie: ${typeVakantie}, Gebied: ${transport}, Belangrijk: ${extraVoorkeuren}`
+        content: `Vertreklocatie: ${vertreklocatie}, Reistype: ${typeVakantie}, Gebied: ${transport}, Belangrijk: ${extraVoorkeuren}`
       }
     ]
   };
@@ -141,18 +136,17 @@ async function submitPrompt() {
       document.getElementById('response-output').classList.remove('hidden');
       document.getElementById('response-output').textContent = data.choices[0].message.content;
       const responseText = data.choices[0].message.content;
-      const countryRegex = /een reis naar ([\p{L} ]+) aan/u;  // Aangepaste regex om te matchen met de nieuwe zinsstructuur
-      const match = responseText.match(countryRegex);
+      const pattern = /We raden een ([\p{L}\s]+) in ([\p{L}\s]+) aan/u; 
+      const match = responseText.match(pattern);
 
-      if (match && match.length > 1) {
-        let country = match[1];
-        console.log("Gevonden land: " + country);
-        // Hier kun je de landennaam opslaan voor verdere verwerking
-        // Bijvoorbeeld, door een functie aan te roepen die de Google Sheets API query maakt
-        queryGoogleSheetsWithCountry(country);
-      } else {
-        console.log("Geen land gevonden in de respons");
-        // Behandel het geval waarin geen landennaam werd gevonden
+      let reistype = match && match.length > 1 ? match[1] : null;
+      let country = match && match.length > 2 ? match[2] : null;
+
+    if (country && reistype) {
+      console.log("Gevonden land: " + country + ", Reistype: " + reistype);
+      queryGoogleSheetsWithCountry(country, reistype);
+    } else {
+      console.log("Geen land of reistype gevonden in de respons");
       }
 
       // Verberg de input velden en de 'inspireer me' knop
