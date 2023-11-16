@@ -33,7 +33,7 @@ footer {
 }
 
 .title {
-  color: #40506A;
+  color: #FF8E8E;
   font-family: Fredoka;
   font-size: 25px;
   font-style: normal;
@@ -96,6 +96,7 @@ p.hero-tekst {
 
 p.homepage-content-tekst {
   font-size: 20px;
+  font-weight: 300;
 }
 
 label, select, button {
@@ -196,7 +197,7 @@ position: absolute;
 .logo {
   display: flex;
   align-items: center;
-  padding: 20px;
+  padding: 15px 20px;
   color: #40506A; 
   font-size: 25px;
   text-decoration: none;
@@ -220,7 +221,7 @@ position: absolute;
 
 .homepage-content-left {
   display: flex;
-  padding: 25px 15%;
+  padding: 50px 15%;
   margin-top: 75px;
 }
 
@@ -313,7 +314,7 @@ position: absolute;
   cursor: pointer;
   border-radius: 10px;
   border: 1px solid #FF8E8E;
-  background: #FEE;
+  background: #FFFF;
   padding: 10px 50px;
 }
 
@@ -332,7 +333,7 @@ position: absolute;
 }
 
 .image-selection label.selected {
-  background-color: #FFFF;
+  background-color: #FEE;
 }
 
 .extra-voorkeuren {
@@ -594,6 +595,10 @@ p.hero-tekst {
   margin-top: 25px;
   flex-direction: column;
 }
+
+.homepage-content-left-tekst {
+  margin-right: 0%;
+  }
 
 .homepage-content-right {
   display: flex;
