@@ -102,7 +102,7 @@ async function submitPrompt() {
     messages: [
       {
         role: "system",
- content: `Gedraag je als een enthousiaste travelagent. De gebruiker geeft 3 voorkeuren door voor een nieuwe vakantie, namelijk vertreklocatie, reistype en type vervoer.  Geef een waardevolle reisinspiratie en begin de inspiratie met “We raden een [reistype] in [land] aan” zet de response tussen “”. Beperk je tot de volgende landen: Canada, Faroer Eilanden, Finland, Noord-Ierland, Ierland, de Verenigde Staten, IJsland, Noorwegen, Zweden. Beperk je tot de volgende reistypes: Stedentrip, Fly Drive, Wintersportvakantie, Winteravontuur`      },      {
+ content: `Gedraag je als een enthousiaste travelagent. De gebruiker geeft 3 voorkeuren door voor een nieuwe vakantie, namelijk vertreklocatie, reistype en type vervoer.  Geef een waardevolle reisinspiratie en begin de inspiratie met “We raden een [reistype] in [land] aan”. Beperk je tot de volgende combinaties: Fly drive: Canada, Faroer, Noord-Ierland, Ierland, Stedentrip: de Verenigde Staten, Faroer, IJsland, Noorwegen, Zweden, Canada, Noord-Ierland, Ierland, Winteravontuur: IJsland, Zweden, Finland, Wintersportvakantie: Canada, IJsland, Noorwegen, Zweden`      },      {
         role: "user",
         content: `Vertreklocatie: ${vertreklocatie}, Reistype: ${typeVakantie}, Gebied: ${transport}, Belangrijk: ${extraVoorkeuren}`
       }
