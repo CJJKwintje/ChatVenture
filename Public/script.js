@@ -35,49 +35,59 @@ function beperkTekstLengte(tekst, maxLengte) {
   return tekst.length > maxLengte ? tekst.substring(0, maxLengte) + '...' : tekst;
 }
 
-function queryGoogleSheetsWithCountry(country, reistype) {
+let reisaanbodBeschikbaar = false;
+
+async function queryGoogleSheetsWithCountry(country, reistype) {
   const url = `/.netlify/functions/fetchSheetData?country=${encodeURIComponent(country)}&reistype=${encodeURIComponent(reistype)}`;
 
-  fetch(url)
-    .then(response => response.json())
-    .then(data => {
-      googleSheetsDataReceived = true;
-      checkLoaderAndDisplayStatus();
-      const reisaanbodDisplay = document.getElementById('reisaanbodDisplay');
-      const template = document.getElementById('reisaanbodTemplate').content;
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error('Fout bij het ophalen van gegevens van Google Sheets');
+    }
 
-      reisaanbodDisplay.innerHTML = '';
+    const data = await response.json();
+    googleSheetsDataReceived = true;
+    if (data && data.length > 0) { // Controleer of er data is
+    reisaanbodBeschikbaar = true; // Update de variabele als er reisaanbod is
+    // ... code om het reisaanbod te verwerken en te tonen ...
+  } else {
+    reisaanbodBeschikbaar = false; // Geen reisaanbod beschikbaar
+  }
+    checkLoaderAndDisplayStatus();
 
-      data.forEach((row) => {
-        const clone = document.importNode(template, true);
+    const reisaanbodDisplay = document.getElementById('reisaanbodDisplay');
+    const template = document.getElementById('reisaanbodTemplate').content;
 
-        clone.querySelector('.reisaanbod-logo').src = row[7];
-        clone.querySelector('.reisaanbod-image').src = row[6];
-        clone.querySelector('.reisaanbod-naam').textContent = row[2];
-        clone.querySelector('.reisaanbod-beschrijving').textContent = beperkTekstLengte(row[3], 350);
+    reisaanbodDisplay.innerHTML = '';
 
-        const prijsElement = clone.querySelector('.reisaanbod-prijs');
-        if (prijsElement) {
-          prijsElement.textContent = `Vanaf € ${row[4]}`;
-        }
+    data.forEach((row) => {
+      const clone = document.importNode(template, true);
 
-        let button = clone.querySelector('.reisaanbod-link');
-        button.onclick = function() {
-          window.open(row[5], '_blank');
-        };
+      clone.querySelector('.reisaanbod-logo').src = row[7];
+      clone.querySelector('.reisaanbod-image').src = row[6];
+      clone.querySelector('.reisaanbod-naam').textContent = row[2];
+      clone.querySelector('.reisaanbod-beschrijving').textContent = beperkTekstLengte(row[3], 350);
 
-        reisaanbodDisplay.appendChild(clone);
-      });
-    })
-    .catch(error => {
-      console.error('Fout bij het ophalen van gegevens:', error);
-      reisaanbodDisplay.innerText = 'Er is een fout opgetreden bij het ophalen van de gegevens.';
-      googleSheetsDataReceived = true;
-      checkLoaderAndDisplayStatus();
+      const prijsElement = clone.querySelector('.reisaanbod-prijs');
+      if (prijsElement) {
+        prijsElement.textContent = `Vanaf € ${row[4]}`;
+      }
+
+      let button = clone.querySelector('.reisaanbod-link');
+      button.onclick = function() {
+        window.open(row[5], '_blank');
+      };
+
+      reisaanbodDisplay.appendChild(clone);
     });
+  } catch (error) {
+    console.error('Fout bij het ophalen van gegevens:', error);
+    document.getElementById('reisaanbodDisplay').innerText = 'Er is een fout opgetreden bij het ophalen van de gegevens.';
+    googleSheetsDataReceived = true;
+    checkLoaderAndDisplayStatus();
+  }
 }
-// De rest van je code blijft ongewijzigd
-
 
 async function submitPrompt() {
   chatGPTResponseReceived = false;
@@ -110,66 +120,69 @@ async function submitPrompt() {
   };
 
   try {
-    const response = await fetchWithTimeout('/.netlify/functions/chat', {
+    const chatResponse = await fetchWithTimeout('/.netlify/functions/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(postData)
     }, 20000);
 
-    if (!response.ok) {
-      throw new Error(`Network response was not ok: ${response.statusText}`);
+    if (!chatResponse.ok) {
+      throw new Error(`Network response was not ok: ${chatResponse.statusText}`);
     }
 
-    const contentType = response.headers.get('content-type');
+    const contentType = chatResponse.headers.get('content-type');
     if (!contentType || !contentType.includes('application/json')) {
       throw new TypeError("Oops, we haven't got JSON!");
     }
 
-    const data = await response.json();
-    if (data.choices && data.choices.length > 0) {
-      chatGPTResponseReceived = true;
-      checkLoaderAndDisplayStatus();
+    const data = await chatResponse.json();
+    chatGPTResponseReceived = true;
 
-      document.getElementById('response-title').classList.remove('hidden');
-      document.getElementById('response-title').classList.remove('hidden');
-      document.getElementById('reisaanbod-title').classList.remove('hidden');
-      document.getElementById('response-output').classList.remove('hidden');
-      document.getElementById('response-output').textContent = data.choices[0].message.content;
+    if (data.choices && data.choices.length > 0) {
       const responseText = data.choices[0].message.content;
+      document.getElementById('response-output').textContent = responseText;
+      document.getElementById('response-output').classList.remove('hidden');
       const pattern = /We raden een ([\p{L}\s]+) in ([\p{L}\s]+) aan/u; 
       const match = responseText.match(pattern);
 
       let reistype = match && match.length > 1 ? match[1] : null;
       let country = match && match.length > 2 ? match[2] : null;
 
-    if (country && reistype) {
-      console.log("Gevonden land: " + country + ", Reistype: " + reistype);
-      queryGoogleSheetsWithCountry(country, reistype);
-    } else {
-      console.log("Geen land of reistype gevonden in de respons");
+      if (country && reistype) {
+        await queryGoogleSheetsWithCountry(country, reistype);
+      } else {
+        console.log("Geen land of reistype gevonden in de respons");
+        googleSheetsDataReceived = true;
       }
-
-      // Verberg de input velden en de 'inspireer me' knop
-      document.getElementById('input-fields').style.display = 'none';
-      document.getElementById('inspire-me-btn').style.display = 'none';
     } else {
       chatGPTResponseReceived = true;
-      checkLoaderAndDisplayStatus();
-      document.getElementById('response-output').textContent = 'No response from API.';
+      googleSheetsDataReceived = true;
     }
+
+    checkLoaderAndDisplayStatus();
+
   } catch (error) {
     document.getElementById('response-output').textContent = error.message;
     chatGPTResponseReceived = true;
+    googleSheetsDataReceived = true;
     checkLoaderAndDisplayStatus();
   }
 }
 
 function checkLoaderAndDisplayStatus() {
   if (chatGPTResponseReceived && googleSheetsDataReceived) {
-    // Beide responses zijn ontvangen, stop de loader en toon de inhoud
     loaderAnimation.stop();
     document.getElementById('loader').classList.add('hidden');
-    document.getElementById('content-container').style.display = 'block';
+    document.getElementById('content-container').style.display = 'none';
+    document.getElementById('response-title').classList.remove('hidden');
+    document.getElementById('response-output').classList.remove('hidden');
+  if (reisaanbodBeschikbaar) { // Toon alleen als er reisaanbod is  
+    document.getElementById('reisaanbod-container').classList.remove('hidden');
+    document.getElementById('reisaanbod-title').classList.remove('hidden'); // Zorg dat deze regel correct is
+    } else {
+      document.getElementById('reisaanbod-container').classList.add('hidden');
+      document.getElementById('reisaanbod-title').classList.add('hidden');
+    }
   }
 }
 
