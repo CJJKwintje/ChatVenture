@@ -202,8 +202,8 @@ position: absolute;
 .logo {
   display: flex;
   align-items: center;
-  padding: 15px 20px;
-  color: #40506A; 
+  padding: 15px 15px;
+  color: #455375; 
   font-size: 25px;
   text-decoration: none;
   font-family: Fredoka; 
