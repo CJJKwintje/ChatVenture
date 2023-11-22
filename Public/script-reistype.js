@@ -93,28 +93,21 @@ async function submitPrompt() {
   chatGPTResponseReceived = false;
   googleSheetsDataReceived = false;
 
-  document.querySelector('h1').style.display = 'none';
   document.getElementById('content-container').style.display = 'none';
   document.getElementById('loader').classList.remove('hidden');
   loaderAnimation.goToAndPlay(0, true);
 
   const vertreklocatie = document.getElementById('vertreklocatie').value;
   const typeVakantie = document.getElementById('type-vakantie-select').value;
-  const selectedRadio = document.querySelector('input[name="transport-select"]:checked');
-  if (!selectedRadio) {
-    console.error('Geen transport geselecteerd');
-    return;
-  }
-  const transport = selectedRadio.value;
   const extraVoorkeuren = document.getElementById('textarea-voorkeuren').value;
 
   const postData = {
     messages: [
       {
         role: "system",
- content: `Gedraag je als een enthousiaste travelagent. De gebruiker geeft 3 voorkeuren door voor een nieuwe vakantie, namelijk vertreklocatie, reistype en type vervoer.  Geef een waardevolle reisinspiratie en begin de inspiratie met “We raden een [reistype] in [land] aan”. Beperk je tot de volgende combinaties: Fly drive: Canada, Faroer, Noord-Ierland, Ierland, Stedentrip: de Verenigde Staten, Faroer, IJsland, Noorwegen, Zweden, Canada, Noord-Ierland, Ierland, Winteravontuur: IJsland, Zweden, Finland, Wintersportvakantie: Canada, IJsland, Noorwegen, Zweden`      },      {
+ content: `Gedraag je als een enthousiaste travelagent. De gebruiker geeft 3 voorkeuren door voor een nieuwe vakantie, namelijk vertreklocatie, reistype en extra wensen.  Geef een waardevolle reisinspiratie en begin de inspiratie met “We raden een [reistype] in [land] aan”. Beperk je tot de volgende combinaties: Fly drive: Canada, Faroer, Noord-Ierland, Ierland, Stedentrip: de Verenigde Staten, Faroer, IJsland, Noorwegen, Zweden, Canada, Noord-Ierland, Ierland, Winteravontuur: IJsland, Zweden, Finland, Wintersportvakantie: Canada, IJsland, Noorwegen, Zweden`      },      {
         role: "user",
-        content: `Vertreklocatie: ${vertreklocatie}, Reistype: ${typeVakantie}, Gebied: ${transport}, Belangrijk: ${extraVoorkeuren}`
+        content: `Vertreklocatie: ${vertreklocatie}, Reistype: ${typeVakantie}, Overige wensen: ${extraVoorkeuren}`
       }
     ]
   };
@@ -142,7 +135,7 @@ async function submitPrompt() {
       const responseText = data.choices[0].message.content;
       document.getElementById('response-output').textContent = responseText;
       document.getElementById('response-output').classList.remove('hidden');
-      const pattern = /We raden een ([\p{L}\s-]+) in ([\p{L}\s]+) aan/u;
+      const pattern = /We raden een ([\p{L}\s-]+) in ([\p{L}\s]+) aan/u; 
       const match = responseText.match(pattern);
 
       let reistype = match && match.length > 1 ? match[1] : null;

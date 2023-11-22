@@ -44,10 +44,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
 </div>
 </header>
+<div class="container-homepage">
+  <div class="hero">
+    <div class="hero-content">
+    <h1 class="hero-h1">Fly Drive inspiratie voor jouw vakantie</h1>
+    <p class="hero-tekst">Zelf bepalen waar je heen gaat zonder strak schema? Ontdek de mogelijkheden van een Fly Drive vakantie</p>
+</div>
+
+      <div class="hero-image">
+        <img src="assets/fly-drive.jpg" class="homepage-image">
+      </div>
+</div>
 
 <div class="container">
     <div id="content-container">
-    <h1 class="title">Start jouw volgende avontuur</h1>
+    <h2 class="title">Start jouw volgende <span class="text-blue">Fly Drive</span></h2>
     <div id="input-fields">
       <div class="locatie">
         <label for="vertreklocatie">Wat is je vertreklocatie?</label>
@@ -57,35 +68,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="Vakantie-dropdown">
         <label for="type-vakantie-select">Naar wat voor type vakantie ben je op zoek?</label>
         <select id="type-vakantie-select">
-          <option value="">Geen voorkeur</option>
-          <option value="Fly-Drive">Fly-drive</option>
-          <option value="Stedentrip">Stedentrip</option>
-          <option value="wintersport">Wintersport</option>
-          <option value="winteravontuur">Winteravontuur</option>
+          <option value="Fly-drive">Fly-drive</option>
         </select>
       </div>
-
-       <div class="image-selection">
-         <h3>Kies je vervoerstype:</h3>
-        <label for="trein">
-          <input type="radio" name="transport-select" id="trein" value="trein">
-          <img src="assets/train.png">
-       
-        </label>
-
-        <label for="auto">
-          <input type="radio" name="transport-select" id="auto" value="auto">
-          <img src="assets/car.png">
-  
-        </label>
-
-        <label for="vliegtuig">
-          <input type="radio" name="transport-select" id="vliegtuig" value="vliegtuig">
-          <img src="assets/airplane.png">
-       
-        </label>
-      </div>
-
       <div class="extra-voorkeuren">
         <label for="textarea-voorkeuren">Wat vind je verder belangrijk voor je volgende vakantie?</label>
         <textarea id="textarea-voorkeuren" name="extra-voorkeuren" rows="4" cols="50" placeholder="Bijv. Ik neem graag mijn hond mee op vakantie"></textarea>
@@ -127,6 +112,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </template>
 </div>
 
+<div class="container-reistype">
+<h3 class="homepage-title">De ultieme vrijheid van <span class="text-blue">Fly drive </span>vakanties</h3>
+<div class="container">
+<h4>Fly Drive vakantie</h4>
+<p>Een fly drive vakantie belichaamt de essentie van vrijheid en ontdekking. Het combineert het gemak van vliegen met de onafhankelijkheid van een huurauto, waardoor je elke bestemming op jouw tempo kunt verkennen. Deze vorm van reizen heeft recentelijk veel aan populariteit gewonnen, en terecht. Het biedt een unieke kans om verre bestemmingen te ervaren, van de verstopte parels tot de bekende hoogtepunten, allemaal op jouw voorwaarden.<br><br>
+
+Stel je voor dat je door de glooiende heuvels van de Italiaanse Chianti-streek rijdt, langs middeleeuwse torens en uitgestrekte wijngaarden. Of dat je het stuur neemt langs de Noorse fjorden, met adembenemende uitzichten om elke bocht. Een fly drive geeft je de kans om deze dromen waar te maken. In plaats van vast te zitten aan een vooraf bepaalde route, kun je spontaan besluiten om een onbekend pad in te slaan, misschien wel naar dat perfecte uitzichtpunt voor een zonsondergang of een afgelegen strandje dat nog niet is ontdekt door de massa.</p><br><br>
+
+<h4>Fly Drive naar Noorwegen</h4>
+<p>Noorwegen is een voorbeeld van een bestemming die perfect geschikt is voor een fly drive. De combinatie van goed onderhouden wegen, adembenemende natuurlijke schoonheid, en een verscheidenheid aan landschappen maakt het tot een onvergetelijke ervaring. Van de ruige kustlijnen tot de majestueuze bergen en diepe, serene fjorden, elke kilometer biedt iets nieuws en opwindends. Je kunt stoppen bij charmante Noorse dorpjes, genieten van de lokale keuken, of een nacht doorbrengen onder de sterrenhemel.</p><br><br>
+
+<h4>Fly Drive met een huurauto</h4>
+<p>Een fly drive vakantie is meer dan alleen een reis; het is een avontuur dat je zelf vormgeeft. Het stelt je in staat om het onbekende te omarmen, je eigen routes te kiezen en te genieten van de reis zoals jij dat wilt. Of je nu op zoek bent naar culturele schatten in steden zoals Florence en Pisa, of de natuurlijke wonderen van de Plitvice Meren wilt verkennen, de keuze is aan jou. Met een huurauto ben je niet gebonden aan tijdschema's of groepsreizen; je beleeft de wereld op jouw manier.<br><br>
+
+Ontdek vandaag nog de mogelijkheden en begin aan een reis die niet alleen nieuwe bestemmingen onthult, maar ook nieuwe perspectieven opent. Een fly drive vakantie is niet zomaar een uitstapje; het is een pad naar vrijheid en onvergetelijke herinneringen.</p>
+</div></div>
+
 <footer>
   <div class="footer-3">
   <p class="footer-title">Reistypes</p>
@@ -149,7 +151,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   info@chatventure.nl<br>
 </div></div>  
 </footer>
-
 <!-- Begin TradeTracker SuperTag Code -->
 <script type="text/javascript">
 
@@ -163,6 +164,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   (function() {var tt = document.createElement('script'), s = document.getElementsByTagName('script')[0]; tt.setAttribute('type', 'text/javascript'); tt.setAttribute('src', (document.location.protocol == 'https:' ? 'https' : 'http') + '://tm.tradetracker.net/tag?t=' + _TradeTrackerTagOptions.t + '&amp;s=' + _TradeTrackerTagOptions.s + '&amp;chk=' + _TradeTrackerTagOptions.chk); s.parentNode.insertBefore(tt, s);})();
 </script>
 <!-- End TradeTracker SuperTag Code -->
-<script src="script.js"></script>
+<script src="script-reistype.js"></script>
 </body>
 </html>

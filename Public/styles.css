@@ -35,9 +35,9 @@ footer {
 .title {
   color: #FF8E8E;
   font-family: Fredoka;
-  font-size: 25px;
   font-style: normal;
   font-weight: 600;
+  font-size: 2em;
   line-height: 55.688px; /* 222.75% */
   letter-spacing: -0.5px;
   margin-bottom: 40px;
@@ -74,14 +74,13 @@ h2.hero-h2 {
 
 h3 {
   font-size: 1.2em;
-  font-weight: 300;
+  font-weight: 400;
   margin: 0px;
   margin-bottom: 10px;
 }
 
 h3.homepage-title {
   text-align: center;
-  padding-top: 75px;
   color: #FF8E8E;
   font-family: Fredoka;
   font-size: 35px;
@@ -89,14 +88,31 @@ h3.homepage-title {
   font-weight: 600;
 }
 
+h4 {
+  font-size: 1.2em;
+  line-height: 0px;
+  font-weight: 500;
+}
+
+p {
+  font-size: 1.2em;
+  font-weight: 300;
+  margin-block: 0px;
+}
+
 p.hero-tekst {
   padding-right: 75px;
+  padding-bottom: 25px;
   font-size: 20px;
 }
 
 p.homepage-content-tekst {
   font-size: 20px;
   font-weight: 300;
+}
+
+p.footer-content {
+  font-size: 1em;
 }
 
 a {
@@ -149,7 +165,6 @@ button:hover {
 .text-blue {
   color: #455375;
   font-family: Fredoka;
-  font-size: 35px;
   font-style: normal;
   font-weight: 600;
 }
@@ -217,6 +232,10 @@ position: absolute;
   width: 50px; 
   height: auto;
   justify-content: center; 
+}
+
+.homepage-content-container {
+  padding-top: 50px;
 }
 
 .illustration {
@@ -312,6 +331,10 @@ position: absolute;
 
 }
 
+.image-selection {
+  margin-bottom: 25px;
+}
+
 .image-selection label {
   display: inline-grid;
   justify-content: center;
@@ -343,8 +366,7 @@ position: absolute;
 
 .extra-voorkeuren {
   display: grid;
-  padding-top: 25px;
-  padding-bottom: 50px;
+  margin-bottom: 25px;
 }
 
 .extra-voorkeuren textarea::placeholder {
@@ -395,6 +417,7 @@ position: absolute;
 #reisaanbodDisplay {
   display: flex;
   padding: 0px 10%;
+  margin-bottom: 50px;
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -413,6 +436,13 @@ position: absolute;
 
 }
 
+.container-reistype {
+  margin-top: 50px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  background-color: #FFF8F8;
+}
+
 .reisaanbod-item {
   display: inline-table;
   margin-top: 25px;
@@ -423,6 +453,7 @@ flex-shrink: 0;
 
 .reisaanbod-item-content {
   display: flex;
+  padding-bottom: 50px;
 }
 
 .reisaanbod-item-content-left {
@@ -520,6 +551,7 @@ flex-shrink: 0;
   font-size: 20px;
   font-weight: 500;
   line-height: 1em;
+  padding-bottom: 10px;
 }
 
 select, button {
@@ -529,11 +561,11 @@ select, button {
 /* Media query for better responsive design */
 @media (max-width: 415px) {
 
-  body {
+body {
     display: block;
   }
 
-  h1 {
+h1 {
     font-size: 40px;
     padding-right: 25px;
     line-height: 1em;
@@ -545,16 +577,26 @@ h1.title {
   font-size: 25px;
 }
 
-  h2 {
+h2 {
     margin-bottom: 0px;
   }
+
+h2.title {
+  padding: 0px;
+  line-height: 1.2em;
+  font-size: 25px;
+}
+
+h3.homepage-title {
+  margin-bottom: 25px;
+}
 
 p.hero-tekst {
   padding-right: 0px;
 }
 
   label, select, button {
-    font-size: 1.2em;
+    font-size: 1em;
     line-height: 25px;
   }
 
@@ -564,6 +606,10 @@ p.hero-tekst {
 
 #content-container {
   padding: 0px;
+}
+
+.container-reistype {
+  margin-top: 0px;
 }
 
 .hero {
@@ -653,8 +699,8 @@ p.hero-tekst {
     margin-top: 10px;
     max-width: 100%;
     font-size: 1.2em;
+}
 
-  }
 #reisaanbod-title {
   line-height: 25px;
   text-align: center;
@@ -662,12 +708,13 @@ p.hero-tekst {
 
 #reisaanbodDisplay {
   padding: 0px;
-
+  margin-bottom: 0px;
 }
 
 .reisaanbod-item-content {
     display: flex;
     flex-direction: column;
+    padding-bottom: 25px;
   }
 
 .reisaanbod-item-content-left {
