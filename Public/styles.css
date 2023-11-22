@@ -182,7 +182,7 @@ button:hover {
   display: flex;
   justify-content: right;
   align-items: center;
-  width: 25%;
+  width: 100%;
   margin-right: 25px;
 }
 
