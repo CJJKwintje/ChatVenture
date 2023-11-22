@@ -466,6 +466,7 @@ flex-shrink: 0;
   flex-direction: column;
   justify-content: space-between;
   padding-left: 40px;
+  min-width: 50%;
 }
 
 .item-header {
