@@ -108,6 +108,21 @@ async function submitPrompt() {
   const transport = selectedRadio.value;
   const extraVoorkeuren = document.getElementById('textarea-voorkeuren').value;
 
+// Nieuwe code om gebruikersvoorkeuren op te slaan in Google Sheets
+  const gebruikersvoorkeuren = {
+    vertreklocatie,
+    typeVakantie,
+    transport,
+    extraVoorkeuren
+  };
+
+  await fetch('/.netlify/functions/airtable', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(gebruikersvoorkeuren)
+  }).catch(error => console.error('Fout bij het opslaan van gebruikersvoorkeuren:', error));
+
+
   const postData = {
     messages: [
       {

@@ -1,0 +1,30 @@
+const Airtable = require('airtable');
+
+exports.handler = async (event) => {
+  const { vertreklocatie, typeVakantie, transport, extraVoorkeuren } = JSON.parse(event.body);
+ const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base('appqZjV7d8qBftQ1x');
+
+  try {
+    await base('User_input').create([
+      {
+        fields: {
+          'vertreklocatie': vertreklocatie,
+          'typeVakantie': typeVakantie,
+          'transport': transport,
+          'extraVoorkeuren': extraVoorkeuren
+        }
+      }
+    ]);
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ message: 'Data successfully saved to Airtable' })
+    };
+  } catch (error) {
+    console.error('Error:', error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ message: 'Error saving data to Airtable' })
+    };
+  }
+};
