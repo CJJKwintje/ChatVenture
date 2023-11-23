@@ -143,35 +143,34 @@ if (data.choices && data.choices.length > 0) {
       document.getElementById('response-output').textContent = responseText;
       document.getElementById('response-output').classList.remove('hidden');
 
-   try {   
-     const extractResponse = await fetch('/extract-info', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tekst: responseText })
-      });
+   try {
+  const extractResponse = await fetch('/.netlify/functions/extractinfo', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ tekst: responseText })
+  });
 
-     if (!extractResponse.ok) {
-      console.log("Response status:", extractResponse.status);
-      console.log("Response text:", await extractResponse.text());
-      throw new Error('Fout bij het ophalen van extractiegegevens');
-        }
+  if (!extractResponse.ok) {
+    console.log("Response status:", extractResponse.status);
+    console.log("Response text:", await extractResponse.text());
+    throw new Error('Fout bij het ophalen van extractiegegevens');
+  }
 
-      const extractedData = await extractResponse.json();
+  const extractedData = await extractResponse.json();
 
-      let reistype = extractedData.reistypes.length > 0 ? extractedData.reistypes[0] : null;
-      let country = extractedData.landen.length > 0 ? extractedData.landen[0] : null;
+  let reistype = extractedData.reistypes.length > 0 ? extractedData.reistypes[0] : null;
+  let country = extractedData.landen.length > 0 ? extractedData.landen[0] : null;
 
-      if (country && reistype) {
-        await queryGoogleSheetsWithCountry(country, reistype);
-      } else {
-        console.log("Geen land of reistype gevonden in de respons");
-        googleSheetsDataReceived = true;
-      }
-    } catch (extractError) {
-        console.error('Fout bij het verwerken van extractiegegevens:', extractError);
-        // Extra logica hier indien nodig, zoals het tonen van een foutmelding aan de gebruiker
-
-      }
+  if (country && reistype) {
+    await queryGoogleSheetsWithCountry(country, reistype);
+  } else {
+    console.log("Geen land of reistype gevonden in de respons");
+    googleSheetsDataReceived = true;
+  }
+} catch (extractError) {
+  console.error('Fout bij het verwerken van extractiegegevens:', extractError);
+  // Extra logica hier indien nodig, zoals het tonen van een foutmelding aan de gebruiker
+}
     } else {  
       chatGPTResponseReceived = true;
       googleSheetsDataReceived = true;
