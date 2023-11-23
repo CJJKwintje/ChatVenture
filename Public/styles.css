@@ -445,20 +445,21 @@ position: absolute;
 }
 
 .reisaanbod-item {
-  display: inline-table;
+  display: flex;
   margin-top: 25px;
   width: 100%;
-height: 394px;
-flex-shrink: 0;
+  height: 300px;
+  overflow: hidden;
+  margin-bottom: 50px;
 }
 
 .reisaanbod-item-content {
   display: flex;
-  padding-bottom: 50px;
 }
 
 .reisaanbod-item-content-left {
   min-width: 40%;
+
 }
 
 .reisaanbod-item-content-right {
@@ -501,7 +502,9 @@ flex-shrink: 0;
 
 .reisaanbod-image {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
   border-radius: 10px;
 }
 
@@ -713,6 +716,10 @@ p.hero-tekst {
   margin-bottom: 0px;
 }
 
+.reisaanbod-item {
+  height: auto;
+}
+
 .reisaanbod-item-content {
     display: flex;
     flex-direction: column;
@@ -738,10 +745,6 @@ p.hero-tekst {
 
 .reisaanbod-link {
   padding: 0px 15px;
-}
-
-.reisaanbod-beschrijving {
-  padding-bottom: 0px;
 }
 
 .footer-left {

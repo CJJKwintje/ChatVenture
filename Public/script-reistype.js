@@ -105,7 +105,7 @@ async function submitPrompt() {
     messages: [
       {
         role: "system",
- content: `Gedraag je als een enthousiaste travelagent. De gebruiker geeft 3 voorkeuren door voor een nieuwe vakantie, namelijk vertreklocatie, reistype en extra wensen.  Geef een waardevolle reisinspiratie en begin de inspiratie met “We raden een [reistype] in [land] aan”. Beperk je tot de volgende combinaties: Fly drive: Canada, Faroer, Noord-Ierland, Ierland, Stedentrip: de Verenigde Staten, Faroer, IJsland, Noorwegen, Zweden, Canada, Noord-Ierland, Ierland, Winteravontuur: IJsland, Zweden, Finland, Wintersportvakantie: Canada, IJsland, Noorwegen, Zweden`      },      {
+ content: `Gedraag je als een enthousiaste travelagent. De gebruiker geeft 4 voorkeuren door voor een nieuwe vakantie, namelijk vertreklocatie, reistype, type vervoer en extra wensen.  Geef een waardevolle reisinspiratie. Beperk je tot de volgende combinaties: Fly-drive: Canada, Faeröer Eilanden, Noord-Ierland, Ierland, Stedentrip: de Verenigde Staten, Faroer, IJsland, Noorwegen, Zweden, Canada, Noord-Ierland, Ierland, Winteravontuur: IJsland, Zweden, Finland, Wintersportvakantie: Canada, IJsland, Noorwegen, Zweden, Rondreis: Frankrijk, Groot Brittannië, Scandinavië, Kroatië, de Verenigde Staten, Thailand, Nieuw-Zeeland, Myanmar, Japan, Italië, Indonesië, Griekenland, Frankrijk, Brazillië, Borneo, Australië, Costa Rica, Argentinië, Albanië, Treinreis: Zwitserland, Duitsland, Noorwegen, Italië`      },      {
         role: "user",
         content: `Vertreklocatie: ${vertreklocatie}, Reistype: ${typeVakantie}, Overige wensen: ${extraVoorkeuren}`
       }
@@ -135,11 +135,24 @@ async function submitPrompt() {
       const responseText = data.choices[0].message.content;
       document.getElementById('response-output').textContent = responseText;
       document.getElementById('response-output').classList.remove('hidden');
-      const pattern = /We raden een ([\p{L}\s-]+) in ([\p{L}\s]+) aan/u; 
-      const match = responseText.match(pattern);
 
-      let reistype = match && match.length > 1 ? match[1] : null;
-      let country = match && match.length > 2 ? match[2] : null;
+   try {   
+     const extractResponse = await fetch('/extract-info', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tekst: responseText })
+      });
+
+     if (!extractResponse.ok) {
+      console.log("Response status:", extractResponse.status);
+      console.log("Response text:", await extractResponse.text());
+      throw new Error('Fout bij het ophalen van extractiegegevens');
+        }
+
+      const extractedData = await extractResponse.json();
+
+      let reistype = extractedData.reistypes.length > 0 ? extractedData.reistypes[0] : null;
+      let country = extractedData.landen.length > 0 ? extractedData.landen[0] : null;
 
       if (country && reistype) {
         await queryGoogleSheetsWithCountry(country, reistype);
@@ -147,7 +160,12 @@ async function submitPrompt() {
         console.log("Geen land of reistype gevonden in de respons");
         googleSheetsDataReceived = true;
       }
-    } else {
+    } catch (extractError) {
+        console.error('Fout bij het verwerken van extractiegegevens:', extractError);
+        // Extra logica hier indien nodig, zoals het tonen van een foutmelding aan de gebruiker
+
+      }
+    } else {  
       chatGPTResponseReceived = true;
       googleSheetsDataReceived = true;
     }
