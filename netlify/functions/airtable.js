@@ -24,7 +24,7 @@ exports.handler = async (event) => {
     console.error('Error:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ message: 'Error saving data to Airtable' })
+      body: JSON.stringify({ message: 'Error saving the data to Airtable' })
     };
   }
 };
