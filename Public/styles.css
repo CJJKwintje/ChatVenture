@@ -194,7 +194,8 @@ button:hover {
 
 .hero-content {
   background-color: #FFF8F8;
-  padding: 75px 75px;
+  padding: 50px 50px;
+  max-width: 40%;
 }
 
 .hero-image {

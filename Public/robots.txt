@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /niet-indexeren/
+Sitemap: https://www.jouwwebsite.com/sitemap.xml
