@@ -108,20 +108,13 @@ async function submitPrompt() {
   const transport = selectedRadio.value;
   const extraVoorkeuren = document.getElementById('textarea-voorkeuren').value;
 
-// Nieuwe code om gebruikersvoorkeuren op te slaan in Google Sheets
+    // Definieer gebruikersvoorkeuren hier
   const gebruikersvoorkeuren = {
     vertreklocatie,
     typeVakantie,
     transport,
     extraVoorkeuren
   };
-
-  await fetch('/.netlify/functions/airtable', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(gebruikersvoorkeuren)
-  }).catch(error => console.error('Fout bij het opslaan van gebruikersvoorkeuren:', error));
-
 
   const postData = {
     messages: [
@@ -157,6 +150,18 @@ if (data.choices && data.choices.length > 0) {
       const responseText = data.choices[0].message.content;
       document.getElementById('response-output').textContent = responseText;
       document.getElementById('response-output').classList.remove('hidden');
+
+   // Nieuwe code om zowel gebruikersvoorkeuren als ChatGPT-response naar Airtable te sturen
+  const airtableData = {
+    userPreferences: gebruikersvoorkeuren,
+    chatGPTResponse: responseText
+  };
+
+  await fetch('/.netlify/functions/airtable', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(airtableData)
+  }).catch(error => console.error('Fout bij het opslaan van data in Airtable:', error));   
 
    try {
   const extractResponse = await fetch('/.netlify/functions/extractinfo', {

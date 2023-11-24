@@ -1,17 +1,18 @@
 const Airtable = require('airtable');
 
 exports.handler = async (event) => {
-  const { vertreklocatie, typeVakantie, transport, extraVoorkeuren } = JSON.parse(event.body);
- const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base('appqZjV7d8qBftQ1x');
+  const { userPreferences, chatGPTResponse } = JSON.parse(event.body);
+  const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base('appqZjV7d8qBftQ1x');
 
-  try {
+try {
     await base('User_input').create([
       {
         fields: {
-          'vertreklocatie': vertreklocatie,
-          'typeVakantie': typeVakantie,
-          'transport': transport,
-          'extraVoorkeuren': extraVoorkeuren
+          'Vertreklocatie': userPreferences.vertreklocatie,
+          'TypeVakantie': userPreferences.typeVakantie,
+          'Transport': userPreferences.transport,
+          'ExtraVoorkeuren': userPreferences.extraVoorkeuren,
+          'ChatGPTResponse': chatGPTResponse
         }
       }
     ]);
