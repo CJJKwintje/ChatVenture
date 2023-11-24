@@ -634,6 +634,7 @@ p.hero-tekst {
 .hero-content {
   padding: 20px 25px 0px 25px;
   background-color: #FFFF;
+  max-width: none;
 }
 
 .homepage-image {
