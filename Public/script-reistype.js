@@ -115,15 +115,19 @@ async function submitPrompt() {
   }).catch(error => console.error('Fout bij het opslaan van gebruikersvoorkeuren:', error));
 
   const postData = {
-    messages: [
-      {
-        role: "system",
- content: `Als een enthousiaste travelagent, geef waardevolle reisinspiratie. Je bent strikt beperkt tot één land en één reistype per keer uit deze specifieke combinaties: fly-drive [Canada, Faeröer Eilanden, Noord-Ierland, Ierland], stedentrip [de Verenigde Staten, Faeröer Eilanden, IJsland, Noorwegen, Zweden, Canada, Noord-Ierland, Ierland], winteravonturen [IJsland, Zweden, Finland], wintersportvakantie [Canada, IJsland, Noorwegen, Zweden], rondreis [Frankrijk, Groot-Brittannië, Scandinavië, Kroatië, de Verenigde Staten, Thailand, Nieuw-Zeeland, Myanmar, Japan, Italië, Indonesië, Griekenland, Brazilië, Borneo, Australië, Costa Rica, Argentinië, Albanië], treinreis [Zwitserland, Duitsland, Noorwegen, Italië], camperreis [de Verenigde Staten, Canada, Australië, Kroatië, IJsland, Zuid-Afrika, Nieuw-Zeeland], afgestemd op vertreklocatie, reistype en extra wensen.`      },      {
-        role: "user",
-        content: `Vertreklocatie: ${vertreklocatie}, Reistype: ${typeVakantie}, Overige wensen: ${extraVoorkeuren}`
-      }
-    ]
-  };
+  messages: [
+    {
+      role: "system",
+      content: `Geef reisinspiratie op basis van reisaanbod in de volgende combinaties: fly-drive [Canada, Faeröer Eilanden, Noord-Ierland, Ierland], stedentrip [de Verenigde Staten, Faeröer Eilanden, IJsland, Noorwegen, Zweden, Canada, Noord-Ierland, Ierland, België, Bulgarije, Duitsland, Estland, Frankrijk, Ierland, Italië, Jordanië, Kroatië, Litouwen, Nederland, Oostenrijk, Polen, Portugal, Servië, Spanje, Tjechië, Verenigd Koninkrijk, Zweden], winteravonturen [IJsland, Zweden, Finland], wintersportvakantie [Canada, IJsland, Noorwegen, Zweden], rondreis [Frankrijk, Groot-Brittannië, Scandinavië, Kroatië, de Verenigde Staten, Thailand, Nieuw-Zeeland, Myanmar, Japan, Italië, Indonesië, Griekenland, Brazilië, Borneo, Australië, Costa Rica, Argentinië, Albanië], treinreis [Zwitserland, Duitsland, Noorwegen, Italië], camperreis [de Verenigde Staten, Canada, Australië, Kroatië, IJsland, Zuid-Afrika, Nieuw-Zeeland]. Je bent strikt beperkt tot één land en één reistype per keer uit deze specifieke combinaties. Als er geen specifieke gebruikersvoorkeuren zijn, gebruik dan een willekeurige combinatie uit het bestaande aanbod zodat je alsnog waardevolle reisinspiratie geeft.`
+    },
+    {
+      role: "user",
+      content: userMessageContent.length > 0 
+        ? `Ik wil graag een reis met: ${userMessageContent}.`
+        : `Ik zoek reisinspiratie voor mijn volgende vakantie.`
+    }
+  ]
+};
 
   try {
     const chatResponse = await fetchWithTimeout('/.netlify/functions/chat', {
