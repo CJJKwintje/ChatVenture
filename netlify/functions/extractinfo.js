@@ -2,7 +2,7 @@ const { parse } = require('querystring');
 
 // Voorbeeldlijsten met reistypes en landen
 const reistypes = ["fly-drive", "stedentrip", "wintersport", "winteravontuur", "Rondreis", "treinreis", "camperreis"];
-const landen = ["Nederland", "Spanje", "Italië", "Frankrijk", "Zwitserland", "Duitsland", "Noorwegen", "Zweden", "IJsland", "Finland", "Scandinavië", "Canada", "Noord-Ierland", "Ierland", "Faeröer Eilanden", "de Verenigde Staten", "Schotland", "Groot Brittannië", "Kroatië", "Albanië", "Argentinië", "Australië", "Borneo", "Costa Rica", "Griekenland", "Indonesië", "Japan", "Myanmar", "Nieuw-Zeeland", "Thailand", "Zuid-Afrika"];
+const landen = ["Nederland", "Spanje", "Italië", "Frankrijk", "Zwitserland", "Duitsland", "België", "Jordanië", "Bulgarije", "Estland", "Hongarije", "Litouwen", "Oostenrijk", "Polen", "Portugal", "Servië", "Tjechië", "Verenigd Koninkrijk", "Zweden", "Noorwegen", "Zweden", "IJsland", "Finland", "Scandinavië", "Canada", "Noord-Ierland", "Ierland", "Faeröer Eilanden", "de Verenigde Staten", "Schotland", "Groot Brittannië", "Kroatië", "Albanië", "Argentinië", "Australië", "Borneo", "Costa Rica", "Griekenland", "Indonesië", "Japan", "Myanmar", "Nieuw-Zeeland", "Thailand", "Zuid-Afrika"];
 
 // Functie om informatie te extraheren
 function extractInfo(tekst) {
