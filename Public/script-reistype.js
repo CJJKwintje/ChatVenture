@@ -114,6 +114,12 @@ async function submitPrompt() {
     body: JSON.stringify(gebruikersvoorkeuren)
   }).catch(error => console.error('Fout bij het opslaan van gebruikersvoorkeuren:', error));
 
+  const userMessageContent = [
+  `Vertreklocatie: ${vertreklocatie}`,
+  `Reistype: ${typeVakantie}`,
+  extraVoorkeuren ? `Belangrijk: ${extraVoorkeuren}` : ''
+].filter(Boolean).join(', ');
+
   const postData = {
   messages: [
     {

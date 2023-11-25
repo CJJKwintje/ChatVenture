@@ -753,9 +753,14 @@ button.start-avontuur {
     font-size: 1.2em;
 }
 
+#response-title {
+  font-size: 2em;
+}
+
 #reisaanbod-title {
   line-height: 25px;
   text-align: center;
+  font-size: 2em;
 }
 
 #reisaanbodDisplay {
