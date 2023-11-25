@@ -83,7 +83,7 @@ h3.homepage-title {
   text-align: center;
   color: #FF8E8E;
   font-family: Fredoka;
-  font-size: 35px;
+  font-size: 40px;
   font-style: normal;
   font-weight: 600;
 }
@@ -139,17 +139,17 @@ select, button {
 button {
   display: inline-flex;
   height: 48px;
-  padding: 12px 16px;
+ padding: 30px 20px;
   justify-content: center;
   align-items: center;
   gap: 10px;
   flex-shrink: 0;
-  border-radius: 6px;
+  border-radius: 15px;
   border-color: #FF8E8E;
   background: var(--Primary, #FF8E8E);
   color: var(--White, #FFF);
   font-family: Fredoka;
-  font-size: 1.2em;
+  font-size: 1.5em;
   font-style: normal;
   font-weight: 400;
   line-height: 22px;
@@ -157,6 +157,16 @@ button {
 }
 
 button:hover {
+  background-color: #FFFF;
+  color: #40506A;
+  cursor: pointer;
+}
+
+button.start-avontuur {
+  align-self: flex-start;
+}
+
+button.start-avontuur:hover {
   background-color: #FFFF;
   color: #40506A;
   cursor: pointer;
@@ -189,13 +199,22 @@ button:hover {
 
 .hero {
   display: flex;
-  height: 600px;
+  height: 650px;
+  padding: 20px 50px;
+  background-position: center;
+  background-size: cover;
 }
 
 .hero-content {
+  display: flex;
   background-color: #FFF8F8;
-  padding: 50px 50px;
-  max-width: 40%;
+  padding: 0px 40px 25px 40px;
+  border-radius: 20px;
+  max-width: 35%;
+  margin: 50px;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: min-content;
 }
 
 .hero-image {
@@ -221,7 +240,7 @@ position: absolute;
   align-items: center;
   padding: 15px 15px;
   color: #455375; 
-  font-size: 25px;
+  font-size: 30px;
   text-decoration: none;
   font-family: Fredoka; 
   font-weight: 700; 
@@ -237,7 +256,8 @@ position: absolute;
 }
 
 .homepage-content-container {
-  padding-top: 50px;
+  padding-top: 100px;
+  padding-bottom: 100px;
 }
 
 .illustration {
@@ -247,29 +267,34 @@ position: absolute;
 
 .homepage-content-left {
   display: flex;
-  padding: 50px 15%;
-  margin-top: 75px;
+  justify-content: center;
+  margin-top: 100px;
+  margin-right: 50px;
+  margin-bottom: 50px;
 }
 
 .homepage-content-left-tekst {
+  max-width: 35%;
   margin-right: 10%;
 }
 
 .homepage-content-right {
   display: flex;
   flex-direction: row-reverse;
-  padding: 25px 15%;
-  margin-bottom: 75px;
+  justify-content: center;  
+  margin-top: 100px;
 }
 
 .homepage-content-right-tekst {
   margin-left: 10%;
+  max-width: 35%;
 }
 
 .homepage-content-title {
   color: #FF8E8E;
   font-size: 25px;
   font-weight: 500;
+  line-height: 2em;
 
 }
 
@@ -410,6 +435,7 @@ position: absolute;
 
 #response-title{
   align-self: center;
+  font-size: 50px;
 }
 
 #reisaanbod-container {
@@ -429,7 +455,7 @@ position: absolute;
     color: #40506A;
     justify-self: center;
     font-family: Fredoka;
-    font-size: 25px;
+    font-size: 50px;
     font-style: normal;
     font-weight: 600;
     line-height: 55.688px;
@@ -594,7 +620,9 @@ h2.title {
 }
 
 h3.homepage-title {
-  margin-bottom: 25px;
+  margin-bottom: 50px;
+  margin-top: 25px;
+  padding: 0px 25px;
 }
 
 p.hero-tekst {
@@ -602,13 +630,16 @@ p.hero-tekst {
 }
 
   label, select, button {
-    font-size: 1em;
+    font-size: 1.3em;
     line-height: 25px;
   }
 
-  select, button {
-    padding: 8px 15px;
-  }
+
+button.start-avontuur {
+  margin-bottom: 25px;
+  font-size: 1.3em;
+  padding: 25px 25px;
+}
 
 #content-container {
   padding: 0px;
@@ -622,6 +653,7 @@ p.hero-tekst {
   display: flex;
   flex-direction: column;
   height: unset;
+  padding: 75px 10px 75px;
 }
 
 .hero-image {
@@ -632,9 +664,10 @@ p.hero-tekst {
 }
 
 .hero-content {
-  padding: 20px 25px 0px 25px;
-  background-color: #FFFF;
+  padding: 0px 25px;
+  background: rgba(255, 248, 248, 0.90);
   max-width: none;
+  margin: 0px;
 }
 
 .homepage-image {
@@ -648,26 +681,39 @@ p.hero-tekst {
   object-fit: cover;
 }
 
+.homepage-content-container {
+  padding: 50px 20px;
+}
+
 .homepage-content-left {
   display: flex;
-  padding: 25px 25px;
   margin-top: 25px;
+  margin-right: 0px;
   flex-direction: column;
+}
+
+.homepage-content-title {
+  line-height: 1.2em;
+  padding-bottom: 15px;
 }
 
 .homepage-content-left-tekst {
   margin-right: 0%;
-  }
+  margin-bottom: 25px;
+  max-width: none;
+}
 
 .homepage-content-right {
   display: flex;
   flex-direction: column;
-  padding: 25px 25px;
   margin-bottom: 75px;
+  margin-top: 0px;
 }
 
 .homepage-content-right-tekst {
   margin-left: 0px;
+  margin-bottom: 25px;
+  max-width: none;
 }
 
 .payoff {
