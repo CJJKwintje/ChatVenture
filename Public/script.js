@@ -67,7 +67,7 @@ async function queryGoogleSheetsWithCountry(country, reistype) {
       clone.querySelector('.reisaanbod-logo').src = row[7];
       clone.querySelector('.reisaanbod-image').src = row[6];
       clone.querySelector('.reisaanbod-naam').textContent = row[2];
-      clone.querySelector('.reisaanbod-beschrijving').textContent = beperkTekstLengte(row[3], 350);
+      clone.querySelector('.reisaanbod-beschrijving').textContent = beperkTekstLengte(row[3], 250);
 
       const prijsElement = clone.querySelector('.reisaanbod-prijs');
       if (prijsElement) {
@@ -100,12 +100,11 @@ async function submitPrompt() {
 
   const vertreklocatie = document.getElementById('vertreklocatie').value;
   const typeVakantie = document.getElementById('type-vakantie-select').value;
+  
+  // Veranderd: verwijder de controle of transport is geselecteerd
   const selectedRadio = document.querySelector('input[name="transport-select"]:checked');
-  if (!selectedRadio) {
-    console.error('Geen transport geselecteerd');
-    return;
-  }
-  const transport = selectedRadio.value;
+  const transport = selectedRadio ? selectedRadio.value : ""; // Als er niets geselecteerd is, gebruik een lege string
+  
   const extraVoorkeuren = document.getElementById('textarea-voorkeuren').value;
 
     // Definieer gebruikersvoorkeuren hier
@@ -116,16 +115,28 @@ async function submitPrompt() {
     extraVoorkeuren
   };
 
+  const userMessageContent = [
+  `Vertreklocatie: ${vertreklocatie}`,
+  `Reistype: ${typeVakantie}`,
+  transport ? `Gebied: ${transport}` : '',
+  extraVoorkeuren ? `Belangrijk: ${extraVoorkeuren}` : ''
+].filter(Boolean).join(', ');
+
   const postData = {
-    messages: [
-      {
-        role: "system",
- content: `Als een enthousiaste travelagent, geef waardevolle reisinspiratie in de wij-vorm. Je bent strikt beperkt tot één land en één reistype per keer uit deze specifieke combinaties: fly-drive [Canada, Faeröer Eilanden, Noord-Ierland, Ierland], stedentrip [de Verenigde Staten, Faeröer Eilanden, IJsland, Noorwegen, Zweden, Canada, Noord-Ierland, Ierland], winteravonturen [IJsland, Zweden, Finland], wintersportvakantie [Canada, IJsland, Noorwegen, Zweden], rondreis [Frankrijk, Groot-Brittannië, Scandinavië, Kroatië, de Verenigde Staten, Thailand, Nieuw-Zeeland, Myanmar, Japan, Italië, Indonesië, Griekenland, Brazilië, Borneo, Australië, Costa Rica, Argentinië, Albanië], treinreis [Zwitserland, Duitsland, Noorwegen, Italië], camperreis [de Verenigde Staten, Canada, Australië, Kroatië, IJsland, Zuid-Afrika, Nieuw-Zeeland], afgestemd op vertreklocatie, reistype, vervoer, en extra wensen.`      },      {
-        role: "user",
-        content: `Vertreklocatie: ${vertreklocatie}, Reistype: ${typeVakantie}, Gebied: ${transport}, Belangrijk: ${extraVoorkeuren}`
-      }
-    ]
-  };
+  messages: [
+    {
+      role: "system",
+      content: `Geef reisinspiratie op basis van het volgende aanbod: fly-drive [Canada, Faeröer Eilanden, Noord-Ierland, Ierland], stedentrip [de Verenigde Staten, Faeröer Eilanden, IJsland, Noorwegen, Zweden, Canada, Noord-Ierland, Ierland], winteravonturen [IJsland, Zweden, Finland], wintersportvakantie [Canada, IJsland, Noorwegen, Zweden], rondreis [Frankrijk, Groot-Brittannië, Scandinavië, Kroatië, de Verenigde Staten, Thailand, Nieuw-Zeeland, Myanmar, Japan, Italië, Indonesië, Griekenland, Brazilië, Borneo, Australië, Costa Rica, Argentinië, Albanië], treinreis [Zwitserland, Duitsland, Noorwegen, Italië], camperreis [de Verenigde Staten, Canada, Australië, Kroatië, IJsland, Zuid-Afrika, Nieuw-Zeeland]. Je bent strikt beperkt tot één land en één reistype per keer uit deze specifieke combinaties. Als er geen specifieke gebruikersvoorkeuren zijn, gebruik dan een willekeurige combinatie uit het bestaande aanbod zodat je alsnog waardevolle reisinspiratie geeft.`
+    },
+    {
+      role: "user",
+      content: userMessageContent.length > 0 
+        ? `Ik wil graag een reis met: ${userMessageContent}.`
+        : `Ik zoek reisinspiratie voor mijn volgende vakantie.`
+    }
+  ]
+};
+
 
   try {
     const chatResponse = await fetchWithTimeout('/.netlify/functions/chat', {
