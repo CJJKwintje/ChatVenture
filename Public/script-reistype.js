@@ -1,6 +1,9 @@
 let loaderAnimation;
 let chatGPTResponseReceived = false;
 let googleSheetsDataReceived = false;
+let geselecteerdReisaanbod = []; // Toegevoegd om het geselecteerde reisaanbod op te slaan
+let aantalReisaanbod = 0; // Toegevoegd om het aantal reisaanbod bij te houden
+let selectedCountry = '';
 
 function setupLoaderAnimation() {
   loaderAnimation = lottie.loadAnimation({
@@ -122,7 +125,7 @@ async function submitPrompt() {
   messages: [
     {
       role: "system",
-      content: `Geef alleen reisinspiratie op basis van reisaanbod in de volgende combinaties: fly-drive [Canada, Faeröer Eilanden, Noord-Ierland, Ierland], stedentrip [de Verenigde Staten, Faeröer Eilanden, IJsland, Noorwegen, Zweden, Canada, Noord-Ierland, Ierland, België, Bulgarije, Duitsland, Estland, Frankrijk, Ierland, Italië, Jordanië, Kroatië, Litouwen, Nederland, Oostenrijk, Polen, Portugal, Servië, Spanje, Tjechië, Verenigd Koninkrijk, Zweden], winteravonturen [IJsland, Zweden, Finland], wintersportvakantie [Canada, IJsland, Noorwegen, Zweden], rondreis [Frankrijk, Groot-Brittannië, Scandinavië, Kroatië, de Verenigde Staten, Thailand, Nieuw-Zeeland, Myanmar, Japan, Italië, Indonesië, Griekenland, Brazilië, Borneo, Australië, Costa Rica, Argentinië, Albanië], treinreis [Zwitserland, Duitsland, Noorwegen, Italië], camperreis [de Verenigde Staten, Canada, Australië, Kroatië, IJsland, Zuid-Afrika, Nieuw-Zeeland]. Je bent strikt beperkt tot één land en één reistype per keer uit deze specifieke combinaties. Als er geen specifieke gebruikersvoorkeuren zijn, gebruik dan een willekeurige combinatie uit het bestaande aanbod zodat je alsnog waardevolle reisinspiratie geeft.`
+      content: `Geef alleen reisinspiratie op basis van reisaanbod in de volgende combinaties en verwerk het land en reistype in de inspiratietekst: fly-drive [Canada, Faeröer Eilanden, Noord-Ierland, Ierland], stedentrip [de Verenigde Staten, Faeröer Eilanden, IJsland, Noorwegen, Zweden, Canada, Noord-Ierland, Ierland, België, Duitsland, Estland, Frankrijk, Ierland, Italië, Jordanië, Kroatië, Litouwen, Nederland, Oostenrijk, Polen, Portugal, Servië, Spanje, Tjechië, Verenigd Koninkrijk, Zweden], winteravonturen [IJsland, Zweden, Finland], wintersportvakantie [Canada, IJsland, Noorwegen, Zweden], rondreis [Frankrijk, Groot-Brittannië, Scandinavië, Kroatië, de Verenigde Staten, Thailand, Nieuw-Zeeland, Myanmar, Japan, Italië, Indonesië, Griekenland, Brazilië, Borneo, Australië, Costa Rica, Argentinië, Albanië], treinreis [Zwitserland, Duitsland, Noorwegen, Italië], camperreis [de Verenigde Staten, Canada, Australië, Kroatië, IJsland, Zuid-Afrika, Nieuw-Zeeland]. Je bent strikt beperkt tot één land en één reistype per keer uit deze specifieke combinaties. Als er geen specifieke gebruikersvoorkeuren zijn, gebruik dan een willekeurige combinatie uit het bestaande aanbod zodat je alsnog waardevolle reisinspiratie geeft.`
     },
     {
       role: "user",
@@ -163,6 +166,10 @@ async function submitPrompt() {
 
         let reistype = extractedData.reistypes.length > 0 ? extractedData.reistypes[0] : null;
         let country = extractedData.landen.length > 0 ? extractedData.landen[0] : null;
+
+        if (country) {
+        selectedCountry = country; // Sla het geëxtraheerde land op in de variabele
+      }
 
         if (country && reistype) {
             await queryGoogleSheetsWithCountry(country, reistype);
