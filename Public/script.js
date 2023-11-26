@@ -1,6 +1,8 @@
 let loaderAnimation;
 let chatGPTResponseReceived = false;
 let googleSheetsDataReceived = false;
+let geselecteerdReisaanbod = []; // Toegevoegd om het geselecteerde reisaanbod op te slaan
+let aantalReisaanbod = 0; // Toegevoegd om het aantal reisaanbod bij te houden
 
 function setupLoaderAnimation() {
   loaderAnimation = lottie.loadAnimation({
@@ -35,7 +37,6 @@ function beperkTekstLengte(tekst, maxLengte) {
   return tekst.length > maxLengte ? tekst.substring(0, maxLengte) + '...' : tekst;
 }
 
-let reisaanbodBeschikbaar = false;
 
 async function queryGoogleSheetsWithCountry(country, reistype) {
   const url = `/.netlify/functions/fetchSheetData?country=${encodeURIComponent(country)}&reistype=${encodeURIComponent(reistype)}`;
@@ -46,14 +47,19 @@ async function queryGoogleSheetsWithCountry(country, reistype) {
       throw new Error('Fout bij het ophalen van gegevens van Google Sheets');
     }
 
-    const data = await response.json();
+     const data = await response.json();
     googleSheetsDataReceived = true;
-    if (data && data.length > 0) { // Controleer of er data is
-    reisaanbodBeschikbaar = true; // Update de variabele als er reisaanbod is
-    // ... code om het reisaanbod te verwerken en te tonen ...
-  } else {
-    reisaanbodBeschikbaar = false; // Geen reisaanbod beschikbaar
-  }
+    if (data && data.length > 0) {
+      reisaanbodBeschikbaar = true;
+      geselecteerdReisaanbod = data;
+      aantalReisaanbod = data.length; // Aantal resultaten bijhouden
+      // ... code om het reisaanbod te verwerken en te tonen ...
+    } else {
+      reisaanbodBeschikbaar = false;
+      geselecteerdReisaanbod = [];
+      aantalReisaanbod = 0;
+    }
+
     checkLoaderAndDisplayStatus();
 
     const reisaanbodDisplay = document.getElementById('reisaanbodDisplay');
@@ -67,7 +73,7 @@ async function queryGoogleSheetsWithCountry(country, reistype) {
       clone.querySelector('.reisaanbod-logo').src = row[7];
       clone.querySelector('.reisaanbod-image').src = row[6];
       clone.querySelector('.reisaanbod-naam').textContent = row[2];
-      clone.querySelector('.reisaanbod-beschrijving').textContent = beperkTekstLengte(row[3], 250);
+      clone.querySelector('.reisaanbod-beschrijving').textContent = beperkTekstLengte(row[3], 240);
 
       const prijsElement = clone.querySelector('.reisaanbod-prijs');
       if (prijsElement) {
@@ -139,75 +145,62 @@ async function submitPrompt() {
 
   try {
     const chatResponse = await fetchWithTimeout('/.netlify/functions/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(postData)
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(postData)
     }, 20000);
 
-    if (!chatResponse.ok) {
-      throw new Error(`Network response was not ok: ${chatResponse.statusText}`);
-    }
-
+    if (!chatResponse.ok) throw new Error(`Network response was not ok: ${chatResponse.statusText}`);
     const contentType = chatResponse.headers.get('content-type');
-    if (!contentType || !contentType.includes('application/json')) {
-      throw new TypeError("Oops, we haven't got JSON!");
-    }
+    if (!contentType || !contentType.includes('application/json')) throw new TypeError("Oops, we haven't got JSON!");
 
     const data = await chatResponse.json();
     chatGPTResponseReceived = true;
 
-if (data.choices && data.choices.length > 0) {
-      const responseText = data.choices[0].message.content;
-      document.getElementById('response-output').textContent = responseText;
-      document.getElementById('response-output').classList.remove('hidden');
+    if (data.choices && data.choices.length > 0) {
+        const responseText = data.choices[0].message.content;
+        document.getElementById('response-output').textContent = responseText;
+        document.getElementById('response-output').classList.remove('hidden');
 
-   // Nieuwe code om zowel gebruikersvoorkeuren als ChatGPT-response naar Airtable te sturen
-  const airtableData = {
-    userPreferences: gebruikersvoorkeuren,
-    chatGPTResponse: responseText
-  };
+        const extractResponse = await fetch('/.netlify/functions/extractinfo', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ tekst: responseText })
+        });
 
-  await fetch('/.netlify/functions/airtable', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(airtableData)
-  }).catch(error => console.error('Fout bij het opslaan van data in Airtable:', error));   
+        if (!extractResponse.ok) throw new Error('Fout bij het ophalen van extractiegegevens');
+        const extractedData = await extractResponse.json();
 
-   try {
-  const extractResponse = await fetch('/.netlify/functions/extractinfo', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ tekst: responseText })
-  });
+        let reistype = extractedData.reistypes.length > 0 ? extractedData.reistypes[0] : null;
+        let country = extractedData.landen.length > 0 ? extractedData.landen[0] : null;
 
-  if (!extractResponse.ok) {
-    console.log("Response status:", extractResponse.status);
-    console.log("Response text:", await extractResponse.text());
-    throw new Error('Fout bij het ophalen van extractiegegevens');
-  }
+        if (country && reistype) {
+            await queryGoogleSheetsWithCountry(country, reistype);
+        } else {
+            console.log("Geen land of reistype gevonden in de respons");
+            googleSheetsDataReceived = true;
+        }
+    } else {
+        chatGPTResponseReceived = true;
+        googleSheetsDataReceived = true;
+    }
 
-  const extractedData = await extractResponse.json();
+    if (chatGPTResponseReceived && googleSheetsDataReceived) {
+        const airtableData = {
+            userPreferences: gebruikersvoorkeuren,
+            chatGPTResponse: data.choices ? data.choices[0].message.content : '',
+            selectedOffer: geselecteerdReisaanbod,
+            numberOfOffers: aantalReisaanbod
+        };
 
-  let reistype = extractedData.reistypes.length > 0 ? extractedData.reistypes[0] : null;
-  let country = extractedData.landen.length > 0 ? extractedData.landen[0] : null;
-
-  if (country && reistype) {
-    await queryGoogleSheetsWithCountry(country, reistype);
-  } else {
-    console.log("Geen land of reistype gevonden in de respons");
-    googleSheetsDataReceived = true;
-  }
-} catch (extractError) {
-  console.error('Fout bij het verwerken van extractiegegevens:', extractError);
-  // Extra logica hier indien nodig, zoals het tonen van een foutmelding aan de gebruiker
-}
-    } else {  
-      chatGPTResponseReceived = true;
-      googleSheetsDataReceived = true;
+        await fetch('/.netlify/functions/airtable', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(airtableData)
+        }).catch(error => console.error('Fout bij het opslaan van data in Airtable:', error));
     }
 
     checkLoaderAndDisplayStatus();
-
   } catch (error) {
     document.getElementById('response-output').textContent = error.message;
     chatGPTResponseReceived = true;
