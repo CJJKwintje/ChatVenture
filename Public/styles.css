@@ -804,8 +804,16 @@ button.start-avontuur {
   display: block;
 }
 
+.footer-1 {
+  padding-bottom: 25px;
+}
+
 .footer-right {
   display: block;
+}
+
+.footer-4 {
+  padding-bottom: 25px;
 }
 
 }
@@ -1024,8 +1032,16 @@ button.start-avontuur {
   display: block;
 }
 
+.footer-1 {
+  padding-bottom: 25px;
+}
+
 .footer-right {
   display: block;
+}
+
+.footer-4 {
+  padding-bottom: 25px;
 }
 
 }
