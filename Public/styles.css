@@ -144,7 +144,7 @@ button {
   align-items: center;
   gap: 10px;
   flex-shrink: 0;
-  border-radius: 15px;
+  border-radius: 10px;
   border-color: #FF8E8E;
   background: var(--Primary, #FF8E8E);
   color: var(--White, #FFF);
@@ -465,7 +465,6 @@ position: absolute;
 }
 
 .container-reistype {
-  margin-top: 50px;
   padding-top: 50px;
   padding-bottom: 50px;
   background-color: #FFF8F8;
@@ -475,7 +474,6 @@ position: absolute;
   display: flex;
   margin-top: 25px;
   width: 100%;
-  height: 300px;
   overflow: hidden;
   margin-bottom: 50px;
 }
@@ -529,7 +527,7 @@ position: absolute;
 
 .reisaanbod-image {
   width: 100%;
-  height: 100%;
+  height: 250px;
   object-fit: cover;
   object-position: center;
   border-radius: 10px;
@@ -558,10 +556,14 @@ position: absolute;
 .reisaanbod-link {
   background-color: #FF8E8E;
   padding: 10px 20px;
-  border: 1px;
+  border: 1px solid #FF8E8E;
   border-radius: 5px;
   font-size: 20px;
   font-weight: 500;
+}
+
+.reisaanbod-link:hover {
+  border: 1px solid #FF8E8E;
 }
 
 }
@@ -590,6 +592,27 @@ select, button {
   text-align: center;
 }
 
+#pagination {
+  justify-self: center;
+  margin-bottom: 50px;
+}
+
+#loadMore {
+  padding: 10px 20px;
+  background-color: #455375;
+  color: white;
+  border: 1px solid #455375;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#loadMore:hover {
+    background-color: #FFFF;
+    color: #455375;
+    border: 1px solid #455375;
+
+}
 
 @media (max-width: 385px) {
 

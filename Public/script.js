@@ -4,6 +4,8 @@ let googleSheetsDataReceived = false;
 let geselecteerdReisaanbod = []; // Toegevoegd om het geselecteerde reisaanbod op te slaan
 let aantalReisaanbod = 0; // Toegevoegd om het aantal reisaanbod bij te houden
 let selectedCountry = '';
+let lastIndexShown = 0;
+let itemsPerPage = 5; // Stel hier het gewenste aantal items per 'pagina' in
 
 function setupLoaderAnimation() {
   loaderAnimation = lottie.loadAnimation({
@@ -40,60 +42,38 @@ function beperkTekstLengte(tekst, maxLengte) {
 
 
 async function queryGoogleSheetsWithCountry(country, reistype) {
-  const url = `/.netlify/functions/fetchSheetData?country=${encodeURIComponent(country)}&reistype=${encodeURIComponent(reistype)}`;
+    const url = `/.netlify/functions/fetchSheetData?country=${encodeURIComponent(country)}&reistype=${encodeURIComponent(reistype)}`;
 
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error('Fout bij het ophalen van gegevens van Google Sheets');
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error('Fout bij het ophalen van gegevens van Google Sheets');
+        }
+
+        const data = await response.json();
+        googleSheetsDataReceived = true;
+        if (data && data.length > 0) {
+            reisaanbodBeschikbaar = true;
+            geselecteerdReisaanbod = data;
+            aantalReisaanbod = data.length;
+            lastIndexShown = itemsPerPage; // Stel de beginindex voor het tonen van items in
+            displayReisaanbod(); // Toon de eerste set items
+            document.getElementById('loadMore').style.display = data.length > itemsPerPage ? 'block' : 'none';
+        } else {
+            reisaanbodBeschikbaar = false;
+            geselecteerdReisaanbod = [];
+            aantalReisaanbod = 0;
+            document.getElementById('loadMore').style.display = 'none';
+        }
+
+        checkLoaderAndDisplayStatus();
+
+    } catch (error) {
+        console.error('Fout bij het ophalen van gegevens:', error);
+        document.getElementById('reisaanbodDisplay').innerText = 'Er is een fout opgetreden bij het ophalen van de gegevens.';
+        googleSheetsDataReceived = true;
+        checkLoaderAndDisplayStatus();
     }
-
-     const data = await response.json();
-    googleSheetsDataReceived = true;
-    if (data && data.length > 0) {
-      reisaanbodBeschikbaar = true;
-      geselecteerdReisaanbod = data;
-      aantalReisaanbod = data.length; // Aantal resultaten bijhouden
-      // ... code om het reisaanbod te verwerken en te tonen ...
-    } else {
-      reisaanbodBeschikbaar = false;
-      geselecteerdReisaanbod = [];
-      aantalReisaanbod = 0;
-    }
-
-    checkLoaderAndDisplayStatus();
-
-    const reisaanbodDisplay = document.getElementById('reisaanbodDisplay');
-    const template = document.getElementById('reisaanbodTemplate').content;
-
-    reisaanbodDisplay.innerHTML = '';
-
-    data.forEach((row) => {
-      const clone = document.importNode(template, true);
-
-      clone.querySelector('.reisaanbod-logo').src = row[7];
-      clone.querySelector('.reisaanbod-image').src = row[6];
-      clone.querySelector('.reisaanbod-naam').textContent = row[2];
-      clone.querySelector('.reisaanbod-beschrijving').textContent = beperkTekstLengte(row[3], 240);
-
-      const prijsElement = clone.querySelector('.reisaanbod-prijs');
-      if (prijsElement) {
-        prijsElement.textContent = `Vanaf € ${row[4]}`;
-      }
-
-      let button = clone.querySelector('.reisaanbod-link');
-      button.onclick = function() {
-        window.open(row[5], '_blank');
-      };
-
-      reisaanbodDisplay.appendChild(clone);
-    });
-  } catch (error) {
-    console.error('Fout bij het ophalen van gegevens:', error);
-    document.getElementById('reisaanbodDisplay').innerText = 'Er is een fout opgetreden bij het ophalen van de gegevens.';
-    googleSheetsDataReceived = true;
-    checkLoaderAndDisplayStatus();
-  }
 }
 
 async function submitPrompt() {
@@ -132,7 +112,7 @@ async function submitPrompt() {
   messages: [
     {
       role: "system",
-      content: `Geef alleen reisinspiratie op basis van reisaanbod in de volgende combinaties en verwerk het land en reistype in de inspiratietekst: fly-drive [Canada, Faeröer Eilanden, Noord-Ierland, Ierland], stedentrip [de Verenigde Staten, Faeröer Eilanden, IJsland, Noorwegen, Zweden, Canada, Noord-Ierland, Ierland, België, Duitsland, Estland, Frankrijk, Ierland, Italië, Jordanië, Kroatië, Litouwen, Nederland, Oostenrijk, Polen, Portugal, Servië, Spanje, Tjechië, Verenigd Koninkrijk, Zweden], winteravonturen [IJsland, Zweden, Finland], wintersportvakantie [Canada, IJsland, Noorwegen, Zweden], rondreis [Frankrijk, Groot-Brittannië, Scandinavië, Kroatië, de Verenigde Staten, Thailand, Nieuw-Zeeland, Myanmar, Japan, Italië, Indonesië, Griekenland, Brazilië, Borneo, Australië, Costa Rica, Argentinië, Albanië], treinreis [Zwitserland, Duitsland, Noorwegen, Italië], camperreis [de Verenigde Staten, Canada, Australië, Kroatië, IJsland, Zuid-Afrika, Nieuw-Zeeland]. Je bent strikt beperkt tot één land en één reistype per keer uit deze specifieke combinaties. Als er geen specifieke gebruikersvoorkeuren zijn, gebruik dan een willekeurige combinatie uit het bestaande aanbod zodat je alsnog waardevolle reisinspiratie geeft.`
+      content: `Geef alleen reisinspiratie op basis van reisaanbod in de volgende combinaties en verwerk het land en reistype in de inspiratietekst: fly-drive [Canada, Faeröer Eilanden, Noord-Ierland, Ierland], stedentrip [de Verenigde Staten, Faeröer Eilanden, IJsland, Noorwegen, Zweden, Canada, Noord-Ierland, Ierland, België, Duitsland, Frankrijk, Ierland, Italië, Jordanië, Kroatië, Litouwen, Nederland, Oostenrijk, Polen, Portugal, Servië, Spanje, Tjechië, Verenigd Koninkrijk, Zweden], winteravonturen [IJsland, Zweden, Finland], wintersportvakantie [Canada, IJsland, Noorwegen, Zweden], rondreis [Frankrijk, Groot-Brittannië, Scandinavië, Kroatië, de Verenigde Staten, Thailand, Nieuw-Zeeland, Myanmar, Japan, Italië, Indonesië, Griekenland, Brazilië, Borneo, Australië, Costa Rica, Argentinië, Albanië], treinreis [Zwitserland, Duitsland, Noorwegen, Italië], camperreis [de Verenigde Staten, Canada, Australië, Kroatië, IJsland, Zuid-Afrika, Nieuw-Zeeland]. Je bent strikt beperkt tot één land en één reistype per keer uit deze specifieke combinaties. Als er geen specifieke gebruikersvoorkeuren zijn, gebruik dan een willekeurige combinatie uit het bestaande aanbod zodat je alsnog waardevolle reisinspiratie geeft.`
     },
     {
       role: "user",
@@ -213,6 +193,40 @@ async function submitPrompt() {
     googleSheetsDataReceived = true;
     checkLoaderAndDisplayStatus();
   }
+}
+
+function loadMore() {
+    lastIndexShown += itemsPerPage;
+    if (lastIndexShown >= geselecteerdReisaanbod.length) {
+        document.getElementById('loadMore').style.display = 'none'; // Verberg de knop als alle items zijn getoond
+    }
+    displayReisaanbod();
+}
+
+function displayReisaanbod() {
+    const reisaanbodDisplay = document.getElementById('reisaanbodDisplay');
+    reisaanbodDisplay.innerHTML = ''; // Maak de container leeg voordat je nieuwe items toevoegt
+
+    for (let i = 0; i < lastIndexShown && i < geselecteerdReisaanbod.length; i++) {
+        const row = geselecteerdReisaanbod[i];
+        const clone = document.importNode(document.getElementById('reisaanbodTemplate').content, true);
+
+        clone.querySelector('.reisaanbod-logo').src = row[7];
+        clone.querySelector('.reisaanbod-image').src = row[6];
+        clone.querySelector('.reisaanbod-naam').textContent = row[2];
+        clone.querySelector('.reisaanbod-beschrijving').textContent = beperkTekstLengte(row[3], 240);
+        const prijsElement = clone.querySelector('.reisaanbod-prijs');
+        if (prijsElement) {
+            prijsElement.textContent = `Vanaf € ${row[4]}`;
+        }
+
+        let button = clone.querySelector('.reisaanbod-link');
+        button.onclick = function() {
+            window.open(row[5], '_blank');
+        };
+
+        reisaanbodDisplay.appendChild(clone);
+    }
 }
 
 function checkLoaderAndDisplayStatus() {
