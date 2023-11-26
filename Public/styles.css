@@ -590,6 +590,14 @@ select, button {
   text-align: center;
 }
 
+@media (max-width: 375px) {
+
+#response-title {
+    font-size: 1.8em;
+}
+
+}
+
 /* Media query for better responsive design */
 @media (max-width: 415px) {
 
