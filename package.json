@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "airtable": "^0.12.2",
+    "contentful": "^10.6.12",
     "dotenv": "^16.3.1",
     "google-spreadsheet": "^4.1.1",
     "googleapis": "^128.0.0",
