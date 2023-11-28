@@ -1,7 +1,7 @@
 const Airtable = require('airtable');
 
 exports.handler = async (event) => {
-const { userPreferences, chatGPTResponse, selectedOffer, numberOfOffers, selectedCountry } = JSON.parse(event.body);
+const { userPreferences, chatGPTResponse, selectedOffer, numberOfOffers, selectedCountry, ipAddress } = JSON.parse(event.body);
 const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base('appqZjV7d8qBftQ1x');
 
 try {
@@ -14,7 +14,8 @@ try {
           'ExtraVoorkeuren': userPreferences.extraVoorkeuren,
           'ChatGPTResponse': chatGPTResponse,
           'AantalReisaanbod': numberOfOffers,
-          'GekozenLand': selectedCountry
+          'GekozenLand': selectedCountry,
+          'IPAdres': ipAddress
         }
       }
     ]);

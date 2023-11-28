@@ -76,6 +76,19 @@ async function queryGoogleSheetsWithCountry(country, reistype) {
     }
 }
 
+async function fetchUserIP() {
+  try {
+    const response = await fetch('/.netlify/functions/fetchIP');
+    if (!response.ok) {
+      throw new Error('Netwerkfout bij het ophalen van het IP-adres');
+    }
+    const data = await response.json();
+    return data.ipAddress;
+  } catch (error) {
+    console.error('Fout bij het ophalen van het IP-adres:', error);
+  }
+}
+
 async function submitPrompt() {
   chatGPTResponseReceived = false;
   googleSheetsDataReceived = false;
@@ -101,6 +114,8 @@ async function submitPrompt() {
     transport,
     extraVoorkeuren
   };
+  
+  const ipAddress = await fetchUserIP(); // Haal het IP-adres op
 
   const userMessageContent = [
   `Vertreklocatie: ${vertreklocatie}`,
@@ -181,7 +196,8 @@ async function submitPrompt() {
             chatGPTResponse: data.choices ? data.choices[0].message.content : '',
             selectedOffer: geselecteerdReisaanbod,
             numberOfOffers: aantalReisaanbod,
-            selectedCountry: selectedCountry
+            selectedCountry: selectedCountry,
+            ipAddress: ipAddress
         };
 
         await fetch('/.netlify/functions/airtable', {
