@@ -1118,21 +1118,27 @@ button.start-avontuur {
   }
 
 .inspiratie-buttons {
-  display: flex;
+  display: inline-flex;
   flex-direction: column-reverse;
   margin: 0px 25px 25px 25px;
 }
 
 button#modify-inspiration {
   width: 100%;
+  font-size: 1.2em;
+}
+
+button#regenerate-inspiration {
+  font-size: 1.2em;
 }
 
 .add-input {
-  flex-direction: column-reverse;
+  flex-direction: column;
 }
 
 #additional-input {
   width: 100%;
+  margin-right: 0px;
 }
 
 #loader {
@@ -1151,7 +1157,7 @@ button#modify-inspiration {
 #response-output {
     margin-top: 10px;
     max-width: 100%;
-    font-size: 1.2em;
+    font-size: 1em;
 }
 
 #reisaanbod-container {
