@@ -1141,9 +1141,9 @@ button#regenerate-inspiration {
 }
 
 #reisaanbod-title {
-  line-height: 25px;
-  text-align: center;
-  font-size: 2em;
+  line-height: 1em;
+  font-size: 1.5em;
+  margin-bottom: 25px;
 }
 
 #reisaanbodDisplay {
@@ -1153,6 +1153,7 @@ button#regenerate-inspiration {
 
 .reisaanbod-item {
   height: auto;
+  margin-bottom: 25px;
 }
 
 .reisaanbod-item-content {
