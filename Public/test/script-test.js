@@ -10,8 +10,6 @@ let laatsteGebruikersinvoer = null;
 let isRegenereerKnopGebruikt = false;
 let keuzeGemaakt = false;
 let laatsteExtraVoorkeuren = "";
-let originalChatGPTResponse = '';
-let ipAddress = '';
 
 function setupLoaderAnimation() {
   loaderAnimation = lottie.loadAnimation({
@@ -44,35 +42,6 @@ function fetchWithTimeout(resource, options, timeout = 8000) {
 // Functie om de lengte van de beschrijving te beperken
 function beperkTekstLengte(tekst, maxLengte) {
   return tekst.length > maxLengte ? tekst.substring(0, maxLengte) + '...' : tekst;
-}
-
-function sendToAirtable(userPreferences, originalChatGPTResponse, newChatGPTResponse, selectedOffer, numberOfOffers, selectedCountry, ipAddress, additionalPreferences, isRegenerated) {
-    const data = {
-        userPreferences: userPreferences,
-        originalChatGPTResponse: originalChatGPTResponse,
-        newChatGPTResponse: newChatGPTResponse,
-        selectedOffer: selectedOffer,
-        numberOfOffers: numberOfOffers,
-        selectedCountry: selectedCountry,
-        ipAddress: ipAddress,
-        additionalPreferences: additionalPreferences,
-        isRegenerated: isRegenerated
-    };
-
-    fetch('/.netlify/functions/airtable', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Success: Data sent to Airtable', data);
-    })
-    .catch(error => {
-        console.error('Error sending data to Airtable:', error);
-    });
 }
 
 
@@ -111,10 +80,6 @@ async function queryGoogleSheetsWithCountry(country, reistype) {
     }
 }
 
-function updateOfferCount(offerCount) {
-  const reizenText = offerCount === 1 ? 'bijpassende reis' : 'bijpassende reizen';
-  document.getElementById('offerCount').innerText = offerCount + ' ' + reizenText;
-}
 
 async function fetchUserIP() {
   try {
@@ -136,6 +101,7 @@ async function fetchUserIP() {
 }
 
 async function submitPrompt() {
+  console.log("submitPrompt - laatsteGebruikersinvoer:", laatsteGebruikersinvoer);
   chatGPTResponseReceived = false;
   googleSheetsDataReceived = false;
 
@@ -178,6 +144,8 @@ async function submitPrompt() {
   if (!keuzeGemaakt && huidigeExtraVoorkeuren) {
     laatsteGebruikersinvoer.extraVoorkeuren = huidigeExtraVoorkeuren;
   }
+  
+  console.log("submitPrompt - laatsteGebruikersinvoer:", laatsteGebruikersinvoer);
 
   const ipAddress = await fetchUserIP(); // Haal het IP-adres op
 
@@ -206,6 +174,9 @@ const userMessageContent = [
   frequency_penalty: 0,
   presence_penalty: 0,
 };
+console.log("Gebruikersvoorkeuren voor prompt: ", laatsteGebruikersinvoer);
+console.log("Verzonden postData naar ChatGPT API:", JSON.stringify(postData, null, 2));
+
 
   try {
     const chatResponse = await fetchWithTimeout('/.netlify/functions/chat', {
@@ -223,7 +194,6 @@ const userMessageContent = [
 
     if (data.choices && data.choices.length > 0) {
         const responseText = data.choices[0].message.content;
-        originalChatGPTResponse = responseText; // Sla de oorspronkelijke response op
         document.getElementById('response-output').textContent = responseText;
         document.getElementById('response-output').classList.remove('hidden');
 
@@ -255,21 +225,20 @@ const userMessageContent = [
     }
 
     if (chatGPTResponseReceived && googleSheetsDataReceived) {
-         let newChatGPTResponse = null; // Deze variabele moet worden ingesteld op basis van gebruikersacties
-         let isRegenerated = false; // Deze variabele moet worden ingesteld op basis van gebruikersacties
         const airtableData = {
             userPreferences: laatsteGebruikersinvoer,
-            originalChatGPTResponse: originalChatGPTResponse,
+            chatGPTResponse: data.choices ? data.choices[0].message.content : '',
             selectedOffer: geselecteerdReisaanbod,
             numberOfOffers: aantalReisaanbod,
             selectedCountry: selectedCountry,
             ipAddress: ipAddress
         };
-        console.log(airtableData)
-        sendToAirtable(laatsteGebruikersinvoer, originalChatGPTResponse, newChatGPTResponse, geselecteerdReisaanbod, aantalReisaanbod, selectedCountry, ipAddress, laatsteExtraVoorkeuren, isRegenerated);
-        // Stel dat numberOfOffers ergens in je script wordt ingesteld...
-        updateOfferCount(aantalReisaanbod);
 
+        await fetch('/.netlify/functions/airtable', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(airtableData)
+        }).catch(error => console.error('Fout bij het opslaan van data in Airtable:', error));
     }
 
     checkLoaderAndDisplayStatus();
@@ -428,8 +397,10 @@ document.addEventListener('DOMContentLoaded', () => {
         submitModifiedButton.addEventListener('click', function() {
             const additionalInput = document.getElementById('additional-input').value;
             // Combineer de aanvullende invoer met de oorspronkelijke invoer
+            console.log("Voor aanpassing:", laatsteGebruikersinvoer);
             laatsteGebruikersinvoer.extraVoorkeuren += ` ${additionalInput}`;
             laatsteExtraVoorkeuren = laatsteGebruikersinvoer.extraVoorkeuren; // Nieuwe regel
+            console.log("Na aanpassing:", laatsteGebruikersinvoer);
             submitPrompt(); // Verzend de gecombineerde aanvraag
             // Verberg de knop nadat deze is gebruikt
         submitModifiedButton.classList.add('hidden');
@@ -437,42 +408,3 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-
-    document.getElementById('submit-modified-inspiration').addEventListener('click', async function() {
-        const additionalInput = document.getElementById('additional-input').value;
-        laatsteGebruikersinvoer.extraVoorkeuren = additionalInput;
-        await submitPrompt();
-
-        sendToAirtable(
-            laatsteGebruikersinvoer, 
-            originalChatGPTResponse, 
-            null, // Geen nieuwe response voor aanvullende invoer
-            geselecteerdReisaanbod, 
-            aantalReisaanbod, 
-            selectedCountry, 
-            ipAddress, 
-            additionalInput, 
-            false
-        );
-   document.getElementById('submit-modified-inspiration').classList.add('hidden');
-        keuzeGemaakt = true;
-    });      
-
-document.getElementById('regenerate-inspiration').addEventListener('click', async function() {
-        isRegenereerKnopGebruikt = true;
-        await submitPrompt();
-
-        sendToAirtable(
-            laatsteGebruikersinvoer, 
-            originalChatGPTResponse, 
-            null, // Geen nieuwe response voor regeneratie
-            geselecteerdReisaanbod, 
-            aantalReisaanbod, 
-            selectedCountry, 
-            ipAddress, 
-            null, 
-            true
-        );
-
-        document.getElementById('regenerate-inspiration').classList.add('hidden');
-    });

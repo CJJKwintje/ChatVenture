@@ -1,5 +1,5 @@
 exports.handler = async function(event, context) {
-    // Het IP-adres is beschikbaar in de 'client-ip' header die Netlify toevoegt
+     // Het IP-adres is beschikbaar in de 'client-ip' header die Netlify toevoegt
     const ipAddress = event.headers['client-ip'];
 
     // Controleer of het IP-adres beschikbaar is
