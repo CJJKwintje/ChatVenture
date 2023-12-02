@@ -429,7 +429,7 @@ position: absolute;
   margin-top: 10px;
   font-size: 1em;
   padding: 20px;
-  border-radius: 5px;
+  border-radius: 15px;
   border: 1px solid #eee;
 }
 
@@ -447,7 +447,7 @@ position: absolute;
   text-align: left;
   font-size: 1em;
   padding: 20px;
-   border-radius: 5px;
+  border-radius: 15px;
   border: 1px solid #eee;
 
 }
@@ -502,7 +502,7 @@ position: absolute;
   font-family: 'Fredoka', sans-serif;
   font-size: 1em;
   padding: 20px;
-  border-radius: 5px;
+  border-radius: 15px;
   border: 1px solid #eee;
 }
 
@@ -1003,14 +1003,14 @@ p.hero-tekst {
 }
 
   label, select, button {
-    font-size: 1.3em;
+    font-size: 1em;
     line-height: 25px;
   }
 
 
 button.start-avontuur {
   margin-bottom: 25px;
-  font-size: 1.3em;
+  font-size: 1.2em;
   padding: 25px 25px;
 }
 
@@ -1117,6 +1117,15 @@ button.start-avontuur {
     max-width: 100%;
   }
 
+.locatie input {
+  padding: 15px;
+}  
+
+.Vakantie-dropdown select {
+  padding: 15px;
+}
+
+
 .inspiratie-buttons {
   display: inline-flex;
   flex-direction: column-reverse;
@@ -1126,10 +1135,12 @@ button.start-avontuur {
 button#modify-inspiration {
   width: 100%;
   font-size: 1.2em;
+  margin: 0px;
 }
 
 button#regenerate-inspiration {
   font-size: 1.2em;
+  margin-bottom: 5px;
 }
 
 .add-input {
