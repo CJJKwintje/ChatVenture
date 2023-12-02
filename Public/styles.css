@@ -374,7 +374,7 @@ position: absolute;
 
 .locatie {
   display: inline-grid;
-  padding-bottom: 35px;
+  margin-bottom: 25px;
 }
 
 .locatie input {
@@ -386,12 +386,11 @@ position: absolute;
 }
 
 .locatie input::placeholder {
-  color: #888;
-  font-style: italic;
+  color: #B8B7B7;
 }
 
 .Vakantie-dropdown {
-  padding-bottom: 35px;
+  margin-bottom: 25px;
   display: grid;
  }
 
@@ -437,19 +436,22 @@ position: absolute;
   background-color: #FEE;
 }
 
+#type-vakantie-select.placeholder {
+    /* Specifieke styling voor de eerste optie */
+    color: #B8B7B7;
+}
+
 .extra-voorkeuren {
   display: grid;
   margin-bottom: 25px;
 }
 
 .extra-voorkeuren textarea::placeholder {
-  color: #888;
-  font-style: italic;
+  color: #B8B7B7;
 }
 
 #textarea-voorkeuren {
   max-width: 100%;
-  margin-top: 10px;
   padding: 10px;
   font-family: 'Fredoka', sans-serif;
   font-size: 1em;
@@ -1069,8 +1071,16 @@ button.start-avontuur {
     max-width: 100%;
   }
 
+.locatie {
+  margin-bottom: 20px;
+}
+
 .locatie input {
   padding: 15px;
+}
+
+.Vakantie-dropdown {
+  margin-bottom: 20px;
 }  
 
 .Vakantie-dropdown select {

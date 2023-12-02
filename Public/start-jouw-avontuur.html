@@ -67,14 +67,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <h1 class="title">Start jouw volgende avontuur</h1>
     <div id="input-fields">
       <div class="locatie">
-        <label for="vertreklocatie">Wat is je vertreklocatie?</label>
-        <input type="text" id="vertreklocatie" name="locatie" placeholder="Bijv. Amsterdam">
+        <input type="text" id="vertreklocatie" name="locatie" placeholder="Waar begint je reis?">
       </div>
 
       <div class="Vakantie-dropdown">
-        <label for="type-vakantie-select">Naar wat voor type vakantie ben je op zoek?</label>
-        <select id="type-vakantie-select">
-          <option value="">Geen voorkeur</option>
+        <select id="type-vakantie-select" onchange="updateDropdownStyle(this)">
+    <option value="" disabled selected>Kies jouw type reis</option>
           <option value="rondreis">Rondreis</option>
           <option value="treinreis">Treinreis</option>
           <option value="camperreis">Camperreis</option>
@@ -86,8 +84,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
 
       <div class="extra-voorkeuren">
-        <label for="textarea-voorkeuren">Wat vind je verder belangrijk voor je volgende vakantie?</label>
-        <textarea id="textarea-voorkeuren" name="extra-voorkeuren" rows="4" cols="50" placeholder="Bijv. Ik neem graag mijn hond mee op vakantie"></textarea>
+        <textarea id="textarea-voorkeuren" name="extra-voorkeuren" rows="4" cols="50" placeholder="Beschrijf je belangrijkste wensen"></textarea>
       </div></div>
 
       <button id="inspire-me-btn">Geef mij inspiratie!</button>

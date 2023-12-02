@@ -41,6 +41,18 @@ function fetchWithTimeout(resource, options, timeout = 8000) {
     });
 }
 
+function updateDropdownStyle(dropdown) {
+  if (dropdown.value === "") {
+    dropdown.classList.add('placeholder');
+  } else {
+    dropdown.classList.remove('placeholder');
+  }
+}
+
+// Initieel de dropdown instellen met de placeholder stijl
+document.getElementById('type-vakantie-select').classList.add('placeholder');
+
+
 // Functie om de lengte van de beschrijving te beperken
 function beperkTekstLengte(tekst, maxLengte) {
   return tekst.length > maxLengte ? tekst.substring(0, maxLengte) + '...' : tekst;
