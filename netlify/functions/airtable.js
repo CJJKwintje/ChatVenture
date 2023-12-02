@@ -1,7 +1,7 @@
 const Airtable = require('airtable');
 
 exports.handler = async (event) => {
-const { userPreferences, chatGPTResponse, selectedOffer, numberOfOffers, selectedCountry, ipAddress } = JSON.parse(event.body);
+const { userPreferences, originalChatGPTResponse, newChatGPTResponse, selectedOffer, numberOfOffers, selectedCountry, ipAddress } = JSON.parse(event.body);
 const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base('appqZjV7d8qBftQ1x');
 
 try {
@@ -12,9 +12,12 @@ try {
           'TypeVakantie': userPreferences.typeVakantie,
           'Transport': userPreferences.transport,
           'ExtraVoorkeuren': userPreferences.extraVoorkeuren,
-          'ChatGPTResponse': chatGPTResponse,
+          'ChatGPTResponse': originalChatGPTResponse,
           'AantalReisaanbod': numberOfOffers,
           'GekozenLand': selectedCountry,
+          'AanvullendeVoorkeuren': additionalPreferences, // Nieuw veld
+          'NieuweChatGPTResponse': newChatGPTResponse, // Nieuw veld
+          'IsRegenerated': isRegenerated // Nieuw veld om te markeren of de response opnieuw is gegenereerd
           'IPAdres': ipAddress
         }
       }
