@@ -156,6 +156,7 @@ async function submitPrompt() {
   document.getElementById('loader').classList.remove('hidden');
   // Verberg de oude reisinspiratie en reisaanbod direct
   document.getElementById('response-container').classList.add('hidden');
+  document.getElementById('reisaanbodDisplay').classList.add('hidden');
   document.getElementById('reisaanbod-container').classList.add('hidden');
   document.getElementById('reisaanbod-title').classList.add('hidden');
   document.getElementById('loadMore').classList.add('hidden');

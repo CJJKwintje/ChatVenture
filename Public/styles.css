@@ -1096,14 +1096,14 @@ button.start-avontuur {
 
 button#modify-inspiration {
   width: 100%;
-  font-size: 1.2em;
+  font-size: 1em;
   margin: 0px;
 }
 
 button#regenerate-inspiration {
-  font-size: 1.2em;
+  font-size: 1em;
   margin-bottom: 5px;
-  margin-top: 20px;
+  margin-top: 25px;
 }
 
 .add-input {
