@@ -1090,20 +1090,16 @@ button.start-avontuur {
 
 .inspiratie-buttons {
   display: inline-flex;
-  flex-direction: column-reverse;
-  margin: 0px 25px 25px 25px;
+  margin: 25px 25px 25px 25px;
 }
 
 button#modify-inspiration {
-  width: 100%;
   font-size: 1em;
-  margin: 0px;
+  margin-right: 5px;
 }
 
 button#regenerate-inspiration {
   font-size: 1em;
-  margin-bottom: 5px;
-  margin-top: 25px;
 }
 
 .add-input {
