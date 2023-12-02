@@ -544,9 +544,9 @@ position: absolute;
 }
 
 #loader {
-  align-self: center;
-  max-width: 30%px;
-  height: auto;
+  align-self: center; 
+  max-width: 20%;
+  height: 500px;
 }
 
 #response-container {
@@ -1135,12 +1135,17 @@ button#modify-inspiration {
   width: 100%;
 }
 
+#loader {
+  max-width: 50%;
+}
+
 #response-container {
   margin-top: 10px;
 }    
 
 #response-title {
   font-size: 2em;
+  padding-bottom: 10px;
 }
 
 #response-output {

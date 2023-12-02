@@ -142,6 +142,13 @@ async function submitPrompt() {
   document.querySelector('h1').style.display = 'none';
   document.getElementById('content-container').style.display = 'none';
   document.getElementById('loader').classList.remove('hidden');
+  // Verberg de oude reisinspiratie en reisaanbod direct
+  document.getElementById('response-container').classList.add('hidden');
+  document.getElementById('reisaanbod-container').classList.add('hidden');
+  document.getElementById('reisaanbod-title').classList.add('hidden');
+  document.getElementById('loadMore').classList.add('hidden');
+  document.getElementById('reisaanbodDisplay').innerHTML = ''; // Leeg de reisaanbod container
+
   loaderAnimation.goToAndPlay(0, true);
 
   const regenereerKnop = document.getElementById('regenerate-inspiration');
@@ -340,8 +347,8 @@ function checkLoaderAndDisplayStatus() {
   if (chatGPTResponseReceived && googleSheetsDataReceived) {
     loaderAnimation.stop();
     document.getElementById('loader').classList.add('hidden');
-    document.getElementById('content-container').style.display = 'none';
     document.getElementById('response-container').classList.remove('hidden');
+    document.getElementById('content-container').style.display = 'none';
     document.getElementById('response-title').classList.remove('hidden');
     document.getElementById('response-output').classList.remove('hidden');
     
