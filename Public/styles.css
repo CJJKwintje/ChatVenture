@@ -1207,8 +1207,12 @@ button#regenerate-inspiration {
 }
 
 .reisaanbod-naam {
-      line-height: 25px;
+  line-height: 25px;
 }
+
+.reisaanbod-beschrijving {
+  font-size: 1em;
+  line-height: 1.5em;
 
 .reisaanbod-prijs {
   font-size: 20px;
