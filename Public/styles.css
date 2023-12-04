@@ -45,20 +45,24 @@ footer {
 }
 
 h1 {
-  color: #455375;
-  font-family: Fredoka;
-  font-size: 4em;
+  color: #FFFF;
+  font-family: DM Sans;
+  font-size: 8em;
   font-style: normal;
-  font-weight: 600;
-  line-height: 60px;
+  font-weight: 300;
+  line-height: 120px;
+}
+
+h1.hero-h1 {
+  margin-left: 5%;
 }
 
 h2 {
   color: #FF8E8E;
-  font-family: Fredoka;
+  font-family: DM Sans;
   font-size: 30px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 300;
   line-height: 55.688px; /* 222.75% */
   letter-spacing: -0.5px;
   margin-bottom: 25px;
@@ -83,10 +87,11 @@ h3 {
 h3.homepage-title {
   text-align: center;
   color: #FF8E8E;
-  font-family: Fredoka;
+  font-family: DM Sans;
   font-size: 40px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 400;
+  margin-bottom: 50px;
 }
 
 h4 {
@@ -121,10 +126,18 @@ a {
   color: #FFF;
 }
 
-label, select, button {
+select, button {
   font-size: 1.2em;
   font-style: normal;
   font-weight: 200;
+  line-height: 25px; /* 371.25% */
+  letter-spacing: -0.3px;
+}
+
+label {
+  font-size: 1.2em;
+  font-style: normal;
+  font-weight: 500;
   line-height: 25px; /* 371.25% */
   letter-spacing: -0.3px;
 }
@@ -173,8 +186,7 @@ button.start-avontuur:hover {
 }
 
 button#modify-inspiration {
-font-family: Fredoka;
-font-size: 20px;
+font-size: 1.2em;
 font-style: normal;
 font-weight: 500;
 line-height: 22px; /* 110% */
@@ -189,8 +201,7 @@ margin-right: 10px;
 }
 
 button#regenerate-inspiration {
-font-family: Fredoka;
-font-size: 20px;
+font-size: 1.2em;
 font-style: normal;
 font-weight: 500;
 line-height: 22px; /* 110% */
@@ -204,7 +215,6 @@ padding: 12px 16px;
 }
 
 button#submit-modified-inspiration {
-font-family: Fredoka;
 font-size: 20px;
 font-style: normal;
 font-weight: 500;
@@ -221,7 +231,6 @@ padding: 12px 16px;
 
 .text-blue {
   color: #455375;
-  font-family: Fredoka;
   font-style: normal;
   font-weight: 600;
 }
@@ -246,22 +255,33 @@ padding: 12px 16px;
 
 .hero {
   display: flex;
-  min-height: 600px;
-  padding: 0px 50px;
+  justify-content: space-between;
   background-position: center;
   background-size: cover;
+  align-items: center;
 }
 
-.hero-content {
-  display: flex;
-  background-color: #FFF8F8;
-  padding: 0px 40px 25px 40px;
-  border-radius: 20px;
-  max-width: 35%;
-  margin: 50px;
+#hero-content {
+  color: #FFFF;
   flex-direction: column;
-  justify-content: space-evenly;
-  height: min-content;
+  max-width: 50%;
+}
+
+#hero-inspiratie {
+  height: 100%;
+  width: 100%;
+
+}
+
+#container-inspiratie {
+   background-color: #F1F5FF;
+   padding: 5% 20% 5% 20%;
+   justify-content: center;
+}
+
+button#inspire-me-btn {
+  float: right;
+  margin-bottom: 30px;
 }
 
 .hero-image {
@@ -289,8 +309,8 @@ position: absolute;
   color: #455375; 
   font-size: 30px;
   text-decoration: none;
-  font-family: Fredoka; 
-  font-weight: 700; 
+  font-family: DM Sans; 
+  font-weight: 800; 
   line-height: 1em;
   word-wrap: break-word
 }
@@ -359,21 +379,24 @@ position: absolute;
    display: flex;
    flex-direction: column;
    justify-content: center;
-   padding: 50px 20%;
    margin-left: auto;
    margin-right: auto;
 }
 
 #content-container {
-  padding: 0px 20%;
+  height: fit-content;
+  margin: 5%;
+  background-color: #FFFF;
+  border-radius: 30px;
 }
 
 #input-fields {
-  display: grid;
+  width: 350px;
+  margin: 30px 25px 0px 25px;
 }
 
 .locatie {
-  display: inline-grid;
+  display: grid;
   margin-bottom: 25px;
 }
 
@@ -383,10 +406,6 @@ position: absolute;
   padding: 20px;
   border-radius: 15px;
   border: 1px solid #eee;
-}
-
-.locatie input::placeholder {
-  color: #B8B7B7;
 }
 
 .Vakantie-dropdown {
@@ -436,11 +455,6 @@ position: absolute;
   background-color: #FEE;
 }
 
-#type-vakantie-select.placeholder {
-    /* Specifieke styling voor de eerste optie */
-    color: #B8B7B7;
-}
-
 .extra-voorkeuren {
   display: grid;
   margin-bottom: 25px;
@@ -452,7 +466,9 @@ position: absolute;
 
 #textarea-voorkeuren {
   max-width: 100%;
+  resize: none;
   padding: 10px;
+  margin-top: 10px;
   font-family: DM Sans;
   font-size: 1em;
   padding: 20px;
@@ -464,8 +480,8 @@ position: absolute;
   margin: 25px;
   border-radius: 5px;
   box-sizing: border-box;
-  font-size: 1.5em;
-  font-weight: 100;
+  font-size: 1.2em;
+  font-weight: 300;
   line-height: 1.5em;
 }
 
@@ -497,15 +513,23 @@ position: absolute;
   color: #455375;
 }
 
+.laadscherm-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+p.laadscherm-text {
+  font-size: 1.5em;
+}
+
 #loader {
   align-self: center; 
-  max-width: 20%;
-  height: 500px;
+  max-width: 50%;
 }
 
 #response-container {
-  background-color: #F5F9FF;
-  border-radius: 15px;
+
 }
 
 #response-title{
@@ -517,7 +541,6 @@ position: absolute;
 }
 
 #reisaanbod-container {
-  display: grid;
 }
 
 #reisaanbodDisplay {
@@ -531,8 +554,8 @@ position: absolute;
 
 #reisaanbod-title {
     color: #40506A;
-    justify-self: center;
-    font-family: Fredoka;
+    text-align: center;
+    font-family: DM Sans;
     font-size: 50px;
     font-style: normal;
     font-weight: 600;
@@ -543,8 +566,7 @@ position: absolute;
 }
 
 .container-reistype {
-  padding-top: 50px;
-  padding-bottom: 50px;
+  padding: 75px 10% 75px 10%;
   background-color: #FFF8F8;
 }
 
@@ -670,8 +692,9 @@ select, button {
   text-align: center;
 }
 
-#pagination {
-  justify-self: center;
+.pagination {
+  display: flex;
+  justify-content: center;
   margin-bottom: 50px;
 }
 
@@ -763,7 +786,7 @@ button.start-avontuur {
   overflow: hidden;
 }
 
-.hero-content {
+#hero-content {
   padding: 0px 25px;
   background: rgba(255, 248, 248, 0.90);
   max-width: none;

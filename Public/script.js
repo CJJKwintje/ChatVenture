@@ -41,13 +41,6 @@ function fetchWithTimeout(resource, options, timeout = 8000) {
     });
 }
 
-function updateDropdownStyle(dropdown) {
-  if (dropdown.value === "") {
-    dropdown.classList.add('placeholder');
-  } else {
-    dropdown.classList.remove('placeholder');
-  }
-}
 
 // Initieel de dropdown instellen met de placeholder stijl
 document.getElementById('type-vakantie-select').classList.add('placeholder');
@@ -150,17 +143,19 @@ async function fetchUserIP() {
 async function submitPrompt() {
   chatGPTResponseReceived = false;
   googleSheetsDataReceived = false;
-
   document.querySelector('h1').style.display = 'none';
+  document.getElementById('hero-content').style.display = 'none';
   document.getElementById('content-container').style.display = 'none';
   document.getElementById('loader').classList.remove('hidden');
+  document.getElementById('hero-inspiratie').classList.remove('hidden');
+  document.getElementById('laadscherm').classList.remove('hidden');
+  document.getElementById('reisaanbodDisplay').innerHTML = ''; // Leeg de reisaanbod container
   // Verberg de oude reisinspiratie en reisaanbod direct
   document.getElementById('response-container').classList.add('hidden');
-  document.getElementById('reisaanbodDisplay').classList.add('hidden');
   document.getElementById('reisaanbod-container').classList.add('hidden');
   document.getElementById('reisaanbod-title').classList.add('hidden');
   document.getElementById('loadMore').classList.add('hidden');
-  document.getElementById('reisaanbodDisplay').innerHTML = ''; // Leeg de reisaanbod container
+  
 
   loaderAnimation.goToAndPlay(0, true);
 
@@ -360,6 +355,7 @@ function checkLoaderAndDisplayStatus() {
   if (chatGPTResponseReceived && googleSheetsDataReceived) {
     loaderAnimation.stop();
     document.getElementById('loader').classList.add('hidden');
+    document.getElementById('laadscherm').classList.add('hidden');
     document.getElementById('response-container').classList.remove('hidden');
     document.getElementById('content-container').style.display = 'none';
     document.getElementById('response-title').classList.remove('hidden');
