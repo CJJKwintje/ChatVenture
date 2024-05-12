@@ -666,11 +666,8 @@ p.laadscherm-text {
   border: 1px solid #FF8E8E;
 }
 
-}
-
 #reisaanbodDisplay .reisaanbod-link {
   align-self: end;
-
 }
 
 .footer-left {
@@ -715,7 +712,7 @@ select, button {
 
 }
 
-@media (max-width: 385px) {
+@media (max-width: 390px) {
 
 body {
     display: block;
@@ -768,6 +765,10 @@ button.start-avontuur {
   padding: 0px;
 }
 
+#container-inspiratie {
+  padding: 10px 0;
+}
+
 .container-reistype {
   margin-top: 0px;
 }
@@ -788,7 +789,6 @@ button.start-avontuur {
 
 #hero-content {
   padding: 0px 25px;
-  background: rgba(255, 248, 248, 0.90);
   max-width: none;
   margin: 0px;
 }
@@ -1015,7 +1015,6 @@ button.start-avontuur {
 
 .hero-content {
   padding: 0px 25px;
-  background: rgba(255, 248, 248, 0.90);
   max-width: none;
   margin: 0px;
 }
