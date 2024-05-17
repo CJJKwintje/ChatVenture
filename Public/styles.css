@@ -88,9 +88,9 @@ h3 {
 h3.homepage-title {
   text-align: center;
   font-family: DM Sans;
-  font-size: 45px;
+  font-size: 50px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   line-height: normal;
   margin-bottom: 50px;
   padding: 0% 15%;
@@ -319,7 +319,7 @@ position: absolute;
   justify-content: center; 
 }
 
-.homepage-content-container {
+#homepage-content-container {
   padding-top: 100px;
   padding-bottom: 100px;
 }
@@ -357,8 +357,8 @@ position: absolute;
 .homepage-content-title {
   color: #FF8E8E;
   font-size: 25px;
-  font-weight: 500;
-  line-height: 2em;
+  font-weight: 400;
+  line-height: 1.2em;
 
 }
 
@@ -423,7 +423,7 @@ position: absolute;
 
 }
 
-.container-reisorganisaties {
+#container-reisorganisaties {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -750,6 +750,7 @@ h1 {
     font-size: 40px;
     padding-right: 25px;
     line-height: 1em;
+    text-align: center;
   }
 
 h1.title {
@@ -980,6 +981,7 @@ h1 {
     font-size: 40px;
     padding-right: 25px;
     line-height: 1em;
+    text-align: center;
   }
 
 h1.title {
@@ -1001,6 +1003,8 @@ h2.title {
 h3.homepage-title {
   margin-bottom: 50px;
   margin-top: 25px;
+  font-size: 35px;
+  padding: 0px 25px;
 }
 
 p.hero-tekst {
@@ -1032,6 +1036,8 @@ button.start-avontuur {
   flex-direction: column;
   min-height: unset;
   padding: 50px 10px 50px;
+  min-height: 450px;
+  height: auto;
 }
 
 .hero-image {
@@ -1122,7 +1128,6 @@ button.start-avontuur {
   }
 
 .locatie {
-  margin-bottom: 20px;
 }
 
 .locatie input {
@@ -1130,17 +1135,26 @@ button.start-avontuur {
 }
 
 .Vakantie-dropdown {
-  margin-bottom: 20px;
 }  
 
 .Vakantie-dropdown select {
   padding: 15px;
 }
 
+#container-reisorganisaties {
+  display:grid;
+  grid-template-columns: 1fr 1fr; /* Add this line */
+  justify-items: center;
+}
+
+.logo-reisorganisaties {
+  width: 150px;
+  margin: 10px 0px 10px 0px ;
+}
 
 .inspiratie-buttons {
   display: inline-flex;
-  margin: 25px 25px 25px 25px;
+  margin: 20px 10px 5px 20px;
 }
 
 button#modify-inspiration {
@@ -1166,7 +1180,8 @@ button#regenerate-inspiration {
 }
 
 #response-container {
-  margin-top: 10px;
+  margin: 0px 20px 0px 20px;
+  padding: 10px;
 }    
 
 #response-title {
@@ -1232,6 +1247,10 @@ button#regenerate-inspiration {
 
 .reisaanbod-link {
   padding: 0px 15px;
+}
+
+#homepage-content-container {
+  padding: 50px 20px
 }
 
 .footer-left {

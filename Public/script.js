@@ -360,6 +360,8 @@ function checkLoaderAndDisplayStatus() {
     document.getElementById('content-container').style.display = 'none';
     document.getElementById('response-title').classList.remove('hidden');
     document.getElementById('response-output').classList.remove('hidden');
+    document.getElementById('container-reisorganisaties').style.display = 'none';
+    document.getElementById('homepage-content-container').style.display = 'none';
     
      if (!keuzeGemaakt) {
       toonKnoppen(); // Toon de knoppen als de gebruiker nog geen keuze heeft gemaakt
