@@ -54,7 +54,7 @@ h1 {
 }
 
 h1.hero-h1 {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
   margin: 0px;
 }
 
@@ -747,9 +747,8 @@ body {
   }
 
 h1 {
-    font-size: 40px;
-    padding-right: 25px;
-    line-height: 1em;
+    font-size: 30px;
+    line-height: 1.2em;
     text-align: center;
   }
 
@@ -978,9 +977,8 @@ body {
   }
 
 h1 {
-    font-size: 40px;
-    padding-right: 25px;
-    line-height: 1em;
+    font-size: 30px;
+    line-height: 1.2em;
     text-align: center;
   }
 
@@ -1035,7 +1033,7 @@ button.start-avontuur {
   display: flex;
   flex-direction: column;
   min-height: unset;
-  padding: 50px 10px 50px;
+  padding: 30px 20px;
   min-height: 450px;
   height: auto;
 }
@@ -1062,6 +1060,10 @@ button.start-avontuur {
   left: 50%;
   transform: translate(-50%, -50%);
   object-fit: cover;
+}
+
+p.laadscherm-text {
+  font-size: 1em;
 }
 
 .homepage-content-container {
@@ -1127,19 +1129,21 @@ button.start-avontuur {
     max-width: 100%;
   }
 
+#input-fields {
+  margin: 10px 0px;
+}
+
 .locatie {
 }
 
 .locatie input {
-  padding: 15px;
-}
+  padding: 15px 10px;}
 
 .Vakantie-dropdown {
 }  
 
 .Vakantie-dropdown select {
-  padding: 15px;
-}
+  padding: 15px 10px;}
 
 #container-reisorganisaties {
   display:grid;
@@ -1176,22 +1180,23 @@ button#regenerate-inspiration {
 }
 
 #loader {
-  max-width: 50%;
+  max-width: 25%;
+  height: auto;
 }
 
 #response-container {
-  margin: 0px 20px 0px 20px;
-  padding: 10px;
+  margin: 0px;
+  padding: 25px 20px;
 }    
 
 #response-title {
   font-size: 1.5em;
   padding-bottom: 10px;
+  margin: 0px 0px 20px 0px
 }
 
 #response-output {
-    margin-top: 10px;
-    margin-bottom: 0px;
+    margin: 5px 0px;
     max-width: 100%;
     font-size: 1em;
     font-weight: 300;
