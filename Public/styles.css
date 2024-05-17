@@ -47,14 +47,15 @@ footer {
 h1 {
   color: #FFFF;
   font-family: DM Sans;
-  font-size: 8em;
+  font-size: 64px;
   font-style: normal;
-  font-weight: 300;
+  font-weight: 600;
   line-height: 120px;
 }
 
 h1.hero-h1 {
-  margin-left: 5%;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  margin: 0px;
 }
 
 h2 {
@@ -86,12 +87,13 @@ h3 {
 
 h3.homepage-title {
   text-align: center;
-  color: #FF8E8E;
   font-family: DM Sans;
-  font-size: 40px;
+  font-size: 45px;
   font-style: normal;
   font-weight: 400;
+  line-height: normal;
   margin-bottom: 50px;
+  padding: 0% 15%;
 }
 
 h4 {
@@ -255,33 +257,28 @@ padding: 12px 16px;
 
 .hero {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   background-position: center;
   background-size: cover;
   align-items: center;
+  padding: 50px 0px 50px 0px;
+  height: 450px
 }
 
 #hero-content {
   color: #FFFF;
   flex-direction: column;
-  max-width: 50%;
 }
 
 #hero-inspiratie {
-  height: 100%;
-  width: 100%;
-
 }
 
 #container-inspiratie {
-   background-color: #F1F5FF;
-   padding: 5% 20% 5% 20%;
-   justify-content: center;
 }
 
 button#inspire-me-btn {
-  float: right;
-  margin-bottom: 30px;
+  width: 100%;
 }
 
 .hero-image {
@@ -385,40 +382,64 @@ position: absolute;
 
 #content-container {
   height: fit-content;
-  margin: 5%;
-  background-color: #FFFF;
-  border-radius: 30px;
 }
 
 #input-fields {
-  width: 350px;
-  margin: 30px 25px 0px 25px;
+  margin-top: 25px;
 }
+
+#input-fields-top {
+  display: flex;
+  justify-content: space-between;
+  }
 
 .locatie {
   display: grid;
-  margin-bottom: 25px;
+  height: fit-content;
+  margin-right: 5px;
+  width: 100%;
 }
 
 .locatie input {
   margin-top: 10px;
   font-size: 1em;
   padding: 20px;
-  border-radius: 15px;
+  border-radius: 10px;
   border: 1px solid #eee;
 }
 
 .Vakantie-dropdown {
-  margin-bottom: 25px;
   display: grid;
+  width: 100%;
+  margin-left: 5px;
  }
 
 .Vakantie-dropdown select {
   text-align: left;
   font-size: 1em;
   padding: 20px;
-  border-radius: 15px;
+  border-radius: 10px;
   border: 1px solid #eee;
+
+}
+
+.container-reisorganisaties {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #F9F9F9;
+  padding: 20px
+}
+
+.logo-reisorganisaties {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background-color: #FFFF;
+  height: 75px;
+  width: 200px;
+  margin: 0px 10px 0px 10px;
 
 }
 
@@ -457,7 +478,7 @@ position: absolute;
 
 .extra-voorkeuren {
   display: grid;
-  margin-bottom: 25px;
+  margin-bottom: 10px;
 }
 
 .extra-voorkeuren textarea::placeholder {
@@ -472,7 +493,7 @@ position: absolute;
   font-family: DM Sans;
   font-size: 1em;
   padding: 20px;
-  border-radius: 15px;
+  border-radius: 10px;
   border: 1px solid #eee;
 }
 
@@ -496,7 +517,7 @@ position: absolute;
 
 .inspiratie-buttons {
   display: flex;
-  margin: 0px 25px 25px 25px;
+  margin: 0px 25px 0px 25px;
 }
 
 #additional-input {
@@ -517,19 +538,26 @@ position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #FFFF;
+  border-radius: 10px;
+  padding: 0px 25px 0px 0px;
 }
 
 p.laadscherm-text {
-  font-size: 1.5em;
+  font-size: 1.2em;
 }
 
 #loader {
   align-self: center; 
   max-width: 50%;
+  height: 150px;
 }
 
 #response-container {
-
+  background-color: #FFFF;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 0% 20% 0% 20%;
 }
 
 #response-title{
@@ -805,7 +833,7 @@ button.start-avontuur {
 }
 
 .homepage-content-container {
-  padding: 50px 20px;
+    padding: 50px 20px;
 }
 
 .homepage-content-left {
