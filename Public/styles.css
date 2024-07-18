@@ -119,6 +119,11 @@ p.homepage-content-tekst {
   font-weight: 300;
 }
 
+p.reistype-content-tekst {
+  font-size: 20px;
+  font-weight: 300;
+}
+
 p.footer-content {
   font-size: 1em;
 }
@@ -359,6 +364,27 @@ position: absolute;
   font-size: 25px;
   font-weight: 400;
   line-height: 1.2em;
+
+}
+
+.reistype-content-title {
+  color: #FF8E8E;
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 1.2em;
+
+}
+
+.reistype-content {
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+  margin-right: 50px;
+  margin-bottom: 50px;
+  padding: 0% 15%;
+}
+
+.reistype-content-tekst {
 
 }
 
@@ -865,6 +891,28 @@ button.start-avontuur {
   margin-left: 0px;
   margin-bottom: 25px;
   max-width: none;
+}
+
+.reistype-content-title {
+  color: #FF8E8E;
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 1.2em;
+  padding-bottom: 15px;
+
+}
+
+.reistype-content {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+  margin-right: 0px;
+  margin-bottom: 50px;
+  padding: 0;
+}
+
+.reistype-content-tekst {
+
 }
 
 .payoff {
