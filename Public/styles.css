@@ -1033,9 +1033,15 @@ body {
 
   .logoimage {
     display: inline-block;
-    width: 25px; 
+    width: 30px; 
     height: auto;
     justify-content: center; 
+  }
+
+  .logo {
+    padding: 10px;
+    font-size: 20px;
+  
   }
 
 h1 {
@@ -1084,7 +1090,7 @@ button.start-avontuur {
 }
 
 #content-container {
-  padding: 15px;
+  padding: 15px 0px;
 }
 
 .container-reistype {
@@ -1161,6 +1167,28 @@ p.laadscherm-text {
   margin-left: 0px;
   margin-bottom: 25px;
   max-width: none;
+}
+
+.reistype-content-title {
+  color: #FF8E8E;
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 1.2em;
+  padding-bottom: 15px;
+
+}
+
+.reistype-content {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+  margin-right: 0px;
+  margin-bottom: 50px;
+  padding: 0;
+}
+
+.reistype-content-tekst {
+
 }
 
 .payoff {
