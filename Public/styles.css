@@ -304,6 +304,12 @@ position: absolute;
     object-fit: cover;
 }
 
+.logo-div {
+  padding: 15px 15px;
+  display: flex;
+  align-items: center;
+}
+
 .logo {
   display: flex;
   align-items: center;
@@ -929,6 +935,7 @@ button.start-avontuur {
 
 .logo {
   padding: 10px;
+  font-size: 20px;
 
 }
 
@@ -1022,6 +1029,13 @@ button.start-avontuur {
 
 body {
     display: block;
+  }
+
+  .logoimage {
+    display: inline-block;
+    width: 25px; 
+    height: auto;
+    justify-content: center; 
   }
 
 h1 {
