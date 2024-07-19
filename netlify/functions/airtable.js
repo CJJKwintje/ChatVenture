@@ -2,7 +2,7 @@ const Airtable = require('airtable');
 
 exports.handler = async (event) => {
 const { userPreferences, originalChatGPTResponse, newChatGPTResponse, selectedOffer, numberOfOffers, selectedCountry, ipAddress } = JSON.parse(event.body);
-const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base('appqZjV7d8qBftQ1x');
+const base = new Airtable({ apiKey: process.env.AIRTABLE_PAT }).base('appqZjV7d8qBftQ1x');
 
 try {
     await base('User_input').create([
