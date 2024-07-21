@@ -13,6 +13,77 @@ let laatsteExtraVoorkeuren = "";
 let originalChatGPTResponse = '';
 let ipAddress = '';
 
+// Initialize Contentful client
+const contentfulClient = contentful.createClient({
+  space: 'mojawqr86alx', // Replace with your space ID
+  accessToken: 'wOjSMrxnQnOEjY3CQpXQX7p_dCCGUYY2GDubsgrgCis' // Replace with your access token
+});
+
+// Mapping of pages to their corresponding Contentful entry IDs
+const pageEntries = {
+  'stedentrip': '4AGTy7sBjbn8RP2UBWORmy',
+  'fly-drives': 'entryIdForStedentripPage',
+  // Add more page mappings...
+};
+
+// Function to get the current page based on the URL path
+function getCurrentPage() {
+  const path = window.location.pathname;
+  if (path.includes('stedentrip')) {
+    return 'stedentrip';
+  } else if (path.includes('fly-drives')) {
+    return 'fly-drives';
+  }
+  // Add more conditions for other pages...
+  return null;
+}
+
+// Function to fetch and update content from Contentful
+async function fetchContentfulData() {
+  const currentPage = getCurrentPage();
+  if (!currentPage) {
+    console.error('No page mapping found for current path');
+    return;
+  }
+
+  const entryId = pageEntries[currentPage];
+  if (!entryId) {
+    console.error('No entry ID found for current page');
+    return;
+  }
+
+  try {
+    const entry = await contentfulClient.getEntry(entryId);
+    console.log('Contentful entry fetched successfully for page:', currentPage, entry);
+    updateContent(entry.fields);
+  } catch (error) {
+    console.error('Error fetching Contentful entry for page:', currentPage, error);
+  }
+}
+
+// Function to update the content on the page
+function updateContent(fields) {
+  // Update the hero section
+  document.querySelector('.hero').style.backgroundImage = `url(${fields.heroImage.fields.file.url})`;
+  document.querySelector('.hero-h1').innerText = fields.heroTitle;
+
+  // Update the main section
+  document.querySelector('#main .title').innerText = fields.mainTitle;
+  document.querySelector('#main .subtitle').innerText = fields.subTitle;
+
+  // Update section 1
+  document.querySelector('#section-1 .reistype-content-title').innerText = fields.sectionTitle1;
+  document.querySelector('#section-1 .reistype-content-tekst').innerText = fields.sectionText1;
+
+  // Update section 2
+  document.querySelector('#section-2 .reistype-content-title').innerText = fields.sectionTitle2;
+  document.querySelector('#section-2 .reistype-content-tekst').innerText = fields.sectionText2;
+
+  // Update section 3
+  document.querySelector('#section-3 .reistype-content-title').innerText = fields.sectionTitle3;
+  document.querySelector('#section-3 .reistype-content-tekst').innerText = fields.sectionText3;
+}
+
 function setupLoaderAnimation() {
   loaderAnimation = lottie.loadAnimation({
     container: document.getElementById('loader'),
@@ -52,32 +123,43 @@ function beperkTekstLengte(tekst, maxLengte) {
 }
 
 function sendToAirtable(userPreferences, originalChatGPTResponse, newChatGPTResponse, selectedOffer, numberOfOffers, selectedCountry, ipAddress, additionalPreferences, isRegenerated) {
-    const data = {
-        userPreferences: userPreferences,
-        originalChatGPTResponse: originalChatGPTResponse,
-        newChatGPTResponse: newChatGPTResponse,
-        selectedOffer: selectedOffer,
-        numberOfOffers: numberOfOffers,
-        selectedCountry: selectedCountry,
-        ipAddress: ipAddress,
-        additionalPreferences: additionalPreferences,
-        isRegenerated: isRegenerated
-    };
+  const data = {
+      userPreferences: userPreferences,
+      originalChatGPTResponse: originalChatGPTResponse,
+      newChatGPTResponse: newChatGPTResponse,
+      selectedOffer: selectedOffer,
+      numberOfOffers: numberOfOffers,
+      selectedCountry: selectedCountry,
+      ipAddress: ipAddress,
+      additionalPreferences: additionalPreferences,
+      isRegenerated: isRegenerated
+  };
 
-    fetch('/.netlify/functions/airtable', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Success: Data sent to Airtable', data);
-    })
-    .catch(error => {
-        console.error('Error sending data to Airtable:', error);
-    });
+  console.log('Data to send to Airtable:', data);
+
+  try {
+      // Escape speciale karakters in JSON-string
+      const jsonString = JSON.stringify(data, (key, value) =>
+          typeof value === 'string' ? value.replace(/[\b\f\n\r\t]/g, '') : value
+      );
+      console.log('JSON String:', jsonString);
+      fetch('/.netlify/functions/airtable', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: jsonString,
+      })
+      .then(response => response.json())
+      .then(data => {
+          console.log('Success: Data sent to Airtable', data);
+      })
+      .catch(error => {
+          console.error('Error sending data to Airtable:', error);
+      });
+  } catch (error) {
+      console.error('Error stringifying data:', error);
+  }
 }
 
 
@@ -407,6 +489,9 @@ document.addEventListener('DOMContentLoaded', () => {
     typeVakantie: '',
     extraVoorkeuren: ''
   };
+
+   // Fetch and update content from Contentful
+   fetchContentfulData();
 
   document.querySelectorAll('.image-selection input[type="radio"]').forEach(radio => {
     radio.addEventListener('change', function() {
