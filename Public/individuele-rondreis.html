@@ -8,6 +8,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-532B33VV');</script>
 <!-- End Google Tag Manager -->
+  
   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-0QWYT071NM"></script>
 <script>
@@ -20,8 +21,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="tradetracker-site-verification" content="03bdcb214e226670bd85c8d7d6f5acc91aa6bc2a" />
-  <title>Chatventure - Inspiratie voor jouw volgende individuele rondreis</title>
-   <link rel="apple-touch-icon" sizes="57x57" href="assets/favicon/apple-icon-57x57.png">
+  <title>Chatventure - Inspiratie voor jouw volgende avontuur!</title>
+<link rel="apple-touch-icon" sizes="57x57" href="assets/favicon/apple-icon-57x57.png">
 <link rel="apple-touch-icon" sizes="60x60" href="assets/favicon/apple-icon-60x60.png">
 <link rel="apple-touch-icon" sizes="72x72" href="assets/favicon/apple-icon-72x72.png">
 <link rel="apple-touch-icon" sizes="76x76" href="assets/favicon/apple-icon-76x76.png">
@@ -49,64 +50,104 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-532B33VV"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
-
+<script src="https://cdn.jsdelivr.net/npm/contentful@latest/dist/contentful.browser.min.js"></script>
 <header>
 <div class="headerleft">
   <div class="logo">
-      <img src="assets/logo.jpg" class="logoimage">
+      <img src="assets/logo.jpg" class="logoimage" alt="Chatventure Logo">
     <a href="/index.html" class="logo">Chatventure</a></div>
 </div>
 <div class="headerright">
-  <a href="https://www.nordic.nl/opreis?tt=34304_1904422_461857_&amp;r=" target="_blank" rel="sponsored nofollow"><img src="https://ti.tradetracker.net/?c=34304&amp;m=1904422&amp;a=461857&amp;r=&amp;t=html" width="468" height="60" border="0" alt="" /></a>
+  <a href="https://www.d-reizen.nl/opvakantie/index.aspx/?tt=37700_2262602_461857_&amp;r=" target="_blank" rel="sponsored nofollow"><img src="https://ti.tradetracker.net/?c=37700&amp;m=2262602&amp;a=461857&amp;r=&amp;t=html" width="728" height="90" border="0" alt="Curacao resultatenpagina" /></a>
 </div>
 </div>
 </header>
 
 <div class="container-homepage">
-  <div class="hero" style="background-image: url(assets/rondreis.jpg);">
-    <div class="hero-content">
-    <h1 class="hero-h1">Inspiratie voor jouw volgende individuele rondreis</h1>
-    <p class="hero-tekst">Zelf bepalen waar je heen gaat zonder strak schema? Ontdek de mogelijkheden van een individuele rondreis</p>
-</div>
-</div>
-
-<div class="container">
-    <div id="content-container">
-    <h2 class="title">Start jouw volgende <span class="text-blue">rondreis</span></h2>
-    <div id="input-fields">
-      <div class="locatie">
-        <label for="vertreklocatie">Wat is je vertreklocatie?</label>
-        <input type="text" id="vertreklocatie" name="locatie" placeholder="Bijv. Amsterdam">
-      </div>
-
-      <div class="Vakantie-dropdown">
-        <label for="type-vakantie-select">Naar wat voor type vakantie ben je op zoek?</label>
-        <select id="type-vakantie-select">
-          <option value="rondreis">Individuele rondreis</option>
-        </select>
-      </div>
+  <div class="hero" style="background-image: url('');">
+    <div id="hero-content"><h1 class="hero-h1"></h1>
+    </div>
+     <div id="content-container">
+      <div id="input-fields">
+      <div id="input-fields-top">
+        <div class="locatie">
+          <input type="text" id="vertreklocatie" name="locatie" placeholder="Waar begint je reis?">
+          </div>
+          <div class="Vakantie-dropdown">
+            <select id="type-vakantie-select" onchange="updateDropdownStyle(this)">
+              <option value="rondreis">Rondreis</option>
+            </select>
+          </div>
+          </div>
       <div class="extra-voorkeuren">
-        <label for="textarea-voorkeuren">Wat vind je verder belangrijk voor je volgende vakantie?</label>
-        <textarea id="textarea-voorkeuren" name="extra-voorkeuren" rows="4" cols="50" placeholder="Bijv. Ik neem graag mijn hond mee op vakantie"></textarea>
-      </div></div>
+        <textarea id="textarea-voorkeuren" name="extra-voorkeuren" rows="4" cols="50" placeholder="Beschrijf je belangrijkste wensen"></textarea>
+      </div>
+      <button id="inspire-me-btn">Start avontuur</button>
+    </div>
+    </div>
 
-      <button id="inspire-me-btn">Geef mij inspiratie!</button>
+  <div id="hero-inspiratie" class="hidden">
+
+  <div id="container-inspiratie">
+  
+  <div id="laadscherm" class="hidden">
+  <div class="laadscherm-container">  
+  <div id="loader"></div>
+  <p class="laadscherm-text">Persoonlijke reisinspiratie maken..</p>
+  </div>
   </div>
 
-  <div id="loader" class="hidden"></div>
-  <h2 id="response-title" class="hidden">Inspiratie voor jouw reis</h2>
+
+  <div id="response-container" class="hidden">
+  <h2 id="response-title" class="hidden">Wat leuk dat je op zoek bent naar een rondreis!</h2>
   <div id="response-output" class="hidden" style="white-space: pre-wrap;"></div>
-   <button id="stel-samen-btn" class="hidden">Stel je eigen reis samen</button>
-</div>
+  <div class="inspiratie-buttons">
+  <button id="modify-inspiration" class="hidden"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+  <path d="M12 4V20M20 12L4 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>Aanpassen</button>
+  <div class="add-input"><textarea id="additional-input" class="hidden" placeholder="Wat wil je aanpassen?"></textarea>
+  <button id="submit-modified-inspiration" class="hidden">Pas aan</button>
+  </div>
+  <button id="regenerate-inspiration" class="hidden"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+  <path d="M1 1V6H1.58152M16.9381 8C16.446 4.05369 13.0796 1 9 1C5.64262 1 2.76829 3.06817 1.58152 6M1.58152 6H6M17 17V12H16.4185M16.4185 12C15.2317 14.9318 12.3574 17 9 17C4.92038 17 1.55399 13.9463 1.06189 10M16.4185 12H12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>Opnieuw</button>
+  </div>
+
+  <button id="stel-samen-btn" class="hidden">Stel je eigen reis samen</button>
+  </div>
+  </div>
+  </div>
+  </div>
+
+  <div id="container-reisorganisaties">
+    <div class="logo-reisorganisaties">
+      <img src="assets/reisorganisaties/Oad-logo.png" height="25px" alt="Logo Oad">
+    </div>
+    <div class="logo-reisorganisaties">
+      <img src="assets/reisorganisaties/D-reizen-logo.png" height="25px" alt="D-Reizen logo">
+    </div>
+    <div class="logo-reisorganisaties">
+      <img src="assets/reisorganisaties/travelhome-logo.svg" height="25px" alt="Logo Travelhome">
+    </div>
+    <div class="logo-reisorganisaties">
+      <img src="assets/reisorganisaties/BBI-logo.jpg" height="40px" alt="Logo BBI Travel">
+    </div>
+    <div class="logo-reisorganisaties">
+      <img src="assets/reisorganisaties/treinrondreis-logo.png" height="20px" alt="Logo Treinrondreis">
+    </div>
+    <div class="logo-reisorganisaties">
+      <img src="assets/reisorganisaties/weekendjeweg-logo.png" height="15px" alt="Logo Weekendjeweg">
+    </div>
+  </div>
 
 <!-- Nieuwe div voor het tonen van reisaanbod -->
 
-<div id="reisaanbod-container">
-<h2 id="reisaanbod-title" class="hidden">Reisaanbod speciaal voor jou:</h2>
+<div id="reisaanbod-container" class="hidden">
+<h2 id="reisaanbod-title" class="hidden">We hebben <span id="offerCount"></span> gevonden:</h2>
 <div id="reisaanbodDisplay"></div>
 
 <!-- Voeg hier de pagineringselementen toe -->
-    <div id="pagination">
+    <div class="pagination">
         <button id="loadMore" class="hidden" onclick="loadMore()">Toon meer</button>
     </div>
 
@@ -131,22 +172,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </template>
 </div>
 
-<div class="container-reistype">
-<h3 class="homepage-title">Ontdek de wereld van <span class="text-blue">individuele rondreizen</span></h3>
-<div class="container">
-<h4>Jouw weg naar persoonlijke avonturen</h4>
-<p>Bij Chatventure geloven we dat de beste manier om de wereld te ontdekken, is door het op je eigen unieke manier te doen. Daarom bieden wij een uitgebreid aanbod van individuele rondreizen aan, zorgvuldig geselecteerd van diverse gerenommeerde reisaanbieders. Of je nu droomt van idyllische stranden, bruisende steden of serene natuur, op onze website vind je de perfecte reis die bij jouw individuele stijl past.</p><br>
-
-<h4>Wat is een individuele rondreis?</h4>
-<p>Een individuele rondreis is een reis waarbij je de vrijheid hebt om zelf je route, tempo en ervaringen te bepalen. In tegenstelling tot groepsreizen, waar je het schema en de activiteiten deelt met anderen, geeft een individuele rondreis je de autonomie om je eigen avontuur te creëren. Of je nu kiest voor zelf rijden of een reis met privéchauffeur, deze reizen zijn ontworpen om aan jouw persoonlijke voorkeuren te voldoen.</p><br>
-
-<h4>Voorbeeld: Ontdek Thailand op jouw manier</h4>
-<p>Stel je voor: een individuele rondreis door het betoverende Thailand. Begin in het levendige Bangkok, waar je op eigen tempo de beroemde tempels en markten kunt verkennen. Reis vervolgens naar het noorden naar Chiang Mai, een stad vol cultuur en prachtige natuur. Eindig je reis met een ontspannen verblijf aan de prachtige stranden van Phuket. Deze reis, en vele anderen, zijn volledig aanpasbaar en kunnen worden afgestemd op jouw voorkeuren, met de zekerheid dat alle logistiek zorgvuldig is geregeld door deskundige reisaanbieders.<br><br>
-
-<h4>Jouw Reis, Jouw Keuzes</h4>
-<p>Bij Chatventure draait het allemaal om keuzevrijheid. Blader door ons uitgebreide aanbod en vind de rondreis die bij jou past. Of je nu op zoek bent naar een avontuurlijke, culturele of ontspannende vakantie, onze partners bieden het allemaal. Begin vandaag nog met het plannen van jouw droomreis!</p>
-
-</div></div>
+  <div id="homepage-content-container">
+    <div id="main" class="body-content">
+      <h3 class="title"></h3>
+      <p class="subtitle"></p>
+      </div>
+    <div id="section-1" class="body-content">
+      <p class="reistype-content-title"></p>
+      <p class="reistype-content-tekst"></p>    
+      </div>
+    <div id="section-2" class="body-content">
+      <p class="reistype-content-title"></p>
+      <p class="reistype-content-tekst"></p>   
+      </div>
+    <div id="section-3" class="body-content">
+      <p class="reistype-content-title"></p>
+      <p class="reistype-content-tekst"></p>
+      </div>
+  </div>
 
 <footer>
   <div class="footer-left">
@@ -169,19 +212,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   info@chatventure.nl<br>
 </div></div>  
 </footer>
-<!-- Begin TradeTracker SuperTag Code -->
-<script type="text/javascript">
 
-  var _TradeTrackerTagOptions = {
-    t: 'a',
-    s: '461857',
-    chk: '92b9e4052444e12e95ccdbf6b84362db',
-    overrideOptions: {}
-  };
-
-  (function() {var tt = document.createElement('script'), s = document.getElementsByTagName('script')[0]; tt.setAttribute('type', 'text/javascript'); tt.setAttribute('src', (document.location.protocol == 'https:' ? 'https' : 'http') + '://tm.tradetracker.net/tag?t=' + _TradeTrackerTagOptions.t + '&amp;s=' + _TradeTrackerTagOptions.s + '&amp;chk=' + _TradeTrackerTagOptions.chk); s.parentNode.insertBefore(tt, s);})();
-</script>
-<!-- End TradeTracker SuperTag Code -->
-<script src="script-reistype.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

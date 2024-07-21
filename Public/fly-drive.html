@@ -8,6 +8,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-532B33VV');</script>
 <!-- End Google Tag Manager -->
+  
   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-0QWYT071NM"></script>
 <script>
@@ -20,8 +21,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="tradetracker-site-verification" content="03bdcb214e226670bd85c8d7d6f5acc91aa6bc2a" />
-  <title>Chatventure - Fly-drive inspiratie voor jouw vakantie</title>
-   <link rel="apple-touch-icon" sizes="57x57" href="assets/favicon/apple-icon-57x57.png">
+  <title>Chatventure - Inspiratie voor jouw volgende avontuur!</title>
+<link rel="apple-touch-icon" sizes="57x57" href="assets/favicon/apple-icon-57x57.png">
 <link rel="apple-touch-icon" sizes="60x60" href="assets/favicon/apple-icon-60x60.png">
 <link rel="apple-touch-icon" sizes="72x72" href="assets/favicon/apple-icon-72x72.png">
 <link rel="apple-touch-icon" sizes="76x76" href="assets/favicon/apple-icon-76x76.png">
@@ -49,64 +50,104 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-532B33VV"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
-
+<script src="https://cdn.jsdelivr.net/npm/contentful@latest/dist/contentful.browser.min.js"></script>
 <header>
 <div class="headerleft">
   <div class="logo">
-      <img src="assets/logo.jpg" class="logoimage">
+      <img src="assets/logo.jpg" class="logoimage" alt="Chatventure Logo">
     <a href="/index.html" class="logo">Chatventure</a></div>
 </div>
 <div class="headerright">
-  <a href="https://www.nordic.nl/opreis?tt=34304_1904422_461857_&amp;r=" target="_blank" rel="sponsored nofollow"><img src="https://ti.tradetracker.net/?c=34304&amp;m=1904422&amp;a=461857&amp;r=&amp;t=html" width="468" height="60" border="0" alt="" /></a>
+  <a href="https://www.d-reizen.nl/opvakantie/index.aspx/?tt=37700_2262602_461857_&amp;r=" target="_blank" rel="sponsored nofollow"><img src="https://ti.tradetracker.net/?c=37700&amp;m=2262602&amp;a=461857&amp;r=&amp;t=html" width="728" height="90" border="0" alt="Curacao resultatenpagina" /></a>
 </div>
 </div>
 </header>
 
 <div class="container-homepage">
-  <div class="hero" style="background-image: url(assets/fly-drive.jpg);">
-    <div class="hero-content">
-    <h1 class="hero-h1">Fly-drive inspiratie voor jouw vakantie</h1>
-    <p class="hero-tekst">Zelf bepalen waar je heen gaat zonder strak schema? Ontdek de mogelijkheden van een fly-drive vakantie</p>
-</div>
-</div>
-
-<div class="container">
-    <div id="content-container">
-    <h2 class="title">Start jouw volgende <span class="text-blue">fly-drive</span></h2>
-    <div id="input-fields">
-      <div class="locatie">
-        <label for="vertreklocatie">Wat is je vertreklocatie?</label>
-        <input type="text" id="vertreklocatie" name="locatie" placeholder="Bijv. Amsterdam">
-      </div>
-
-      <div class="Vakantie-dropdown">
-        <label for="type-vakantie-select">Naar wat voor type vakantie ben je op zoek?</label>
-        <select id="type-vakantie-select">
-          <option value="fly-drive">Fly-drive</option>
-        </select>
-      </div>
+  <div class="hero" style="background-image: url('');">
+    <div id="hero-content"><h1 class="hero-h1"></h1>
+    </div>
+     <div id="content-container">
+      <div id="input-fields">
+      <div id="input-fields-top">
+        <div class="locatie">
+          <input type="text" id="vertreklocatie" name="locatie" placeholder="Waar begint je reis?">
+          </div>
+          <div class="Vakantie-dropdown">
+            <select id="type-vakantie-select" onchange="updateDropdownStyle(this)">
+              <option value="fly-drive">Fly-drive</option>
+            </select>
+          </div>
+          </div>
       <div class="extra-voorkeuren">
-        <label for="textarea-voorkeuren">Wat vind je verder belangrijk voor je volgende vakantie?</label>
-        <textarea id="textarea-voorkeuren" name="extra-voorkeuren" rows="4" cols="50" placeholder="Bijv. Ik neem graag mijn hond mee op vakantie"></textarea>
-      </div></div>
+        <textarea id="textarea-voorkeuren" name="extra-voorkeuren" rows="4" cols="50" placeholder="Beschrijf je belangrijkste wensen"></textarea>
+      </div>
+      <button id="inspire-me-btn">Start avontuur</button>
+    </div>
+    </div>
 
-      <button id="inspire-me-btn">Geef mij inspiratie!</button>
+  <div id="hero-inspiratie" class="hidden">
+
+  <div id="container-inspiratie">
+  
+  <div id="laadscherm" class="hidden">
+  <div class="laadscherm-container">  
+  <div id="loader"></div>
+  <p class="laadscherm-text">Persoonlijke reisinspiratie maken..</p>
+  </div>
   </div>
 
-  <div id="loader" class="hidden"></div>
-  <h2 id="response-title" class="hidden">Inspiratie voor jouw reis</h2>
+
+  <div id="response-container" class="hidden">
+  <h2 id="response-title" class="hidden">Wat leuk dat je op zoek bent naar een fly-drive!</h2>
   <div id="response-output" class="hidden" style="white-space: pre-wrap;"></div>
-   <button id="stel-samen-btn" class="hidden">Stel je eigen reis samen</button>
-</div>
+  <div class="inspiratie-buttons">
+  <button id="modify-inspiration" class="hidden"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+  <path d="M12 4V20M20 12L4 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>Aanpassen</button>
+  <div class="add-input"><textarea id="additional-input" class="hidden" placeholder="Wat wil je aanpassen?"></textarea>
+  <button id="submit-modified-inspiration" class="hidden">Pas aan</button>
+  </div>
+  <button id="regenerate-inspiration" class="hidden"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+  <path d="M1 1V6H1.58152M16.9381 8C16.446 4.05369 13.0796 1 9 1C5.64262 1 2.76829 3.06817 1.58152 6M1.58152 6H6M17 17V12H16.4185M16.4185 12C15.2317 14.9318 12.3574 17 9 17C4.92038 17 1.55399 13.9463 1.06189 10M16.4185 12H12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>Opnieuw</button>
+  </div>
+
+  <button id="stel-samen-btn" class="hidden">Stel je eigen reis samen</button>
+  </div>
+  </div>
+  </div>
+  </div>
+
+  <div id="container-reisorganisaties">
+    <div class="logo-reisorganisaties">
+      <img src="assets/reisorganisaties/Oad-logo.png" height="25px" alt="Logo Oad">
+    </div>
+    <div class="logo-reisorganisaties">
+      <img src="assets/reisorganisaties/D-reizen-logo.png" height="25px" alt="D-Reizen logo">
+    </div>
+    <div class="logo-reisorganisaties">
+      <img src="assets/reisorganisaties/travelhome-logo.svg" height="25px" alt="Logo Travelhome">
+    </div>
+    <div class="logo-reisorganisaties">
+      <img src="assets/reisorganisaties/BBI-logo.jpg" height="40px" alt="Logo BBI Travel">
+    </div>
+    <div class="logo-reisorganisaties">
+      <img src="assets/reisorganisaties/treinrondreis-logo.png" height="20px" alt="Logo Treinrondreis">
+    </div>
+    <div class="logo-reisorganisaties">
+      <img src="assets/reisorganisaties/weekendjeweg-logo.png" height="15px" alt="Logo Weekendjeweg">
+    </div>
+  </div>
 
 <!-- Nieuwe div voor het tonen van reisaanbod -->
 
-<div id="reisaanbod-container">
-<h2 id="reisaanbod-title" class="hidden">Reisaanbod speciaal voor jou:</h2>
+<div id="reisaanbod-container" class="hidden">
+<h2 id="reisaanbod-title" class="hidden">We hebben <span id="offerCount"></span> gevonden:</h2>
 <div id="reisaanbodDisplay"></div>
 
 <!-- Voeg hier de pagineringselementen toe -->
-    <div id="pagination">
+    <div class="pagination">
         <button id="loadMore" class="hidden" onclick="loadMore()">Toon meer</button>
     </div>
 
@@ -131,22 +172,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </template>
 </div>
 
-<div class="container-reistype">
-<h3 class="homepage-title">De ultieme vrijheid van <span class="text-blue">fly-drive </span>vakanties</h3>
-<div class="container">
-<h4>Fly-drive vakantie</h4>
-<p>Een fly drive vakantie belichaamt de essentie van vrijheid en ontdekking. Het combineert het gemak van vliegen met de onafhankelijkheid van een huurauto, waardoor je elke bestemming op jouw tempo kunt verkennen. Deze vorm van reizen heeft recentelijk veel aan populariteit gewonnen, en terecht. Het biedt een unieke kans om verre bestemmingen te ervaren, van de verstopte parels tot de bekende hoogtepunten, allemaal op jouw voorwaarden.<br><br>
-
-Stel je voor dat je door de glooiende heuvels van de Italiaanse Chianti-streek rijdt, langs middeleeuwse torens en uitgestrekte wijngaarden. Of dat je het stuur neemt langs de Noorse fjorden, met adembenemende uitzichten om elke bocht. Een fly drive geeft je de kans om deze dromen waar te maken. In plaats van vast te zitten aan een vooraf bepaalde route, kun je spontaan besluiten om een onbekend pad in te slaan, misschien wel naar dat perfecte uitzichtpunt voor een zonsondergang of een afgelegen strandje dat nog niet is ontdekt door de massa.</p><br><br>
-
-<h4>Fly Drive naar Noorwegen</h4>
-<p>Noorwegen is een voorbeeld van een bestemming die perfect geschikt is voor een fly drive. De combinatie van goed onderhouden wegen, adembenemende natuurlijke schoonheid, en een verscheidenheid aan landschappen maakt het tot een onvergetelijke ervaring. Van de ruige kustlijnen tot de majestueuze bergen en diepe, serene fjorden, elke kilometer biedt iets nieuws en opwindends. Je kunt stoppen bij charmante Noorse dorpjes, genieten van de lokale keuken, of een nacht doorbrengen onder de sterrenhemel.</p><br><br>
-
-<h4>Fly Drive met een huurauto</h4>
-<p>Een fly drive vakantie is meer dan alleen een reis; het is een avontuur dat je zelf vormgeeft. Het stelt je in staat om het onbekende te omarmen, je eigen routes te kiezen en te genieten van de reis zoals jij dat wilt. Of je nu op zoek bent naar culturele schatten in steden zoals Florence en Pisa, of de natuurlijke wonderen van de Plitvice Meren wilt verkennen, de keuze is aan jou. Met een huurauto ben je niet gebonden aan tijdschema's of groepsreizen; je beleeft de wereld op jouw manier.<br><br>
-
-Ontdek vandaag nog de mogelijkheden en begin aan een reis die niet alleen nieuwe bestemmingen onthult, maar ook nieuwe perspectieven opent. Een fly drive vakantie is niet zomaar een uitstapje; het is een pad naar vrijheid en onvergetelijke herinneringen.</p>
-</div></div>
+  <div id="homepage-content-container">
+    <div id="main" class="body-content">
+      <h3 class="title"></h3>
+      <p class="subtitle"></p>
+      </div>
+    <div id="section-1" class="body-content">
+      <p class="reistype-content-title"></p>
+      <p class="reistype-content-tekst"></p>    
+      </div>
+    <div id="section-2" class="body-content">
+      <p class="reistype-content-title"></p>
+      <p class="reistype-content-tekst"></p>   
+      </div>
+    <div id="section-3" class="body-content">
+      <p class="reistype-content-title"></p>
+      <p class="reistype-content-tekst"></p>
+      </div>
+  </div>
 
 <footer>
   <div class="footer-left">
@@ -169,19 +212,7 @@ Ontdek vandaag nog de mogelijkheden en begin aan een reis die niet alleen nieuwe
   info@chatventure.nl<br>
 </div></div>  
 </footer>
-<!-- Begin TradeTracker SuperTag Code -->
-<script type="text/javascript">
 
-  var _TradeTrackerTagOptions = {
-    t: 'a',
-    s: '461857',
-    chk: '92b9e4052444e12e95ccdbf6b84362db',
-    overrideOptions: {}
-  };
-
-  (function() {var tt = document.createElement('script'), s = document.getElementsByTagName('script')[0]; tt.setAttribute('type', 'text/javascript'); tt.setAttribute('src', (document.location.protocol == 'https:' ? 'https' : 'http') + '://tm.tradetracker.net/tag?t=' + _TradeTrackerTagOptions.t + '&amp;s=' + _TradeTrackerTagOptions.s + '&amp;chk=' + _TradeTrackerTagOptions.chk); s.parentNode.insertBefore(tt, s);})();
-</script>
-<!-- End TradeTracker SuperTag Code -->
-<script src="script-reistype.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

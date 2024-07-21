@@ -22,7 +22,8 @@ const contentfulClient = contentful.createClient({
 // Mapping of pages to their corresponding Contentful entry IDs
 const pageEntries = {
   'stedentrip': '4AGTy7sBjbn8RP2UBWORmy',
-  'fly-drives': 'entryIdForStedentripPage',
+  'fly-drive': '1inoFOPG16NxiAkxF1Fglh',
+  'rondreis': '6poz7xqep441sLykHmGe1f'
   // Add more page mappings...
 };
 
@@ -31,8 +32,10 @@ function getCurrentPage() {
   const path = window.location.pathname;
   if (path.includes('stedentrip')) {
     return 'stedentrip';
-  } else if (path.includes('fly-drives')) {
-    return 'fly-drives';
+  } else if (path.includes('fly-drive')) {
+    return 'fly-drive';
+  } else if (path.includes('rondreis')) {
+    return 'rondreis';
   }
   // Add more conditions for other pages...
   return null;
