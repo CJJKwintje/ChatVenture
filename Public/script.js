@@ -13,12 +13,6 @@ let laatsteExtraVoorkeuren = "";
 let originalChatGPTResponse = '';
 let ipAddress = '';
 
-// Initialize Contentful client
-const contentfulClient = contentful.createClient({
-  space: 'mojawqr86alx', // Replace with your space ID
-  accessToken: 'wOjSMrxnQnOEjY3CQpXQX7p_dCCGUYY2GDubsgrgCis' // Replace with your access token
-});
-
 // Mapping of pages to their corresponding Contentful entry IDs
 const pageEntries = {
   'stedentrip': '4AGTy7sBjbn8RP2UBWORmy',
@@ -41,7 +35,7 @@ function getCurrentPage() {
   return null;
 }
 
-// Function to fetch and update content from Contentful
+// Function to fetch and update content from Contentful via Netlify Function
 async function fetchContentfulData() {
   const currentPage = getCurrentPage();
   if (!currentPage) {
@@ -56,7 +50,10 @@ async function fetchContentfulData() {
   }
 
   try {
-    const entry = await contentfulClient.getEntry(entryId);
+    const response = await fetch(`/.netlify/functions/fetchContentful?entryId=${entryId}`);
+    if (!response.ok) throw new Error(`Error fetching entry: ${response.statusText}`);
+
+    const entry = await response.json();
     console.log('Contentful entry fetched successfully for page:', currentPage, entry);
     updateContent(entry.fields);
   } catch (error) {
