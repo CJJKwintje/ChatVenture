@@ -1,8 +1,8 @@
 const contentful = require('contentful');
 
 exports.handler = async (event, context) => {
-  const space = process.env.mojawqr86alx;
-  const accessToken = process.env.wOjSMrxnQnOEjY3CQpXQX7p_dCCGUYY2GDubsgrgCis;
+    const space = process.env.CONTENTFUL_SPACE_ID;
+    const accessToken = process.env.CONTENTFUL_ACCESS_TOKEN;
   
   const client = contentful.createClient({
     space,
