@@ -1079,7 +1079,6 @@ h3.title {
   margin-bottom: 50px;
   margin-top: 25px;
   font-size: 2em;
-  padding: 0px 25px;
 }
 
 p.hero-tekst {
@@ -1126,6 +1125,10 @@ button.start-avontuur {
   padding: 0px 25px;
   max-width: none;
   margin: 0px;
+}
+
+.body-content {
+  max-width: 100%;
 }
 
 .homepage-image {
@@ -1354,7 +1357,8 @@ button#regenerate-inspiration {
 }
 
 #homepage-content-container {
-  padding: 50px 20px
+  padding: 50px 20px;
+  margin: 0px;
 }
 
 .footer-left {
